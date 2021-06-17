@@ -1,33 +1,33 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Movies from '../components/Movies.vue'
+import Homepage from '../components/Homepage.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    // componente carregado por todo
-    path: '/',
-    name: 'Movies',
-    component: Movies
+    // componente carregado
+    path: '/abc',
+    name: 'Homepage',
+    component: Homepage
   },
   {
     // componente carregado quando é navegado para esta rota
-    path: '/todos',
-    name: 'Todos',
+    path: '/patients',
+    name: 'Patients',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Todos.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Patients.vue')
   },
   {
     // componente carregado quando é navegado para esta rota
-    path: '/todos/:todoId',
-    name: 'TodoDetails',
+    path: '/patients/:patientId',
+    name: 'PatientDetails',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/TodoDetails.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/PatientsDetails.vue')
   },
 
 ]
