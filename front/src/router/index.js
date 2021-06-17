@@ -2,15 +2,18 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Homepage from '../components/Homepage.vue'
 
+
 Vue.use(VueRouter)
 
 const routes = [
   {
     // componente carregado
-    path: '/abc',
+    path: '/',
     name: 'Homepage',
     component: Homepage
   },
+
+  
   {
     // componente carregado quando é navegado para esta rota
     path: '/patients',
@@ -19,6 +22,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Patients.vue')
+                    
   },
   {
     // componente carregado quando é navegado para esta rota

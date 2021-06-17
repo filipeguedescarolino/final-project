@@ -3,23 +3,33 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import 'bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
 
-import '@fortawesome/fontawesome-free/css/all.css'
-import '@fortawesome/fontawesome-free/js/all.js'
+
+import vuetify from '@/plugins/vuetify' // path to vuetify export
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import vuetify from './plugins/vuetify'
-
-Vue.config.productionTip = false
 
 Vue.use(VueAxios, axios)
 
-new Vue({
-  router,
-  store,
-  vuetify,
-  render: h => h(App)
-}).$mount('#app')
+Vue.config.productionTip = false
+
+
+  new Vue({
+    router,
+    store,
+    vuetify,
+    
+    render: h => h(App),
+  }).$mount('#app')
+
+
+
+
+
+// new Vue({
+//   router,
+//   store,
+//   vuetify,
+//   render: h => h(App)
+// }).$mount('#app')

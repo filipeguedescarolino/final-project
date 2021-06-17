@@ -1,7 +1,7 @@
 const express = require('express')
-
+const cors = require('cors')
 const server = express()
-
+server.use(cors())
 const EXPRESS_PORT = 3000
 
 module.exports = {
