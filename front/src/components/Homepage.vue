@@ -5,30 +5,117 @@
     lazy-validation
     style="padding: 30px;
       margin: 0 30px;
-      border-top: 0px;"
-  >
+      border-top: 0px;">
+    
+    <!-- Phone field -->
+    <v-text-field
+      v-model.number="phone"
+      type="number"
+      :counter="9"
+      :rules="phoneRules"
+      label="phone">
+    </v-text-field>
+
+    <!-- zipCode field -->
+    <v-text-field
+      v-model.number="zipCode"
+      type="number"
+      :counter="10"
+      :rules="zipCodeRules"
+      label="zipCode">
+    </v-text-field>
+    <!-- SNS field -->
+    <v-text-field
+      v-model.number="sns"
+      type="number"
+      :counter="20"
+      :rules="snsRules"
+      label="sns">
+    </v-text-field>
+    <!-- NIF field -->
+    <v-text-field
+      v-model.number="nif"
+      type="number"
+      :counter="20"
+      :rules="nifRules"
+      label="nif">
+    </v-text-field>
+
+    <!-- mobilePhone field -->
+    <v-text-field
+      v-model.number="mobilePhone"
+      type="number"
+      :counter="9"
+      :rules="mobilePhoneRules"
+      label="mobilephone">
+    </v-text-field>
+
+
+    <!-- Field Name -->
     <v-text-field
       v-model="name"
       :counter="10"
       :rules="nameRules"
       label="Name"
-      required
-    ></v-text-field>
+      required>
 
+    </v-text-field>
+
+    <!-- Field Address -->
+    <v-text-field
+      v-model="address"
+      :counter="200"
+      :rules="addressRules"
+      label="address"
+      required>
+
+    </v-text-field>
+    <!-- Field email -->
     <v-text-field
       v-model="email"
       :rules="emailRules"
       label="E-mail"
-      required
-    ></v-text-field>
+      required>
 
+    </v-text-field>
+    <!-- field Gender -->
     <v-select
       v-model="select"
       :items="items"
       :rules="[v => !!v || 'Item is required']"
-      label="Item"
+      label="Gender"
       required
     ></v-select>
+
+    <!-- Password and Password Conf  -->
+    <v-text-field
+      v-model="password"
+      :counter="8"
+      
+      type="password"
+      label="password"
+      required>
+    </v-text-field>
+    <!-- Passwordconf -->
+    <v-text-field
+      v-model="passwordConfirmation"
+      type="password"
+      :counter="8"      
+      label="passwordConfirmation"
+      required>
+    </v-text-field>
+    <!-- Date -->
+    <v-text-field
+      v-model="date"
+      :rules="dateRules"
+      type="date"
+      label="date"
+      required>
+
+    </v-text-field>
+
+
+
 
     <v-checkbox
       v-model="checkbox"
@@ -36,6 +123,12 @@
       label="Do you agree?"
       required
     ></v-checkbox>
+
+
+
+
+
+
 
     <v-btn
       :disabled="!valid"
@@ -64,21 +157,21 @@
 </template>
 
 <script>
-  import { requiredIf, minLength, sameAs } from 'vuelidate/lib/validators'
+  
 
   export default {
-    validations: {
-        password: {
-            minLength: minLength(8),
-            required: requiredIf(function () {
-                return this.isCreateRegistration
-            }),
-        },
+    // validations: {
+    //     password: {
+    //         minLength: minLength(8),
+    //         required: requiredIf(function () {
+    //             return this.isCreateRegistration
+    //         }),
+    //     },
 
-        passwordConfirmation: {
-            sameAsPassword: sameAs('password'),
-        },
-    },
+    //     passwordConfirmation: {
+    //         sameAsPassword: sameAs('password'),
+    //     },
+    // },
 
     data () {
         return {
@@ -97,16 +190,61 @@
       ],
       select: null,
       items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
+        'Male',
+        'Female',
       ],
       checkbox: false,
+      phone: '',
+      phoneRules: [
+        
+        v => Number.isInteger(Number(v)) || "The value must be an integer number"
+      ],
+
+      mobilePhone: '',
+      mobilePhoneRules: [
+        v => !!v || 'mobilePhone is required',
+        v => Number.isInteger(Number(v)) || "The value must be an integer number"
+      ],
+
+      zipCode: '',
+      zipCodeRules: [
+        v => !!v || 'zipCode is required',
+        v => Number.isInteger(Number(v)) || "The value must be an integer number"
+      ],
+
+      sns: '',
+      snsRules: [
+        v => !!v || 'SNS is required',
+        v => Number.isInteger(Number(v)) || "The value must be an integer number"
+      ],
+
+      nif: '',
+      nifRules: [
+        v => !!v || 'Nif is required',
+        v => Number.isInteger(Number(v)) || "The value must be an integer number"
+      ],
+
+      address: '',
+      addressRules: [
+        v => !!v || 'Address is required',
+        v => (v && v.length <= 200) || 'Address must be less than 200 characters',
+      ],
+      password: '',
+      passwordConfirmation: '',
+
+      date: '',
+      dateRules: [
+        v => !!v || 'Address is required'
+      ]
+
     }},
 
     methods: {
       validate () {
+        if (this.password != this.passwordConfirmation) {
+          alert('Password is not a match')
+          return
+        }
         this.$refs.form.validate()
       },
       reset () {

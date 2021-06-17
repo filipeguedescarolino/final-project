@@ -1,7 +1,10 @@
 <template>
   <v-app id="app">
     
-    <Navbar/>   
+    <Navbar/>
+    <h1 class="text-center">
+      Client Registration
+    </h1>
     <Homepage/>
     <DatePicker/>
   </v-app>
@@ -26,6 +29,13 @@ export default {
     DatePicker,
     
     
-  }
+  },
+
+   data () {
+        return {
+        authenticated: true
+
+      }
+   }
 };
 </script>
