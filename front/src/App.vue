@@ -6,7 +6,7 @@
       app
       fixed
       dark
-      class="blue lighten-1"
+      color="#99D3DF"
       
     >
 
@@ -16,7 +16,7 @@
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item class="text-h6"
+          <v-list-item class="text-h6 grey--text  text--lighten-5"
             :to="'/login'"
             @click="drawer = !drawer">
             Login
@@ -55,10 +55,29 @@
     </v-navigation-drawer>
 
     <v-app-bar app
-    class="blue lighten-1">
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+    color="#88BBD6">
+      <v-app-bar-nav-icon @click="drawer = !drawer" ></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title  style="margin-left: 140px;" >
+        <v-list-item  class="text-h6 red--text  text--lighten-5" :to="'/about'"> 
+          About us
+        </v-list-item>
+      </v-toolbar-title>
+      <v-toolbar-title  class="grey--text  text--lighten-5" style="margin-left: 140px;">
+        <v-list-item class="grey--text  text--lighten-5" :to="'/specialists'"> 
+          Our specialists
+        </v-list-item>
+      </v-toolbar-title>
+      <v-toolbar-title  style="margin-left: 140px;" :to="'/appointment'">
+        <v-list-item class="grey--text  text--lighten-5" :to="'/about'"> 
+          Appointment
+        </v-list-item>
+      </v-toolbar-title>
+      <v-toolbar-title  style="margin-left: 140px;" :to="'/prices'">
+        <v-list-item class="grey--text  text--lighten-5" :to="'/about'"> 
+          Prices
+        </v-list-item>
+      </v-toolbar-title>
     </v-app-bar>
 
     <v-main>

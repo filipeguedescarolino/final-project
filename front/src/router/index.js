@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 // import Homepage from '../components/Homepage.vue'
 import Home from '../views/Home.vue'
 import Login from '../components/Login.vue'
+import medics from '../components/medics.vue'
 
 
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/home',
     name: 'home',
     component: Home
+  },
+  {
+    path: '/specialists',
+    name: 'specialists',
+    component: medics
   },
   {
     // componente carregado quando é navegado para esta rota
