@@ -4,24 +4,27 @@
       <v-navigation-drawer
       v-model="drawer"
       app
-      absolute
+      fixed
       dark
+      class="blue lighten-1"
       
     >
 
       <v-list-item class="px-2">
         <v-list-item-avatar>
-          <v-img src="https://64.media.tumblr.com/89bc148ede0b273a79fc3599d1b9da4c/6c89bb77ae2c792e-3f/s1280x1920/142e8810788d75cc26e65d285e2882f63f64c484.jpg"></v-img>
+         <v-icon>person</v-icon>
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title class="text-h6">
-            Menu
-          </v-list-item-title>
+          <v-list-item class="text-h6"
+            :to="'/login'"
+            @click="drawer = !drawer">
+            Login
+          </v-list-item>
 
-          <v-list-item-subtitle>
+          <!-- <v-list-item-subtitle>
             My BooketList
-          </v-list-item-subtitle>
+          </v-list-item-subtitle> -->
         </v-list-item-content>
       </v-list-item>
 
@@ -44,12 +47,15 @@
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
-          <v-divider></v-divider>
+
+          
+         
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app>
+    <v-app-bar app
+    class="blue lighten-1">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Application</v-toolbar-title>
@@ -65,9 +71,9 @@
   export default {
     data() {
       return {
-        drawer: true ,
+        drawer: null ,
         items: [
-          { title: 'Dashboard', icon: 'mdi-ghost', to: '/' },
+          { title: 'My appointments', icon: 'home', to: '/appointments' },
           { title: 'Book Preview', icon: 'mdi-book-open-page-variant-outline', to: 'book-preview' },
           { title: 'List', icon: 'mdi-bookshelf', to: 'list' }
         ],
