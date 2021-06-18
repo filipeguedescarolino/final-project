@@ -1,4 +1,5 @@
 <template>
+
   <v-form id="app"
     ref="form"
     v-model="valid"
@@ -7,51 +8,7 @@
       margin: 0 30px;
       border-top: 0px;">
     
-    <!-- Phone field -->
-    <v-text-field
-      v-model.number="phone"
-      type="number"
-      :counter="9"
-      :rules="phoneRules"
-      label="phone">
-    </v-text-field>
-
-    <!-- zipCode field -->
-    <v-text-field
-      v-model.number="zipCode"
-      type="number"
-      :counter="10"
-      :rules="zipCodeRules"
-      label="zipCode">
-    </v-text-field>
-    <!-- SNS field -->
-    <v-text-field
-      v-model.number="sns"
-      type="number"
-      :counter="20"
-      :rules="snsRules"
-      label="sns">
-    </v-text-field>
-    <!-- NIF field -->
-    <v-text-field
-      v-model.number="nif"
-      type="number"
-      :counter="20"
-      :rules="nifRules"
-      label="nif">
-    </v-text-field>
-
-    <!-- mobilePhone field -->
-    <v-text-field
-      v-model.number="mobilePhone"
-      type="number"
-      :counter="9"
-      :rules="mobilePhoneRules"
-      label="mobilephone">
-    </v-text-field>
-
-
-    <!-- Field Name -->
+    <!-- field name -->
     <v-text-field
       v-model="name"
       :counter="10"
@@ -60,24 +17,7 @@
       required>
 
     </v-text-field>
-
-    <!-- Field Address -->
-    <v-text-field
-      v-model="address"
-      :counter="200"
-      :rules="addressRules"
-      label="address"
-      required>
-
-    </v-text-field>
-    <!-- Field email -->
-    <v-text-field
-      v-model="email"
-      :rules="emailRules"
-      label="E-mail"
-      required>
-
-    </v-text-field>
+    
     <!-- field Gender -->
     <v-select
       v-model="select"
@@ -87,14 +27,104 @@
       required
     ></v-select>
 
+    <!-- Date -->
+    <v-text-field
+      v-model="birthDate"
+      :rules="birthDateRules"
+      type="date"
+      label="birthDate"
+      required>
+
+    </v-text-field>
+
+    <!-- Field Address -->
+    <v-text-field
+      v-model="address"
+      :counter="200"
+      :rules="addressRules"
+      label="Address"
+      required>
+
+    </v-text-field>
+
+    <!-- zipCode field -->
+    <v-text-field
+      v-model.number="zipCode"
+      type="number"
+      :counter="10"
+      :rules="zipCodeRules"
+      label="zipCode">
+
+    </v-text-field>
+
+    <!-- Field email -->
+    <v-text-field
+      v-model="email"
+      :rules="emailRules"
+      label="E-mail"
+      required>
+
+    </v-text-field>
+
+    <!-- mobilePhone field -->
+    <v-text-field
+      v-model.number="mobilePhone"
+      type="number"
+      :counter="9"
+      :rules="mobilePhoneRules"
+      label="mobilephone">
+
+    </v-text-field>
+
+    <!-- Phone field -->
+    <v-text-field
+      v-model.number="phone"
+      type="number"
+      :counter="9"
+      :rules="phoneRules"
+      label="phone">
+    </v-text-field>
+
+
+
+    
+    <!-- SNS field -->
+    <v-text-field
+      v-model.number="sns"
+      type="number"
+      :counter="20"
+      :rules="snsRules"
+      label="sns">
+
+    </v-text-field>
+
+    <!-- NIF field -->
+    <v-text-field
+      v-model.number="nif"
+      type="number"
+      :counter="20"
+      :rules="nifRules"
+      label="nif">
+
+    </v-text-field>
+
+    <!-- field Insurance -->
+    <v-select
+      v-model="selectInsurance"
+      :items="insurance"
+      :rules="[v => !!v || 'Item is required']"
+      label="Select Insurance"
+      required
+    ></v-select>
+
     <!-- Password and Password Conf  -->
     <v-text-field
       v-model="password"
-      :counter="8"
-      
+      :counter="8"      
       type="password"
       label="password"
       required>
+
     </v-text-field>
     <!-- Passwordconf -->
     <v-text-field
@@ -103,24 +133,15 @@
       :counter="8"      
       label="passwordConfirmation"
       required>
-    </v-text-field>
-    <!-- Date -->
-    <v-text-field
-      v-model="date"
-      :rules="dateRules"
-      type="date"
-      label="date"
-      required>
 
     </v-text-field>
 
-
-
+    
 
     <v-checkbox
       v-model="checkbox"
       :rules="[v => !!v || 'You must agree to continue!']"
-      label="Do you agree?"
+      label="All information is correct?"
       required
     ></v-checkbox>
 
@@ -193,6 +214,14 @@
         'Male',
         'Female',
       ],
+
+      selectInsurance: null,
+      insurance: [
+        'None',
+        'Multicare',
+        'Medis',
+        'AdvanceCare'
+      ],
       checkbox: false,
       phone: '',
       phoneRules: [
@@ -232,8 +261,8 @@
       password: '',
       passwordConfirmation: '',
 
-      date: '',
-      dateRules: [
+      birthDate: '',
+      birthDateRules: [
         v => !!v || 'Address is required'
       ]
 
