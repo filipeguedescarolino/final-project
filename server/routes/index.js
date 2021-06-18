@@ -1,10 +1,10 @@
-// const auth = require('../middlewares/auth')
-
+const auth = require('../middlewares/auth')
+const bcrypt = require('bcrypt')
 const patientsRouter = require('./internal/patients')
 const doctorsRouter = require('./internal/doctors')
 // const todosRouter = require('./internal/todos')
 
-// const login = require('./public/login')
+const login = require('./public/login')
 
 module.exports = {
   register(app) {
@@ -12,6 +12,16 @@ module.exports = {
     app.use('/doctors', doctorsRouter)
     // app.use('/todos', auth, todosRouter)
     
-    // app.post('/login', login)
+    app.post('/login', login)
+    app.get('/encrypt', async (req,res) =>{
+      // receber 1 string e converter para hash
+      let result = await bcrypt.hash('filasGay', 10)
+      res.send(
+        {
+          unencrypted: 'filasGay', encrypted: result
+        })
+        // put da hash na pass do client.
+
+    })
   }
 }

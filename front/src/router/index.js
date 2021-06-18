@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Homepage from '../components/Homepage.vue'
+// import Homepage from '../components/Homepage.vue'
 import Home from '../views/Home.vue'
+import Login from '../components/Login.vue'
 
 
 
@@ -10,9 +11,9 @@ Vue.use(VueRouter)
 const routes = [
   {
     // componente carregado
-    path: '/',
-    name: 'Homepage',
-    component: Homepage
+    path: '/login',
+    name: 'login',
+    component: Login
   },
 
   

@@ -98,46 +98,163 @@
                         
                         <v-form>
                           <v-text-field
+                            v-model="name"
+                            :counter="30"
+                            color="blue accent-3"
+                            :rules="nameRules"
                             label="Name"
-                            name="Name"
                             prepend-icon="person"
-                            type="text"
-                            color="blue accent-3">
+                            required>
                           </v-text-field>
                           
+                          <!-- field Gender -->
+                          <v-select
+                            v-model="select"
+                            :items="items"
+                            color="blue accent-3"
+                            :rules="[v => !!v || 'Item is required']"
+                            label="Gender"
+                            prepend-icon="person"
+                            required
+                          ></v-select>
+
+                          <!-- Date -->
                           <v-text-field
-                            label="Email"
-                            name="Email"
+                            v-model="birthDate"
+                            color="blue accent-3"
+                            :rules="birthDateRules"
+                            type="date"
+                            label="birthDate"
+                            prepend-icon="event"
+                            required>
+
+                          </v-text-field>
+
+                          <!-- Field Address -->
+                          <v-text-field
+                            v-model="address"
+                            :counter="200"
+                            color="blue accent-3"
+                            :rules="addressRules"
+                            prepend-icon="home"
+                            label="Address"
+                            required>
+
+                          </v-text-field>
+
+                          <!-- zipCode field -->
+                          <v-text-field
+                            v-model.number="zipCode"
+                            type="number"
+                            :counter="10"
+                            color="blue accent-3"
+                            :rules="zipCodeRules"
+                            prepend-icon="home"
+                            label="zipCode">
+
+                          </v-text-field>
+
+                          <!-- Field email -->
+                          <v-text-field
+                            v-model="email"
+                            color="blue accent-3"
+                            :rules="emailRules"
+                            label="E-mail"
                             prepend-icon="email"
-                            type="text"
-                            color="blue accent-3">
+                            required>
+
                           </v-text-field>
 
+                          <!-- mobilePhone field -->
                           <v-text-field
-                            id="password"
-                            label="Password"
-                            name="password"
-                            prepend-icon="lock"
-                            type="password"
-                            color="blue accent-3">
+                            v-model.number="mobilePhone"
+                            type="number"
+                            :counter="9"
+                            color="blue accent-3"
+                            prepend-icon="phone"
+                            :rules="mobilePhoneRules"
+                            label="mobilephone">
+
                           </v-text-field>
 
+                          <!-- Phone field -->
                           <v-text-field
-                            id="password"
-                            label="Password Confirmation"
-                            name="password"
-                            prepend-icon="lock"
+                            v-model.number="phone"
+                            type="number"
+                            :counter="9"
+                            color="blue accent-3"
+                            prepend-icon="phone"
+                            :rules="phoneRules"
+                            label="phone">
+                          </v-text-field>
+
+
+
+                          
+                          <!-- SNS field -->
+                          <v-text-field
+                            v-model.number="sns"
+                            type="number"
+                            :counter="20"
+                            color="blue accent-3"
+                            :rules="snsRules"
+                            prepend-icon="person"
+                            label="sns">
+
+                          </v-text-field>
+
+                          <!-- NIF field -->
+                          <v-text-field
+                            v-model.number="nif"
+                            type="number"
+                            :counter="20"
+                            color="blue accent-3"
+                            :rules="nifRules"
+                            prepend-icon="person"
+                            label="nif">
+
+                          </v-text-field>
+
+                          <!-- field Insurance -->
+                          <v-select
+                            v-model="selectInsurance"
+                            :items="insurance"
+                            color="blue accent-3"
+                            :rules="[v => !!v || 'Item is required']"
+                            label="Select Insurance"
+                            prepend-icon="book"
+                            required
+                          ></v-select>
+
+                          <!-- Password and Password Conf  -->
+                          <v-text-field
+                            v-model="password"
+                            :counter="8"      
                             type="password"
-                            color="blue accent-3">
+                            label="password"
+                            prepend-icon="lock"
+                            required>
+
+                          </v-text-field>
+                          <!-- Passwordconf -->
+                          <v-text-field
+                            v-model="passwordConfirmation"
+                            name= "password"
+                            type="password"
+                            :counter="8"      
+                            label="passwordConfirmation"
+                            prepend-icon="lock"
+                            required>
+
                           </v-text-field>
                         </v-form>
                       </v-card-text>
 
                       <div class="text-center mt-n5 mb-3">
                         <v-btn rounded color="blue accent-3" 
-                          @click="registrationForm" dark>
+                          @click="registerClient" dark>
 
-                          Finish Registration
+                         Complete Registration
                         </v-btn>
                       </div>
                     </v-col>
@@ -153,19 +270,135 @@
 </template>
 
 <script>
-export default {
-  data: () => ({
-    step: 1
-  }),
-  props: {
-    source: String
-  },
 
-  methods: {
-    registrationForm() {
+  import axios from 'axios';
+
+  export default {
+
+    props: {
+      source: String
+    },
+    data () {
+      return {
       
-      this.step = 1
-    }
-  }
-};
+        valid: true,
+        name: '',
+        nameRules: [
+          v => !!v || 'Name is required',
+          v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+        ],
+        email: '',
+        emailRules: [
+          v => !!v || 'E-mail is required',
+          v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        ],
+        select: null,
+        items: [
+          'Male',
+          'Female',
+        ],
+
+        selectInsurance: null,
+        insurance: [
+          'None',
+          'Multicare',
+          'Medis',
+          'AdvanceCare'
+        ],
+        checkbox: false,
+        phone: '',
+        phoneRules: [
+          
+          v => Number.isInteger(Number(v)) || "The value must be an integer number"
+        ],
+
+        mobilePhone: '',
+        mobilePhoneRules: [
+          v => !!v || 'mobilePhone is required',
+          v => Number.isInteger(Number(v)) || "The value must be an integer number"
+        ],
+
+        zipCode: '',
+        zipCodeRules: [
+          v => !!v || 'zipCode is required',
+          v => Number.isInteger(Number(v)) || "The value must be an integer number"
+        ],
+
+        sns: '',
+        snsRules: [
+          v => !!v || 'SNS is required',
+          v => Number.isInteger(Number(v)) || "The value must be an integer number"
+        ],
+
+        nif: '',
+        nifRules: [
+          v => !!v || 'Nif is required',
+          v => Number.isInteger(Number(v)) || "The value must be an integer number"
+        ],
+
+        address: '',
+        addressRules: [
+          v => !!v || 'Address is required',
+          v => (v && v.length <= 200) || 'Address must be less than 200 characters',
+        ],
+        password: '',
+        passwordRules: [
+            v => !!v || 'password is required',
+        ],
+        passwordConfirmation: '',
+        passwordConfirmationRules: [
+            v => !!v || 'passwordConfirmation is required',
+        ],
+
+        birthDate: '',
+        birthDateRules: [
+          v => !!v || 'Address is required'
+        ],
+        step: 1
+
+      }
+    },
+
+    methods: {
+
+      // get() {
+      //   axios.get('http://localhost:3000/patients?page=1&limit=5').then((response) => {
+      //     console.log(response)
+      //   })
+      // },
+
+      registerClient() {
+        if (this.password != this.passwordConfirmation) {
+          alert('password is not equal')
+          return
+        }
+
+        let patient = {
+          "name": this.name,
+          "gender": this.select,
+          "birthdate": this.birthDate,
+          "address": this.address,
+          "zip_code": this.zipCode,
+          "email": this.email,
+          "mobile_phone": this.mobilePhone,
+          "phone": this.phone,
+          "sns": this.sns,
+          "nif": this.nif,
+          "password": this.password
+        }
+
+        console.log(patient)
+        axios.post('http://localhost:3000/patients', patient).then(response =>  console.log(response.data.id))      
+        .catch(error => {
+          this.errorMessage = error.message
+          console.error("There was an error!", error);    
+        });
+    
+      }
+
+    },
+
+    
+  } 
+
 </script>

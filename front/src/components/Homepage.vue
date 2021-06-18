@@ -259,8 +259,13 @@
         v => (v && v.length <= 200) || 'Address must be less than 200 characters',
       ],
       password: '',
+      passwordRules: [
+         v => !!v || 'password is required',
+      ],
       passwordConfirmation: '',
-
+      passwordConfirmationRules: [
+         v => !!v || 'passwordConfirmation is required',
+      ],
       birthDate: '',
       birthDateRules: [
         v => !!v || 'Address is required'
