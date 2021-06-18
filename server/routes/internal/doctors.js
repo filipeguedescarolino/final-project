@@ -9,13 +9,13 @@ router.get('/', (req, res) => {
   const _limit = +limit || 20
   const _page = +page || 1
 
-  db.query('SELECT COUNT(doctor_id) FROM doctors', (error, countResults, _) => {
+  db.query('SELECT COUNT(id) FROM doctors', (error, countResults, _) => {
     if (error) {
       throw error
     }
 
     const offset = (_page - 1) * _limit
-    const total = countResults[0]['COUNT(doctor_id)']
+    const total = countResults[0]['COUNT(id)']
     const pageCount = Math.ceil(total / _limit)
 
     db.query('SELECT * FROM doctors LIMIT ?, ?', [offset, _limit], (error, results, _) => {
@@ -42,7 +42,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query(`SELECT * FROM doctors WHERE doctor_id = ${id}`, (error, results) => {
+  db.query(`SELECT * FROM doctors WHERE id = ${id}`, (error, results) => {
     if (error) {
       throw error
     }
@@ -79,7 +79,7 @@ router.post('/', (req, res) => {
 
       const { insertId } = results
 
-      db.query('SELECT * FROM doctors WHERE doctor_id = ? LIMIT 1', [insertId], (error, results, _) => {
+      db.query('SELECT * FROM doctors WHERE id = ? LIMIT 1', [insertId], (error, results, _) => {
         if (error) {
           throw error
         }
@@ -103,12 +103,12 @@ router.put('/:id', (req, res) => {
   validate(status, {
     status: 'required',
   }).then((value) => {
-    db.query('UPDATE doctors SET ? WHERE doctor_id = ?', [value, id], (error, results, _) => {
+    db.query('UPDATE doctors SET ? WHERE id = ?', [value, id], (error, results, _) => {
       if (error) {
         throw error
       }
 
-      db.query('SELECT * FROM doctors WHERE doctor_id = ? LIMIT 1', [id], (error, results, _) => {
+      db.query('SELECT * FROM doctors WHERE id = ? LIMIT 1', [id], (error, results, _) => {
         if (error) {
           throw error
         }
@@ -148,14 +148,14 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query('SELECT * FROM doctors WHERE doctor_id = ?', [id], (error, results, _) => {
+  db.query('SELECT * FROM doctors WHERE id = ?', [id], (error, results, _) => {
     if (error) {
       throw error
     }
     console.log(results)
     const [doctors] = results
 
-    db.query('DELETE FROM doctors WHERE doctor_id = ?', [id], (error, _, __) => {
+    db.query('DELETE FROM doctors WHERE id = ?', [id], (error, _, __) => {
       if (error) {
         throw error
       }

@@ -17,10 +17,10 @@
     </v-avatar> <span style="margin-left: 10px;" v-if="authenticated"> {{patient.name}}  </span></v-app-bar-nav-icon>
       
     <div style="display: flex; align-items: center; justify-content: space-around;">    
-      <v-toolbar-title style="margin-right: 300px; margin-left: 150px;">Who are we</v-toolbar-title>
-      <v-toolbar-title style="margin-right: 300px;">What we do</v-toolbar-title>
-      <v-toolbar-title style="margin-right: 300px;">Our Team</v-toolbar-title>
-      <v-toolbar-title style="margin-right: 300px;">Appointment</v-toolbar-title>
+      <v-toolbar-title style="margin-right: 300px; margin-left: 150px;"><router-link to="/us">About us</router-link></v-toolbar-title>
+      <v-toolbar-title style="margin-right: 300px;"><router-link to="/tasks">What we do</router-link></v-toolbar-title>
+      <v-toolbar-title style="margin-right: 300px;"><router-link to="/team">Our team</router-link></v-toolbar-title>
+      <v-toolbar-title style="margin-right: 300px;"><router-link to="/schedule">Make an appointment</router-link></v-toolbar-title>
     </div>
     </v-app-bar>
 
@@ -79,9 +79,9 @@
 <script>
   export default {
     data: () => ({
-      drawer: true,
+      drawer: false,
       group: null,
-      authenticated: true,
+      authenticated: false,
       patient: {
         "name": "Filipe" 
       }
