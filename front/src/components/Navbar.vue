@@ -5,7 +5,7 @@
     width="2000"
   >
     <v-app-bar
-      color="deep-purple"
+      class="blue accent-3"
       dark
     >
       <v-app-bar-nav-icon @click="drawer = true"><v-avatar color="indigo">
@@ -16,9 +16,9 @@
       
     </v-avatar> <span style="margin-left: 10px;" v-if="authenticated"> {{patient.name}}  </span></v-app-bar-nav-icon>
       
-    <div style="display: flex; align-items: center; justify-content: space-around;">    
-      <v-toolbar-title style="margin-right: 300px; margin-left: 150px;"><router-link to="/us">About us</router-link></v-toolbar-title>
-      <v-toolbar-title style="margin-right: 300px;"><router-link to="/tasks">What we do</router-link></v-toolbar-title>
+    <div style="display: flex;  align-items: center; justify-content: space-around;" class="fill-height">    
+      <v-toolbar-title style="margin-right: 300px; margin-left: 150px; color: white;"><router-link to="/us">About us</router-link></v-toolbar-title>
+      <v-toolbar-title style="margin-right: 300px;" ><router-link to="/tasks">What we do</router-link></v-toolbar-title>
       <v-toolbar-title style="margin-right: 300px;"><router-link to="/patients">Our team</router-link></v-toolbar-title>
       <v-toolbar-title style="margin-right: 300px;"><router-link to="/schedule">Make an appointment</router-link></v-toolbar-title>
     </div>

@@ -1,9 +1,24 @@
-import Vue from 'vue'
-import Vuetify from 'vuetify/lib/framework'
+import '@fortawesome/fontawesome-free/css/all.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
+import Vue from 'vue';
+import Vuetify from 'vuetify/lib';
 
-Vue.use(Vuetify)
+import colors from 'vuetify/lib/util/colors'
+Vue.use(Vuetify);
 
-const opts = {}
-
-export default new Vuetify(opts)
+export default new Vuetify({
+    icons: {
+        iconfont: 'md' || 'fa' 
+      },
+      theme: {
+        themes: {
+            light: {
+                background: colors.grey.lighten2, // Not automatically applied
+              },
+          dark: {
+            background: colors.shades.white, // If not using lighten/darken, use base to return hex
+          },
+        },
+      },
+});

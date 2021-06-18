@@ -24,6 +24,8 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2",
+    "material-design-icons-iconfont": "^5.0.1",
     "vuetify-loader": "^1.7.2",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
