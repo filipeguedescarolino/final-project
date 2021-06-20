@@ -20,9 +20,11 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     data () {
       return {
+        specialization: '',
         headers: [
           {
             text: 'Specialization',
@@ -86,5 +88,21 @@
         ],
       }
     },
+
+    methods: {
+        getPricesAndSpecializations () {
+            axios.get('http://localhost:3000/appointmentType').then((response) => {
+                console.log(response)
+                this.specialization = response.data.data
+
+                
+            })
+
+        }
+    },
+
+    created() {
+        this.getPricesAndSpecializations()
+    }
   }
 </script>
