@@ -14,14 +14,7 @@
       nextIcon: 'mdi-plus'
     }"
   >
-    <template v-slot:price.Price="{ item }">
-      <v-chip
-        color="blue darken-1"
-        dark
-      >
-        {{ item.calories }}
-      </v-chip>
-    </template>
+    
   
   </v-data-table>
 </template>
