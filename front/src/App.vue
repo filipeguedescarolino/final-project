@@ -59,23 +59,28 @@
       <v-app-bar-nav-icon @click="drawer = !drawer" ></v-app-bar-nav-icon>
 
       <v-toolbar-title  style="margin-left: 140px;" >
-        <v-list-item  class="text-h6 red--text  text--lighten-5" :to="'/about'"> 
-          About us
+        
+        <v-list-item   :to="'/about'"> 
+          <span class=" white--text text--darken-2">  About us </span>
+        </v-list-item>
+        
+      </v-toolbar-title>
+      
+      <v-toolbar-title   style="margin-left: 140px;">
+        <v-list-item  :to="'/specialists'"> 
+          <span class=" white--text text--darken-2">  Our specialists </span> 
         </v-list-item>
       </v-toolbar-title>
-      <v-toolbar-title  class="grey--text  text--lighten-5" style="margin-left: 140px;">
-        <v-list-item class="grey--text  text--lighten-5" :to="'/specialists'"> 
-          Our specialists
-        </v-list-item>
-      </v-toolbar-title>
+
       <v-toolbar-title  style="margin-left: 140px;" :to="'/appointment'">
-        <v-list-item class="grey--text  text--lighten-5" :to="'/about'"> 
-          Appointment
+        <v-list-item  :to="'/about'"> 
+          <span class=" white--text text--darken-2">  Appointment </span>
         </v-list-item>
       </v-toolbar-title>
-      <v-toolbar-title  style="margin-left: 140px;" :to="'/prices'">
-        <v-list-item class="grey--text  text--lighten-5" :to="'/about'"> 
-          Prices
+
+      <v-toolbar-title  style="margin-left: 140px;" >
+        <v-list-item  :to="'/prices'"> 
+          <span class=" white--text text--darken-2">  Prices </span>
         </v-list-item>
       </v-toolbar-title>
     </v-app-bar>

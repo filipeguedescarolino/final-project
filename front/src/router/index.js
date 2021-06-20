@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../components/Login.vue'
 import medics from '../components/medics.vue'
+import Prices from  '../components/Prices.vue'
 
 
 
@@ -15,6 +16,13 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+
+  {
+    // componente carregado
+    path: '/prices',
+    name: 'prices',
+    component: Prices
   },
 
   

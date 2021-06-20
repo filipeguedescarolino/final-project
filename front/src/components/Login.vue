@@ -10,7 +10,7 @@
                   <v-row>
                     <v-col cols="12" md="8">
                       <v-card-text class="mt-6">
-                        <h1  class="text-center display-2 blue--text text--darken-1"> 
+                        <h1  class="text-center display-2 blue--text text--lighten-1"> 
                           Medical Clinic Rui Carolino
                         </h1>
 
@@ -45,13 +45,13 @@
                       </v-card-text>
 
                       <div class="text-center mt-3 mb-2">
-                        <v-btn rounded color="blue accent-3" dark>
+                        <v-btn rounded color="blue lighten-1" dark>
                           Login
                         </v-btn>
                       </div>
                     </v-col>
 
-                    <v-col cols="12" md="4" class="blue lighten-4">
+                    <v-col cols="12" md="4"  class="blue lighten-1">
                       <v-card-text class="white--text mt-12">
                         <h1 class="text-center display-1">
                           Hello, Friend!
@@ -73,7 +73,7 @@
 
                 <v-window-item :value="2">
                   <v-row class="fill-height">
-                    <v-col cols="12" md="4" class="blue accent-3">
+                    <v-col cols="12" md="4" class="blue lighten-1">
                       <v-card-text class="white--text mt-12" 
                         style="margin-top: 50px">
                         <h1 class="text-center display-1 ">
@@ -92,7 +92,7 @@
 
                     <v-col cols="12" md="8">
                       <v-card-text class="mt-6">
-                        <h1 class="text-center display-2 blue--text text--accent-3">
+                        <h1 class="text-center display-1 blue--text text--lighten-1">
                           Create Account
                         </h1>
                         
