@@ -4,6 +4,7 @@ const patientsRouter = require('./internal/patients')
 const doctorsRouter = require('./internal/doctors')
 const specializationsRouter = require('./internal/specializations')
 const appointmentType = require('./internal/appointmentType')
+const insuranceRouter = require('./internal/insurance')
 // const todosRouter = require('./internal/todos')
 
 const login = require('./public/login')
@@ -14,6 +15,8 @@ module.exports = {
     app.use('/doctors', doctorsRouter)
     app.use('/specializations', specializationsRouter)
     app.use('/appointmentType', appointmentType)
+    app.use('/insurance', insuranceRouter)
+
     // app.use('/todos', auth, todosRouter)
     
     app.post('/login', login)
