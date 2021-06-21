@@ -12,14 +12,14 @@
 
       <v-list-item class="px-2">
         <v-list-item-avatar>
-         <v-icon>person</v-icon>
+         <v-icon>fas fa-lock</v-icon>
         </v-list-item-avatar>
 
         <v-list-item-content>
           <v-list-item class="text-h6 grey--text  text--lighten-5"
             :to="'/login'"
             @click="drawer = !drawer">
-            Login
+            Login / Name
           </v-list-item>
 
           <!-- <v-list-item-subtitle>
@@ -67,18 +67,18 @@
       </v-toolbar-title>
       
       <v-toolbar-title   style="margin-left: 140px;">
-        <v-list-item  :to="'/specialists'"> 
+        <v-list-item  :to="'/profile'"> 
           <span class=" white--text text--darken-2">  Our specialists </span> 
         </v-list-item>
       </v-toolbar-title>
 
-      <v-toolbar-title  style="margin-left: 140px;" :to="'/appointment'">
-        <v-list-item  :to="'/about'"> 
-          <span class=" white--text text--darken-2">  Appointment </span>
+      <v-toolbar-title  style="margin-left: 140px;">
+        <v-list-item  :to="'/partnerships'"> 
+          <span class=" white--text text--darken-2">  Partnerships </span>
         </v-list-item>
       </v-toolbar-title>
 
-      <v-toolbar-title  style="margin-left: 140px;" >
+      <v-toolbar-title  style="margin-left: 140px;">
         <v-list-item  :to="'/prices'"> 
           <span class=" white--text text--darken-2">  Prices </span>
         </v-list-item>
@@ -97,9 +97,9 @@
       return {
         drawer: null ,
         items: [
-          { title: 'My appointments', icon: 'home', to: '/appointments' },
-          { title: 'Book Preview', icon: 'mdi-book-open-page-variant-outline', to: 'book-preview' },
-          { title: 'List', icon: 'mdi-bookshelf', to: 'list' }
+          { title: 'Personal Details', icon: 'fas fa-search', to: '/appointments' },
+          { title: 'History', icon: 'fas fa-list', to: 'book-preview' },
+          { title: 'Appointment', icon: 'fas fa-edit', to: 'appointment' }
         ],
         selectedItem: ''
         }

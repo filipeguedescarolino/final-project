@@ -5,6 +5,9 @@ import Home from '../views/Home.vue'
 import Login from '../components/Login.vue'
 import medics from '../components/medics.vue'
 import Prices from  '../components/Prices.vue'
+import Profile from '../components/Profile.vue'
+import About from '../components/About.vue'
+import MakeAppointment from '../components/MakeAppointment.vue'
 
 
 
@@ -20,11 +23,29 @@ const routes = [
 
   {
     // componente carregado
+    path: '/appointment',
+    name: 'appointment',
+    component: MakeAppointment
+  },
+
+  {
+    // componente carregado
+    path: '/Profile',
+    name: 'profile',
+    component: Profile
+  },
+
+  {
+    // componente carregado
     path: '/prices',
     name: 'prices',
     component: Prices
   },
-
+  {
+    path: '/about',
+    name: 'about',
+    component: About
+  },
   
   {
     path: '/home',

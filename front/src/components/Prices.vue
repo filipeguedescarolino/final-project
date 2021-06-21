@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-row align="center"
+    <v-row 
       class="d-flex">
       <v-col
         class="justify-center align-items-center"      
