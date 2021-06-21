@@ -97,7 +97,7 @@
       return {
         drawer: null ,
         items: [
-          { title: 'Personal Details', icon: 'fas fa-search', to: '/appointments' },
+          { title: 'Personal Details', icon: 'fas fa-search', to: '/patients/:id' },
           { title: 'History', icon: 'fas fa-list', to: 'book-preview' },
           { title: 'Appointment', icon: 'fas fa-edit', to: 'appointment' }
         ],

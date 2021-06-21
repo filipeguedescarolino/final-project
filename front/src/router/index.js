@@ -8,6 +8,7 @@ import Prices from  '../components/Prices.vue'
 import Profile from '../components/Profile.vue'
 import About from '../components/About.vue'
 import MakeAppointment from '../components/MakeAppointment.vue'
+import Partnerships from '../components/Partnerships.vue'
 
 
 
@@ -33,6 +34,13 @@ const routes = [
     path: '/Profile',
     name: 'profile',
     component: Profile
+  },
+
+  {
+    // componente carregado
+    path: '/partnerships',
+    name: 'Partnerships',
+    component: Partnerships
   },
 
   {

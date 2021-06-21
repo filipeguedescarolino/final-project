@@ -2,16 +2,17 @@
     
     <div>
         <v-row
-            :align="align"
+            
             no-gutters
             style="height: 150px;"
         >
         
             <v-col
-            v-for="n in 3"
-            :key="n"
+            v-for= "(profile,index) in profiles" :key="index"
+            
             >
                 <v-card max-width="300" class="mx-auto my-12">
+                    
 
                     <v-img width="400" height="300"
                         :src=profile.image />
@@ -46,6 +47,7 @@
 
                     </v-card-text>
                     <v-divider> </v-divider>
+               
                 </v-card>
             </v-col>
         </v-row> 
@@ -60,47 +62,31 @@ export default {
     data () {
         return {
 
-            profile: {
+            profiles: [
+                {
                 image: "https://www.csaudeboavista.com/wp-content/uploads/2016/05/Dr.-Rui-Carolino-Pediatria-CSB.jpg",
                 name: "Rui Carolino",
                 rating: 5,
                 specialty: "Pediatrics",
                 address: "Porto",
-                avaliability: [
-                    {
-                        "id": 1,
-                        "time": "8:30"
-                    },
-
-                    {
-                        "id": 2,
-                        "time": "9:00"
-                    },
-
-                    {
-                        "id": 3,
-                        "time": "9:30"
-                    },
-
-                    {
-                        "id": 4,
-                        "time": "10:00"
-                    },
-
-                    {
-                        "id": 5,
-                        "time": "10:30"
-                    },
-                ]
-            }
-
-            
-            
-            
-
-
-
+                },
+                {
+                image: "https://www.hsmporto.pt/wp-content/uploads/2015/12/placeholder_homem.png",
+                name: "Cassilda Carolino",
+                rating: 5,
+                specialty: "Fisiatrics",
+                address: "Porto",
+                },
+                {
+                image: "https://www.hsmporto.pt/wp-content/uploads/2015/12/placeholder_homem.png",
+                name: "Vitor Carolino",
+                rating: 5,
+                specialty: "Neurocirurgery",
+                address: "Porto",
+                },
+            ]
         }
     }
+    
 }
 </script>

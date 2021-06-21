@@ -14,7 +14,6 @@ module.exports = {
     app.use('/patients', patientsRouter)
     app.use('/doctors', doctorsRouter)
     app.use('/specializations', specializationsRouter)
-    
     app.use('/insurance', insuranceRouter)
 
     // app.use('/todos', auth, todosRouter)
@@ -28,7 +27,6 @@ module.exports = {
           unencrypted: 'teste', encrypted: result
         })
         // put da hash na pass do client.
-
     })
   }
 }

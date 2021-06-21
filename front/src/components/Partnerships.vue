@@ -11,7 +11,7 @@
     </v-card-title>
     <v-data-table
       :headers="headers"
-      :items="prices"
+      :items="Insurances"
       :search="search"
       :items-per-page="5"
       item-key="name"
@@ -35,28 +35,40 @@
         search: '',
         headers: [
           {
-            text: 'Specialization',
+            text: 'Insurance',
             align: 'start',
             sortable: false,
             value: 'name',
           },
-          { text: 'Base Price', value: 'Price' },
+          { text: 'Covered', value: 'Reimbursed_Value' },
          
         ],
-        prices: [
-            {
-                name: 'Pediatria',
-                Price: '45€',
-            },  
-            {
-                name: 'Fisioterapia',
-                Price: '55€',
-            },
-            {
-                name: 'Oncologia',
-                Price: '60€',
-            },   
+        Insurances: [
+          {
+            name: 'Médis',
+            Reimbursed_Value: '30%',
+          },  
+           {
+            name: 'Multicare',
+            Reimbursed_Value: '35%',
+          },  
+           {
+            name: 'AdvanceCare',
+            Reimbursed_Value: '40%',
+          },  
+          {
+            name: 'Allianz',
+            Reimbursed_Value: '25%',
+          },
+          {
+            name: 'Generali',
+            Reimbursed_Value: '45%',
+          },
            
+          {
+            name: 'Montepio',
+            Reimbursed_Value: '45%',
+          },
         ],
       }
     },
