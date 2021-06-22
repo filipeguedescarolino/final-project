@@ -56,12 +56,12 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  const patient = req.body
+  const doctors = req.body
 
-  validate(patient, {
+  validate(doctors, {
     certificate_number: "required",
     name: "required",
-    id_specialization: "required",
+    
     birthdate: "required",
     address: "required",
     zip_code: "required",

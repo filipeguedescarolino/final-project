@@ -15,7 +15,7 @@
                     
 
                     <v-img width="400" height="300"
-                        :src=profile.image />
+                        :src=profile.image_src />
                     <v-card-title> 
                         {{profile.name}} 
                     </v-card-title>
@@ -41,8 +41,8 @@
                             {{profile.specialty}}
                         </div>
 
-                        <div>
-                            {{profile.address}}
+                        <div class="my-4 subtitle-1 black--text">
+                            Address: {{profile.address}}
                         </div>
 
                     </v-card-text>
@@ -57,35 +57,36 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name: 'Profile',
     data () {
         return {
 
             profiles: [
-                {
-                image: "https://www.csaudeboavista.com/wp-content/uploads/2016/05/Dr.-Rui-Carolino-Pediatria-CSB.jpg",
-                name: "Rui Carolino",
-                rating: 5,
-                specialty: "Pediatrics",
-                address: "Porto",
-                },
-                {
-                image: "https://www.hsmporto.pt/wp-content/uploads/2015/12/placeholder_homem.png",
-                name: "Cassilda Carolino",
-                rating: 5,
-                specialty: "Fisiatrics",
-                address: "Porto",
-                },
-                {
-                image: "https://www.hsmporto.pt/wp-content/uploads/2015/12/placeholder_homem.png",
-                name: "Vitor Carolino",
-                rating: 5,
-                specialty: "Neurocirurgery",
-                address: "Porto",
-                },
+                
             ]
         }
+    },
+
+    methods: {
+
+        getDoctors () {
+            axios.get('http://localhost:3000/doctors').then((response) => {
+                this.profiles = response.data.data 
+            })
+        },
+
+        getDoctorsPivotSpecializations () {
+            axios.get('http://localhost:3000/doctors').then((response) => {
+                this.profiles = response.data.data 
+            })
+        },
+    
+    },
+
+    async created() {
+        await this.getDoctors()
     }
     
 }
