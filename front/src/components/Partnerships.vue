@@ -1,82 +1,81 @@
 <template>
-  <v-card>
-    <v-card-title>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
-    </v-card-title>
-    <v-data-table
-      :headers="headers"
-      :items="Insurances"
-      :search="search"
-      :items-per-page="5"
-      item-key="name"
-      class="elevation-1 pa-4"
-      :footer-props="{
-        showFirstLastPage: true,
-        firstIcon: 'mdi-arrow-collapse-left',
-        lastIcon: 'mdi-arrow-collapse-right',
-        prevIcon: 'mdi-minus',
-        nextIcon: 'mdi-plus'
-      }"
-    ></v-data-table>
-  </v-card>
+    <v-card>
+        <v-card-title>
+            <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Search"
+                single-line
+                hide-details
+            ></v-text-field>
+        </v-card-title>
+        <v-data-table
+            :headers="headers"
+            :items="insurances"
+            :search="search"
+            :items-per-page="5"
+            item-key="name"
+            class="elevation-1 pa-4"
+            :footer-props="{
+            showFirstLastPage: true,
+            firstIcon: 'mdi-arrow-collapse-left',
+            lastIcon: 'mdi-arrow-collapse-right',
+            prevIcon: 'mdi-minus',
+            nextIcon: 'mdi-plus'
+            }">
+
+            <template v-slot:item="props">
+                <tr>
+                    <td>{{ props.item.description }}</td>
+                    <td>{{ props.item.reimbursed_value }}%</td>
+                </tr>
+            </template>
+        </v-data-table>
+    </v-card>
 </template>
 
 
 <script>
-  export default {
-    data () {
-      return {
-        search: '',
-        headers: [
-          {
-            text: 'Insurance',
-            align: 'start',
-            sortable: false,
-            value: 'name',
-          },
-          { text: 'Covered', value: 'Reimbursed_Value' },
-         
-        ],
-        Insurances: [
-          {
-            name: 'Médis',
-            Reimbursed_Value: '30%',
-          },  
-           {
-            name: 'Multicare',
-            Reimbursed_Value: '35%',
-          },  
-           {
-            name: 'AdvanceCare',
-            Reimbursed_Value: '40%',
-          },  
-          {
-            name: 'Allianz',
-            Reimbursed_Value: '25%',
-          },
-          {
-            name: 'Generali',
-            Reimbursed_Value: '45%',
-          },
-           
-          {
-            name: 'Montepio',
-            Reimbursed_Value: '45%',
-          },
-        ],
-      }
-    },
-  }
+    import axios from 'axios'
+
+    export default {
+        data () {
+            return {
+                insurances: [],
+                search: '',
+                headers: [
+                    {
+                        text: 'Insurance',
+                        align: 'start',
+                        sortable: false,
+                        value: 'name',
+                    },
+                { text: 'Covered', value: 'Reimbursed_Value' },
+
+                ],
+                
+            }
+        },
+
+        methods: {
+
+            getInsurances () {
+                axios.get('http://localhost:3000/insurance').then((response) => {
+                    this.insurances = response.data.data 
+                })
+            },
+
+
+        },
+
+        async created() {
+            await this.getInsurances()
+        }
+    }
 </script>
 
 <style>
 tbody tr:nth-of-type(odd) {
-  background-color: rgba(0, 0, 0, .05);
+background-color: rgba(0, 0, 0, .05);
 }
 </style>
