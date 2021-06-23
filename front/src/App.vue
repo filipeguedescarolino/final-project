@@ -56,9 +56,9 @@
 
     <v-app-bar app
     color="#88BBD6">
-      <v-app-bar-nav-icon @click="drawer = !drawer" ></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="drawer = !drawer" class=" white--text text--darken-2"> </v-app-bar-nav-icon>
 
-      <v-toolbar-title  style="margin-left: 140px;" >
+      <v-toolbar-title   >
         
         <v-list-item   :to="'/about'"> 
           <span class=" white--text text--darken-2">  About us </span>
@@ -66,19 +66,19 @@
         
       </v-toolbar-title>
       
-      <v-toolbar-title   style="margin-left: 140px;">
+      <v-toolbar-title   >
         <v-list-item  :to="'/profile'"> 
-          <span class=" white--text text--darken-2">  Our specialists </span> 
+          <span class=" white--text text--darken-2 border-bottom">  Our specialists </span> 
         </v-list-item>
       </v-toolbar-title>
 
-      <v-toolbar-title  style="margin-left: 140px;">
+      <v-toolbar-title   >
         <v-list-item  :to="'/partnerships'"> 
           <span class=" white--text text--darken-2">  Partnerships </span>
         </v-list-item>
       </v-toolbar-title>
 
-      <v-toolbar-title  style="margin-left: 140px;">
+      <v-toolbar-title   >
         <v-list-item  :to="'/prices'"> 
           <span class=" white--text text--darken-2">  Prices </span>
         </v-list-item>
