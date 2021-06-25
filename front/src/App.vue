@@ -98,7 +98,7 @@
         drawer: null ,
         items: [
           { title: 'Personal Details', icon: 'fas fa-search', to: '/patients/:id' },
-          { title: 'History', icon: 'fas fa-list', to: 'book-preview' },
+          { title: 'History', icon: 'fas fa-list', to: '/appointmentsHistory' },
           { title: 'Appointment', icon: 'fas fa-edit', to: 'appointment' }
         ],
         selectedItem: ''

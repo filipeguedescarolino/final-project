@@ -16,8 +16,8 @@ module.exports = (req, res) => { validate(req.body,
   
         } else {
           bcrypt.compare(value.password, results[0].password).then((match) => {
-        //   console.log(value.password)
-        //   console.log(results[0].password)
+          console.log(value.password)
+          console.log(results[0].password)
             
                 console.log(match)
             //   if (match) {

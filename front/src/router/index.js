@@ -9,6 +9,7 @@ import Profile from '../components/Profile.vue'
 import About from '../components/About.vue'
 import MakeAppointment from '../components/MakeAppointment.vue'
 import Partnerships from '../components/Partnerships.vue'
+import AppointmentsHistory from '../components/AppointmentsHistory.vue'
 
 
 
@@ -20,6 +21,13 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+
+  {
+    // componente carregado
+    path: '/appointmentsHistory',
+    name: 'appointmentsHistory',
+    component: AppointmentsHistory
   },
 
   {

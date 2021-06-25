@@ -6,7 +6,8 @@
     <v-stepper-step
       :complete="e6 > 1"
       step="1">
-    
+      <button @click="getTimeSlots()">Click me </button>
+      <button @click="createAppointment()">Post  </button>
       Select the specialization  
     </v-stepper-step>
 
@@ -106,7 +107,7 @@
       step="3"
       
     >
-      Choose the day and hour of the appointment
+      Choose the day and hour of appointment
     </v-stepper-step>
 
     <v-stepper-content step="3">
@@ -125,6 +126,7 @@
             >
               <v-row>
             <v-date-picker
+              
               class="mb-5"
               v-model="picker"
               year-icon="mdi-calendar-blank"
@@ -133,11 +135,22 @@
             ></v-date-picker>
 
             <v-select
-          
-          :items="items"
-          filled
-          label="Filled style"
-        ></v-select>
+              
+              label='Choose the Hour'
+              v-model='timeSlot'
+              :items='timeSlots'
+              item-value="start_at"
+              item-text='start_at'
+              return-object>
+            
+              <!-- <template slot='selection' slot-scope='{ item }'>
+                {{ item.name }} - {{ item.age }}
+              </template> -->
+
+              <template slot='item' slot-scope='{ item }'>
+                {{ item.start_at }} - {{item.end_at}} 
+              </template>
+            </v-select>
         </v-row>
       </v-col>
 
@@ -167,10 +180,20 @@
         color="grey lighten-3"
         class="mb-12"
         height="200px"
-      ></v-card>
+      >
+      
+        <div class="form">
+          <p v-if="specialization" style="font-weight: bold;"> specialization:  {{specialization.description}}  </p>
+          <p v-if="doctor" style="font-weight: bold;"> Doctor: {{doctor.name}} </p> 
+          <p v-if="picker && timeSlot" style="font-weight: bold;"> Date: {{picker}} at {{timeSlot.start_at}} </p> 
+            
+        </div>
+      </v-card>
       <v-btn
         color="primary"
         @click="e6 = 1"
+        @:click="createAppointment()"
+        
       >
         Continue
       </v-btn>
@@ -183,24 +206,36 @@
 
 
 <script>
+  // import moment from 'moment'
   import axios from 'axios'
   export default {
     data () {
       return {
+        loggedUser: '',
         e6: 1,
         items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
         names:[
-          {id: 1, name: 'Paul', age: 23},
-          {id: 2, name: 'Marcelo', age: 15},
-          {id: 3, name: 'Any', age: 30},
+          {id: 5, name: 'Paul', age: 23},
+          {id: 6, name: 'Marcelo', age: 15},
+          {id: 8, name: 'Any', age: 30},
         ],
         specialization: {},
-        doctor: '',
+        doctor: {},          
         specializations: [],
         doctors: '',
         picker: new Date().toISOString().substr(0, 10),
+        timeSlots: '',
+        timeSlot: ''
       }
     },
+
+    // computed: {
+    //   formatDate() {
+    //     return this.picker
+    //       ? moment(this.picker).format("L")
+    //       : "";
+    //   }
+    // },
 
     methods: {
 
@@ -215,6 +250,49 @@
           console.log(response)
           this.doctors = response.data.data
         })
+      },
+
+      getPatients () {
+        axios.get('http://localhost:3000/patients/7').then((response) => {
+          console.log(response)
+          this.loggedUser = response.data.data
+        })
+      },
+
+      getTimeSlots () {
+        debugger; // eslint-disable-line no-debugger
+        
+    
+        console.log(this.picker)
+        console.log(this.doctor.id)
+        
+
+        axios.get(`http://localhost:3000/timeSlots/${this.picker}/${this.doctor.id}`).then((response) => {
+          console.log(response)
+          this.timeSlots = response.data.data
+        })
+      },
+
+      createAppointment() {
+        let appointmentData = {
+          "id_patient": this.loggedUser.id,
+          "id_doctor": this.doctor.id,
+          "day": this.picker,
+          "hour": this.timeSlot.start_at,
+          "id_insurance": this.loggedUser.id_insurance,
+          "id_specialization": this.specialization.id,
+          "id_slot": this.timeSlot.id,
+          "id_status": 2
+        }
+
+        axios.post('http://localhost:3000/appointments', appointmentData).then(response =>  console.log(response.data.id))
+                alert('Appointment is booked.')      
+                .catch(error => {
+                    this.errorMessage = error.message
+                    console.error("There was an error!", error);    
+                })
+
+        console.log(appointmentData)
       }
 
 
@@ -223,6 +301,7 @@
       async created() {
           await this.getSpecializations()
           this.getDoctors()
+          this.getPatients()
       }
   }
 </script>

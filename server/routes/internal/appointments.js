@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
   const _limit = +limit || 20
   const _page = +page || 1
 
-  db.query('SELECT COUNT(id) FROM time_slots', (error, countResults, _) => {
+  db.query('SELECT COUNT(id) FROM appointments', (error, countResults, _) => {
     if (error) {
       throw error
     }
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
     const total = countResults[0]['COUNT(id)']
     const pageCount = Math.ceil(total / _limit)
 
-    db.query('SELECT * FROM time_slots LIMIT ?, ?', [offset, _limit], (error, results, _) => {
+    db.query('SELECT * FROM appointments LIMIT ?, ?', [offset, _limit], (error, results, _) => {
       if (error) {
         throw error
       }
@@ -42,24 +42,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query(`SELECT * FROM time_slots WHERE id_doctor = ${id}`, (error, results) => {
-    if (error) {
-      throw error
-    }
-
-    res.send({
-      code: 200,
-      meta: null,
-      data: results
-    })
-  })
-})
-
-router.get('/:day/:idDoctor', (req, res) => {
-  const { day, idDoctor  } = req.params
-  
-  
-  db.query(`SELECT * FROM time_slots WHERE day = "${day}" AND id_doctor = ${idDoctor}`, (error, results) => {
+  db.query(`SELECT * FROM appointments WHERE id_patient = ${id}`, (error, results) => {
     if (error) {
       throw error
     }
@@ -73,23 +56,27 @@ router.get('/:day/:idDoctor', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  const time_slots = req.body
+  const appointments = req.body
 
-  validate(time_slots, {
+  validate(appointments, {
+    id_patient: "required",
     id_doctor: "required",
-    start_at: "required",    
-    end_at: "required",
+    
     day: "required",
+    hour: "required",
+    id_insurance: "required",
+    id_specialization: "required",
+    id_slot: "required",
     
   }).then((value) => {
-    db.query('INSERT INTO time_slots SET ?', [value], (error, results, _) => {
+    db.query('INSERT INTO appointments SET ?', [value], (error, results, _) => {
       if (error) {
         throw error
       }
 
       const { insertId } = results
 
-      db.query('SELECT * FROM time_slots WHERE id = ? LIMIT 1', [insertId], (error, results, _) => {
+      db.query('SELECT * FROM appointments WHERE id_patient = ? LIMIT 1', [insertId], (error, results, _) => {
         if (error) {
           throw error
         }
@@ -106,34 +93,34 @@ router.post('/', (req, res) => {
   })
 })
 
-// router.put('/:id', (req, res) => {
-//   const { id } = req.params
-//   const status = req.body
+router.put('/:id', (req, res) => {
+  const { id } = req.params
+  const status = req.body
 
-//   validate(status, {
-//     status: 'required',
-//   }).then((value) => {
-//     db.query('UPDATE time_slots SET ? WHERE id = ?', [value, id], (error, results, _) => {
-//       if (error) {
-//         throw error
-//       }
+  validate(status, {
+    status: 'required',
+  }).then((value) => {
+    db.query('UPDATE appointments SET ? WHERE id = ?', [value, id], (error, results, _) => {
+      if (error) {
+        throw error
+      }
 
-//       db.query('SELECT * FROM time_slots WHERE id = ? LIMIT 1', [id], (error, results, _) => {
-//         if (error) {
-//           throw error
-//         }
+      db.query('SELECT * FROM appointments WHERE id = ? LIMIT 1', [id], (error, results, _) => {
+        if (error) {
+          throw error
+        }
 
-//         res.send({
-//           code: 200,
-//           meta: null,
-//           data: results[0]
-//         })
-//       })
-//     })
-//   }).catch((error) => {
-//     res.status(400).send(error)
-//   })
-// })
+        res.send({
+          code: 200,
+          meta: null,
+          data: results[0]
+        })
+      })
+    })
+  }).catch((error) => {
+    res.status(400).send(error)
+  })
+})
 
 // router.patch('/:id/completed', (req, res) => {
 //   const { id } = req.params
@@ -158,14 +145,14 @@ router.post('/', (req, res) => {
 router.delete('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query('SELECT * FROM time_slots WHERE id = ?', [id], (error, results, _) => {
+  db.query('SELECT * FROM appointments WHERE id = ?', [id], (error, results, _) => {
     if (error) {
       throw error
     }
     console.log(results)
-    const [time_slots] = results
+    const [appointments] = results
 
-    db.query('DELETE FROM time_slots WHERE id = ?', [id], (error, _, __) => {
+    db.query('DELETE FROM appointments WHERE id = ?', [id], (error, _, __) => {
       if (error) {
         throw error
       }
@@ -173,7 +160,7 @@ router.delete('/:id', (req, res) => {
       res.send({
         code: 200,
         meta: null,
-        data: time_slots
+        data: appointments
       })
     })
   })

@@ -31,7 +31,7 @@
             Nulla consequat massa quis enim. Praesent venenatis metus at tortor pulvinar varius. Donec venenatis vulputate lorem. Phasellus accumsan cursus velit. Pellentesque ut neque.
         </p>
 
-        <button @click="getTime(beginHour, endHour)"> GETIT </button>
+        <button @click="registerClient()"> GETIT </button>
     </div>
 </template>
 
@@ -40,12 +40,14 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            doctorId: 6,
-            beginHour: "16:00",
-            day: "2021-10-11",
-            endHour: "19:00",
-            clinicalOfficeId: 1,
-            brackets: '' 
+            doctorId: 5,
+            beginHour: "12:00",
+            day: "2021-07-16",
+            endHour: "17:00",
+            clinicalOfficeId: 2,
+            brackets: '',
+            count: 0,
+            mySchedule: '' 
         }
         
     },
@@ -59,7 +61,7 @@ export default {
       //   })
       // },
         getTime(a,b) {
-            let toInt  = time => ((h,m) => h*2 + m/30)(...time.split(':').map(parseFloat))
+        let toInt  = time => ((h,m) => h*2 + m/30)(...time.split(':').map(parseFloat))
         let toTime = int => [Math.floor(int/2), int%2 ? '30' : '00'].join(':')
         let range  = (from, to) => Array(to-from+1).fill().map((_,i) => from + i)
         let eachHalfHour = (t1, t2) => range(...[t1, t2].map(toInt)).map(toTime);
@@ -92,18 +94,19 @@ export default {
             console.log(this.brackets)
             debugger; // eslint-disable-line no-debugger
             console.log(this.brackets)
-            let mySchedule = {
+            
+                        
+            for( var i = 0;  i < this.brackets.length - 1;  i++ )
+                {
+                    axios.post(`http://localhost:3000/timeSlots`,  
+                        this.mySchedule = {
                             "start_at": this.brackets[i],
-                            "end_at": this.brackets[i+1],
+                            "end_at": this.brackets[i + 1],
                             "id_doctor": this.doctorId,
                             "day": this.day
                         }
-            for( var i = 0;  i < this.brackets.length - 1;  i++ )
-                {
-                    axios.post(`/http://localhost:3000/timeSlots`,  {
-                        mySchedule
                         
-                    })
+                    )
                     .then((response) => {
                         // Takes 4 seconds, 4 more seconds, 4 more seconds, etc
                         // Ideally: Takes 4 seconds, returns in the same ~4 seconds, returns in the same ~4 seconds, etc
