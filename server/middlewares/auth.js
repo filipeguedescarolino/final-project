@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
   try {
     const { id } = jwt.verify(authorization, secret)
 
-    db.query('SELECT * FROM client WHERE id = ?', [id], (error, results) => {
+    db.query('SELECT * FROM users WHERE id = ?', [id], (error, results) => {
       if (error) {
         throw error
       }

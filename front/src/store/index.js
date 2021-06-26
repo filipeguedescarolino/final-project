@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    // data
-    user: {}
+    savedSingleUserConnections: {}
+    
   },
-  mutations: {}
-  // this.user
+  mutations: {
+    saveSingleUserConnections: (state, connections) =>
+       {state.savedSingleUserConnections = connections;}
+  
+  }
+  
   ,
   actions: {
     // chamar  setUser()
