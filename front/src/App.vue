@@ -27,7 +27,8 @@
           </v-list-item-subtitle> -->
         </v-list-item-content>
       </v-list-item>
-
+        <!-- <button @click="store"> connect to $store.state.counter </button>
+        <h1> {{$store.state.counter}} </h1> -->
       <v-divider></v-divider>
 
       <v-list
@@ -103,7 +104,19 @@
         ],
         selectedItem: ''
         }
-      } 
+      },
+
+      computed: {
+        // counter() {
+        //   return this.$store.state.counter++;
+        // }
+      },
+      
+      methods: {
+        // addOne() {
+        //   this.$store.state.counter++
+        // }
+      }
     
     }
 </script>

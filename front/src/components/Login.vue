@@ -27,6 +27,7 @@
 
                         <v-form>
                           <v-text-field
+                            v-model="logEmail"
                             label="Email"
                             name="Email"
                             prepend-icon="email"
@@ -35,6 +36,7 @@
                           </v-text-field>
                           
                           <v-text-field
+                            v-model="logPassword"
                             id="password"
                             label="Password"
                             name="password"
@@ -46,7 +48,7 @@
                       </v-card-text>
 
                       <div class="text-center mt-3 mb-2">
-                        <v-btn rounded color="blue lighten-1" dark>
+                        <v-btn rounded color="blue lighten-1" dark @click="loginClient()">
                           Login
                         </v-btn>
                       </div>
@@ -145,8 +147,8 @@
 
                           <!-- zipCode field -->
                           <v-text-field
-                            v-model.number="zipCode"
-                            type="number"
+                            v-model="zipCode"
+                            
                             :counter="10"
                             color="blue accent-3"
                             :rules="zipCodeRules"
@@ -168,8 +170,8 @@
 
                           <!-- mobilePhone field -->
                           <v-text-field
-                            v-model.number="mobilePhone"
-                            type="number"
+                            v-model="mobilePhone"
+                            
                             :counter="9"
                             color="blue accent-3"
                             prepend-icon="phone"
@@ -180,12 +182,12 @@
 
                           <!-- Phone field -->
                           <v-text-field
-                            v-model.number="phone"
-                            type="number"
+                            v-model="phone"
+                            
                             :counter="9"
                             color="blue accent-3"
                             prepend-icon="phone"
-                            :rules="phoneRules"
+                            
                             label="phone">
                           </v-text-field>
 
@@ -194,8 +196,8 @@
                           
                           <!-- SNS field -->
                           <v-text-field
-                            v-model.number="sns"
-                            type="number"
+                            v-model="sns"
+                            
                             :counter="20"
                             color="blue accent-3"
                             :rules="snsRules"
@@ -206,8 +208,8 @@
 
                           <!-- NIF field -->
                           <v-text-field
-                            v-model.number="nif"
-                            type="number"
+                            v-model="nif"
+                            
                             :counter="20"
                             color="blue accent-3"
                             :rules="nifRules"
@@ -219,7 +221,9 @@
                           <!-- field Insurance -->
                           <v-select
                             v-model="selectInsurance"
-                            :items="insurance"
+                            :items="insurances"
+                            item-value='id'
+                            item-text='description'
                             color="blue accent-3"
                             :rules="[v => !!v || 'Item is required']"
                             label="Select Insurance"
@@ -281,7 +285,8 @@
     },
     data () {
       return {
-      
+        logPassword: '',
+        logEmail: '',
         valid: true,
         name: '',
         nameRules: [
@@ -300,60 +305,56 @@
         ],
 
         selectInsurance: null,
-        insurance: [
-          'None',
-          'Multicare',
-          'Medis',
-          'AdvanceCare'
+        insurances: [
+          
         ],
         checkbox: false,
         phone: '',
-        phoneRules: [
-          
-          v => Number.isInteger(Number(v)) || "The value must be an integer number"
-        ],
+        
 
         mobilePhone: '',
         mobilePhoneRules: [
           v => !!v || 'mobilePhone is required',
-          v => Number.isInteger(Number(v)) || "The value must be an integer number"
+          v => (v && v.length <= 13) || 'Name must be less than 13 characters'
         ],
 
         zipCode: '',
         zipCodeRules: [
           v => !!v || 'zipCode is required',
-          v => Number.isInteger(Number(v)) || "The value must be an integer number"
+          v => (v && v.length <= 10) || 'Name must be less than 10 characters'
         ],
 
         sns: '',
         snsRules: [
           v => !!v || 'SNS is required',
-          v => Number.isInteger(Number(v)) || "The value must be an integer number"
+          v => (v && v.length <= 11) || 'Name must be less than 11 characters'
         ],
 
         nif: '',
         nifRules: [
           v => !!v || 'Nif is required',
-          v => Number.isInteger(Number(v)) || "The value must be an integer number"
+          v => (v && v.length <= 9) || 'Name must be equal to 9 characters'
         ],
 
         address: '',
         addressRules: [
           v => !!v || 'Address is required',
-          v => (v && v.length <= 200) || 'Address must be less than 200 characters',
+          v => (v && v.length <= 250) || 'Address must be less than 200 characters',
         ],
         password: '',
         passwordRules: [
             v => !!v || 'password is required',
+            v => (v && v.length <= 15) || 'Address must be less than 15 characters',
         ],
         passwordConfirmation: '',
         passwordConfirmationRules: [
             v => !!v || 'passwordConfirmation is required',
+            v => (v && v.length <= 15) || 'Address must be less than 15 characters',
         ],
 
         birthDate: '',
         birthDateRules: [
-          v => !!v || 'Address is required'
+          v => !!v || 'birthDate is required'
         ],
         step: 1
 
@@ -389,15 +390,42 @@
         }
 
         console.log(patient)
-        axios.post('http://localhost:3000/patients', patient).then(response =>  console.log(response.data.id))      
-        .catch(error => {
-          this.errorMessage = error.message
-          console.error("There was an error!", error);    
-        });
+        
+        axios.post('http://localhost:3000/patients', patient).then(response =>  console.log(response.data.id))
+                alert('Appointment is booked.')
+                this.step = 1     
+                
+        console.log(patient)
     
-      }
+      },
+
+      loginClient() {
+        let logUser = {
+          "username": this.logEmail,
+          "password": this.logPassword
+        }
+
+        axios.post('http://localhost:3000/login', logUser).then((response) => {
+  console.log(response);
+  this.$router.push('/appointmentsHistory')
+}, (error) => {
+  console.log(error);
+});
+
+
+      },
+
+      getInsurances () {
+                axios.get('http://localhost:3000/insurance').then((response) => {
+                    this.insurances = response.data.data 
+                })
+            },
 
     },
+
+    async created() {
+            await this.getInsurances()
+    }
 
     
   } 
