@@ -98,7 +98,7 @@
       return {
         drawer: null ,
         items: [
-          { title: 'Personal Details', icon: 'fas fa-search', to: '/patients/:id' },
+          { title: 'Personal Details', icon: 'fas fa-search', to: '/personalDetails' },
           { title: 'History', icon: 'fas fa-list', to: '/appointmentsHistory' },
           { title: 'Appointment', icon: 'fas fa-edit', to: 'appointment' }
         ],
@@ -107,15 +107,11 @@
       },
 
       computed: {
-        // counter() {
-        //   return this.$store.state.counter++;
-        // }
+       
       },
       
       methods: {
-        // addOne() {
-        //   this.$store.state.counter++
-        // }
+        // algo como restore authentication. tenho de ir buscar o id. -> checkar isto para finalizar
       }
     
     }

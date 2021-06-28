@@ -60,8 +60,7 @@ router.post('/', (req, res) => {
 
   validate(doctors, {
     certificate_number: "required",
-    name: "required",
-    
+    name: "required",  
     birthdate: "required",
     address: "required",
     zip_code: "required",
@@ -69,8 +68,7 @@ router.post('/', (req, res) => {
     mobile_phone: "required",
     password: "required",
     status: "required",
-    gender:"required",
-    
+    gender:"required",  
   }).then((value) => {
     db.query('INSERT INTO doctors SET ?', [value], (error, results, _) => {
       if (error) {

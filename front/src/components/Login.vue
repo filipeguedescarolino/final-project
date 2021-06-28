@@ -278,12 +278,22 @@
 <script>
 
   import axios from 'axios';
-  import mapMutations from 'vuex'
+  
+  import { mapActions, mapGetters } from 'vuex'
   export default {
 
     props: {
       source: String
     },
+
+    computed:{
+      ...mapGetters([
+        'user',
+        'token'
+      ]),
+
+    },
+
     data () {
       return {
         logPassword: '',
@@ -363,10 +373,11 @@
     },
 
     methods: {
-      ...mapMutations([
+      ...mapActions([
         'setUser',
         'setToken'
       ]),
+        
       // get() {
       //   axios.get('http://localhost:3000/patients?page=1&limit=5').then((response) => {
       //     console.log(response)
@@ -411,9 +422,10 @@
 
         axios.post('http://localhost:3000/login', logUser).then((response) => {
           console.log(response);
-          this.$router.push('/appointmentsHistory')
-          // this.$store.state.user = response.data.patient
-          // this.$store.state.token = response.data.token
+          this.$router.push('/personalDetails')
+          this.setUser(response.data.patient)
+          this.setToken(response.data.token)
+
         }, (error) => {
           
           console.log(error);

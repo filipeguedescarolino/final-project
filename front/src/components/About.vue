@@ -40,7 +40,7 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            doctorId: 5,
+            doctorId: 1,
             beginHour: "12:00",
             day: "2021-07-16",
             endHour: "17:00",

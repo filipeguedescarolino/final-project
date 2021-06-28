@@ -10,6 +10,7 @@ import About from '../components/About.vue'
 import MakeAppointment from '../components/MakeAppointment.vue'
 import Partnerships from '../components/Partnerships.vue'
 import AppointmentsHistory from '../components/AppointmentsHistory.vue'
+import personalDetails from '../components/personalDetails.vue'
 
 
 
@@ -21,6 +22,13 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+
+  {
+    // componente carregado
+    path: '/personalDetails',
+    name: 'personalDetails',
+    component: personalDetails
   },
 
   {
