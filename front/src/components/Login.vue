@@ -1,4 +1,5 @@
 <template>
+ <!-- eslint-disable  -->
   <v-app id="inspire">
     <v-main>
       <v-container   class="fill-height" fluid>
@@ -277,7 +278,7 @@
 <script>
 
   import axios from 'axios';
-
+  import mapMutations from 'vuex'
   export default {
 
     props: {
@@ -362,7 +363,10 @@
     },
 
     methods: {
-
+      ...mapMutations([
+        'setUser',
+        'setToken'
+      ]),
       // get() {
       //   axios.get('http://localhost:3000/patients?page=1&limit=5').then((response) => {
       //     console.log(response)
@@ -406,10 +410,13 @@
         }
 
         axios.post('http://localhost:3000/login', logUser).then((response) => {
-  console.log(response);
-  this.$router.push('/appointmentsHistory')
-}, (error) => {
-  console.log(error);
+          console.log(response);
+          this.$router.push('/appointmentsHistory')
+          // this.$store.state.user = response.data.patient
+          // this.$store.state.token = response.data.token
+        }, (error) => {
+          
+          console.log(error);
 });
 
 
@@ -417,11 +424,13 @@
 
       getInsurances () {
                 axios.get('http://localhost:3000/insurance').then((response) => {
-                    this.insurances = response.data.data 
+                    this.insurances = response.data.data
                 })
             },
 
     },
+
+    
 
     async created() {
             await this.getInsurances()

@@ -10,41 +10,24 @@
 // export default new Vuex.Store({
 //   state() {
 //     return {
-//       userId: null,
+//       user: null,
 //       token: null
 //     }
     
 //   },
 //   mutations: {
-//   setUser(state, payload) {
-//     state.token = payload.token;
-//     state.userId = payload.userId;
-    
-//   }  
+//     setUser(state, user) {
+//       state.user = payload.user  
+//     },
+//     setToken(state, token) {
+//       state.token = payload.token   
+//     }    
   
 //   },
   
   
 //   actions: {
-//    login() {
-
-//    },
-
-  //  signup(context, payload) {
-  //   fetch('https://....key=[API]', configuration)
-  //   method: post,
-  //   body: JSON.stringify({
-  //     email: payload.email,
-  //     password: payload.password,
-  //     returnSecureToken: true
-  //   })
-
-  //  if e else response ok caso certto
-    // context.commit('setUser', {
-    //   token: response.data.idToken,
-    //   userId: responseData.localId
-    // } )
-  //  }
+   
 //   },
 //   modules: {
 //   }
@@ -52,13 +35,6 @@
 
 
 
-// em baixo qd faz login, caso validações estejam certas:
-// nos metodos::
-// submitForm:
 
-// this.$store.dispatch('signup', {
-//   email: this.email,
-//   password: this.password,
 
-// }) -> action
 
