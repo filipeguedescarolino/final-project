@@ -1,15 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Card from '../components/Card.vue'
+import WorkingHours from '../components/WorkingHours.vue'
+import CreateDoctor from '../components/CreateDoctor.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     // componente carregado
-    path: '/',
-    name: 'card',
-    component: Card
+    path: '/working-hours',
+    name: 'WorkingHours',
+    component: WorkingHours
+  },
+
+  {
+    // componente carregado
+    path: '/create_doctor',
+    name: 'CreateDoctor',
+    component: CreateDoctor
   },
 ]
 

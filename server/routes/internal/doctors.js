@@ -67,8 +67,10 @@ router.post('/', (req, res) => {
     email: "required",
     mobile_phone: "required",
     password: "required",
-    status: "required",
-    gender:"required",  
+    
+    gender:"required",
+    image_src: "required",
+    nif: "required"
   }).then((value) => {
     db.query('INSERT INTO doctors SET ?', [value], (error, results, _) => {
       if (error) {

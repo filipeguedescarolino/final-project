@@ -6,8 +6,8 @@
     <v-stepper-step
       :complete="e6 > 1"
       step="1">
-      <button @click="getTimeSlots()">Click me </button>
-      <button @click="createAppointment()">Post  </button>
+      <!-- <button @click="getTimeSlots()">Click me </button>
+      <button @click="createAppointment()">Post  </button> -->
       Select the specialization  
     </v-stepper-step>
 

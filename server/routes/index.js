@@ -8,13 +8,14 @@ const insuranceRouter = require('./internal/insurance')
 const timeSlots = require('./internal/timeSlots')
 const appointments = require('./internal/appointments')
 const pivotDoctorSpecialization = require('./internal/pivot_doctor_specialization')
+const clinicalOffices = require('./internal/clinical_offices')
 // const todosRouter = require('./internal/todos')
 
 const login = require('./public/login')
 
 module.exports = {
   register(app) {
-    app.use('/patients',  patientsRouter)
+    app.use('/patients', auth, patientsRouter)
     app.use('/doctors', doctorsRouter)
     app.use('/specializations', specializationsRouter)
     app.use('/insurance', insuranceRouter)
@@ -22,9 +23,13 @@ module.exports = {
     app.use('/timeSlots', timeSlots)
     app.use('/appointments', appointments)
     app.use('/pivot_doctor_specialization', pivotDoctorSpecialization)
+    app.use('/clinical_offices', clinicalOffices)
     // app.use('/todos', auth, todosRouter)
     
     app.post('/login', login)
+    
+    app.post('/doctors-login', login)
+    // app.post('/backoffice-login', loginPatient)
     
   }
 }

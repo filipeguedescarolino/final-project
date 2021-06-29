@@ -18,12 +18,23 @@ export default new Vuex.Store({
   mutations: {
     setUser(state, user) {
       state.user = user
-       
+
+      localStorage.setItem('user', JSON.stringify(user))   // Json.parse reverso.
     },
     setToken(state, token) {
       state.token = token
       localStorage.setItem('token', token)   
-    }    
+    },
+    
+    // removeToken(state,token) {
+    //   state.token = null
+    //   localStorage.setItem('token', token)    
+    // },
+
+    // removeUser(state,user) {
+    //   state.user = null
+    //   localStorage.setItem('user', user)
+    // }
   },
 
   
@@ -35,6 +46,10 @@ export default new Vuex.Store({
     setToken ({ commit }, token) {
       commit('setToken', token)
     },
+    // removeToken ({ commit }, token) {
+    //   commit('removeTo', token)
+    // },
+
   },
   modules: {
   }

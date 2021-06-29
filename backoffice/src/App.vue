@@ -7,10 +7,10 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6">
-            Application
+            Doctor
           </v-list-item-title>
           <v-list-item-subtitle>
-            subtext
+            application
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -22,6 +22,7 @@
         nav
       >
         <v-list-item
+          :to="item.to"
           v-for="item in items"
           :key="item.title"
           link
@@ -38,7 +39,7 @@
     
   </v-navigation-drawer>
 
-  <v-app-bar app>
+  <!-- <v-app-bar app>
     <v-app-bar
       absolute
       color="white"
@@ -52,11 +53,11 @@
       <v-spacer></v-spacer>
 
       <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
+        <h1> asdsa</h1>
       </v-btn>
 
       <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
+        <v-icon>asd</v-icon>
       </v-btn>
 
       <v-btn icon>
@@ -64,7 +65,7 @@
       </v-btn>
     </v-app-bar>
 
-  </v-app-bar>
+  </v-app-bar> -->
 
   <!-- Sizes your content based upon application components -->
   <v-main>
@@ -87,16 +88,7 @@
       justify="center"
       no-gutters
     >
-      <v-btn
-        v-for="link in links"
-        :key="link"
-        color="white"
-        text
-        rounded
-        class="my-2"
-      >
-        {{ link }}
-      </v-btn>
+      
       <v-col
         class="primary lighten-2 py-4 text-center white--text"
         cols="12"
@@ -115,19 +107,17 @@
       return {
         drawer: true,
         items: [
-          { title: 'Home', icon: 'mdi-home-city' },
-          { title: 'My Account', icon: 'mdi-account' },
-          { title: 'Users', icon: 'mdi-account-group-outline' },
+          { title: 'Create Doctor', to: '/create_doctor' },
+          { title: 'Working period', to: 'working-hours' },
+          { title: 'Specialties', to: 'specialties' },
+          { title: 'Prices', to: 'prices' },
+          { title: 'Income Doctors', to: 'incomedoctor' },
+          { title: 'Income Patients', to: 'incomepatients' },
+          
         ],
-        mini: true,
-        links: [
-        'Home',
-        'About Us',
-        'Team',
-        'Services',
-        'Blog',
-        'Contact Us',
-      ],
+        
+        
+      
       }
     },
   }
