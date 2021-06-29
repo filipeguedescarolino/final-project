@@ -2,8 +2,8 @@ import Vue from 'vue'
 let bearerInterceptor = {
 
     process (request)  {
-        let token = 'Bearer ' + localStorage.getItem('token');
-    
+        let token = localStorage.getItem('token');
+        // 'Bearer ' + 
     // request interceptor
         request.headers.common['Authorization'] = token;
 

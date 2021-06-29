@@ -18,7 +18,7 @@
         height="100px">
 
         <v-card-title class="mb-12 justify-center">         
-          <v-text class="justify-center">
+          <v-text-content class="justify-center">
             <v-select              
               label='Choose a specialization'
               v-model='specialization'
@@ -36,7 +36,7 @@
               </template>
             </v-select>
             
-          </v-text>
+          </v-text-content>
         </v-card-title>
           
         

@@ -10,7 +10,8 @@
       
     >
 
-      <v-list-item class="px-2">
+      <v-list-item class="px-2"
+        v-if="!localStorageToken && !patient">
         <v-list-item-avatar>
          <v-icon>fas fa-lock</v-icon>
         </v-list-item-avatar>
@@ -19,7 +20,7 @@
           <v-list-item class="text-h6 grey--text  text--lighten-5"
             :to="'/login'"
             @click="drawer = !drawer">
-            Login / Name
+            Login 
           </v-list-item>
 
           <!-- <v-list-item-subtitle>
@@ -27,9 +28,18 @@
           </v-list-item-subtitle> -->
         </v-list-item-content>
       </v-list-item>
+      <v-list-item v-else>
+        <v-list-item-avatar v-if="patient">
+            <v-img :src="patient.image"> </v-img>
+            
+        </v-list-item-avatar>
+          <h1 v-if="patient"> {{patient.name}} </h1>
+          
+      </v-list-item>
         <!-- <button @click="store"> connect to $store.state.counter </button>
         <h1> {{$store.state.counter}} </h1> -->
       <v-divider></v-divider>
+
 
       <v-list
         dense
@@ -51,6 +61,16 @@
 
           
          
+        </v-list-item>
+
+        <v-list-item link @click="Logout()">
+          <v-list-item-icon>
+            <v-icon>fas fa-home</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title> Logout </v-list-item-title>
+          </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -93,6 +113,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     data() {
       return {
@@ -101,18 +122,54 @@
           { title: 'Personal Details', icon: 'fas fa-search', to: '/personalDetails' },
           { title: 'History', icon: 'fas fa-list', to: '/appointmentsHistory' },
           { title: 'Appointment', icon: 'fas fa-edit', to: 'appointment' }
+         
+
         ],
-        selectedItem: ''
+        selectedItem: '',
+        patient: {},
         }
       },
 
       computed: {
-       
+       localStorageToken() {
+         if (localStorage.token) {
+           return ''
+         }
+         return localStorage.token
+       },
+
+       localStorageUser() {
+         if (!localStorage.user == null || !localStorage.user) {
+           return ''
+         }
+          return JSON.parse(localStorage.user)
+        
+       }
       },
       
       methods: {
-        // algo como restore authentication. tenho de ir buscar o id. -> checkar isto para finalizar
-      }
+        getPatientDetails() {
+          if (!this.localStorageUser) {
+            return
+          }
+
+          axios.get(`http://localhost:3000/patients/${this.localStorageUser.id}`).then((response) => {
+                this.patient = response.data.data 
+            })
+        },
+
+        Logout() {
+          localStorage.token = null 
+          localStorage.user = null
+          this.patient = null
+          this.$router.push('/login')
+        }
+
+      },
+
+      async created() {
+        await this.getPatientDetails()
+    }
     
     }
 </script>

@@ -5,9 +5,7 @@ const jwt = require('jsonwebtoken')
 const db = require('../../db')
 
 module.exports = (req, res) => {
-  console.log('AQUI')
-  console.log(req.route.path)
-  console.log('AQUI')
+  
   validate(req.body, {
       username: 'required|email',
       password: 'required'
@@ -15,13 +13,13 @@ module.exports = (req, res) => {
       let query = ''
 
       if (req.route.path === '/doctors-login') {
-        query = 'SELECT * FROM patients WHERE email = ? AND status = "active"'
+        query = 'SELECT * FROM doctors WHERE email = ? AND status = "active"'
       } else if (req.route.path === '/patients-login') {
         query = 'SELECT * FROM patients WHERE email = ? AND status = "active"'
       } else  {
-        query = 'SELECT * FROM patients WHERE email = ? AND status = "active"'
+        query = 'SELECT * FROM users_admin WHERE email = ?'
       }
-
+      
       
       db.query(query, [value.username], (error, results) => {
         

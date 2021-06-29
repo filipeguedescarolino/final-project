@@ -21,14 +21,15 @@ module.exports = {
     app.use('/insurance', insuranceRouter)
     app.use('/workingHours', workingHours)
     app.use('/timeSlots', timeSlots)
-    app.use('/appointments', appointments)
+    app.use('/appointments', auth, appointments)
     app.use('/pivot_doctor_specialization', pivotDoctorSpecialization)
     app.use('/clinical_offices', clinicalOffices)
     // app.use('/todos', auth, todosRouter)
     
-    app.post('/login', login)
+    app.post('/patients-login', login)
     
     app.post('/doctors-login', login)
+    app.post('/admin-login', login)
     // app.post('/backoffice-login', loginPatient)
     
   }

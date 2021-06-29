@@ -420,7 +420,7 @@
           "password": this.logPassword
         }
 
-        axios.post('http://localhost:3000/login', logUser).then((response) => {
+        axios.post('http://localhost:3000/patients-login', logUser).then((response) => {
           console.log(response);
           this.$router.push('/personalDetails')
           this.setUser(response.data.patient)

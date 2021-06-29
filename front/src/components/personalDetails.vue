@@ -1,10 +1,12 @@
 <template>
   <v-card
-    class="mx-auto mt-10 pa-5"
-    width="256"
+    class="mx-auto mt-10 pa-2"
+    width="60%"
     tile
+    center
   >
-    <v-navigation-drawer permanent>
+    <v-navigation-drawer permanent
+    width="900" class="pa-4">
       <v-system-bar></v-system-bar>
       <v-list>
         <v-list-item>
@@ -21,9 +23,7 @@
             <v-list-item-subtitle>{{patient.email}}</v-list-item-subtitle>
           </v-list-item-content>
 
-          <v-list-item-action>
-            <v-icon>mdi-menu-down</v-icon>
-          </v-list-item-action>
+          
         </v-list-item>
       </v-list>
       <v-divider></v-divider>
@@ -42,7 +42,7 @@
 
             <v-list-item-content class="pa-5 ">
                 <v-list-item-title class="mb-1 pa-2"> Gender: {{patient.gender}}</v-list-item-title>
-                <v-list-item-title class="mb-1 pa-2"> birthDate: {{patient.birthDate}}</v-list-item-title>  
+                <v-list-item-title class="mb-1 pa-2"> birthDate: {{patient.birthdate}}</v-list-item-title>  
                 <v-list-item-title class="mb-1 pa-2"> Adress: {{patient.address}}</v-list-item-title>
                 <v-list-item-title class="mb-1 pa-2"> Zip-Code: {{patient.zip_code}}</v-list-item-title>
                 <v-list-item-title class="mb-1 pa-2"> Mobile: {{patient.mobile_phone}}</v-list-item-title>
