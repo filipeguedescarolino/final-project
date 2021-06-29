@@ -194,8 +194,9 @@
         @click="e6 = 1"
         @:click="createAppointment()"
         
+
       >
-        Continue
+        Create appointment
       </v-btn>
       <v-btn text>
         Cancel
@@ -229,6 +230,16 @@
       }
     },
 
+    computed: {
+      localStorageUser() {
+        if (!localStorage.user == null || !localStorage.user) {
+          return ''
+        }
+        return JSON.parse(localStorage.user)
+      
+      }
+    },
+
     // computed: {
     //   formatDate() {
     //     return this.picker
@@ -253,7 +264,8 @@
       },
 
       getPatients () {
-        axios.get('http://localhost:3000/patients/7').then((response) => {
+        let userId = this.localStorageUser.id
+        axios.get(`http://localhost:3000/patients/${userId}`).then((response) => {
           console.log(response)
           this.loggedUser = response.data.data
         })
@@ -298,10 +310,18 @@
 
       },
 
+      watch: {
+        picker(val) {
+          this.getTimeSlots()
+          console.log(val)
+        }
+      },
+
       async created() {
           await this.getSpecializations()
           this.getDoctors()
           this.getPatients()
+
       }
   }
 </script>

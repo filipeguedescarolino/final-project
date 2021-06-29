@@ -66,7 +66,7 @@ router.post('/', (req, res) => {
     hour: "required",
     id_insurance: "required",
     id_specialization: "required",
-    id_slot: "required",
+    id_time_slot: "required",
     
   }).then((value) => {
     db.query('INSERT INTO appointments SET ?', [value], (error, results, _) => {

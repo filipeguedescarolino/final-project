@@ -11,7 +11,7 @@
     >
 
       <v-list-item class="px-2"
-        v-if="!localStorageToken && !patient">
+        v-if="!localStorageToken">
         <v-list-item-avatar>
          <v-icon>fas fa-lock</v-icon>
         </v-list-item-avatar>
@@ -29,11 +29,11 @@
         </v-list-item-content>
       </v-list-item>
       <v-list-item v-else>
-        <v-list-item-avatar v-if="patient">
+        <v-list-item-avatar>
             <v-img :src="patient.image"> </v-img>
             
         </v-list-item-avatar>
-          <h1 v-if="patient"> {{patient.name}} </h1>
+          <h1> {{patient.name}} </h1>
           
       </v-list-item>
         <!-- <button @click="store"> connect to $store.state.counter </button>
@@ -42,6 +42,7 @@
 
 
       <v-list
+        v-if="localStorageToken"
         dense
         nav
       >
@@ -132,17 +133,19 @@
 
       computed: {
        localStorageToken() {
-         if (localStorage.token) {
-           return ''
+         debugger; // eslint-disable-line no-debugger
+         if (localStorage && localStorage.token) {
+           return localStorage.token
          }
-         return localStorage.token
+          return ''
        },
 
        localStorageUser() {
-         if (!localStorage.user == null || !localStorage.user) {
-           return ''
+         debugger; // eslint-disable-line no-debugger
+         if (localStorage && localStorage.user) {
+           return JSON.parse(localStorage.user)
          }
-          return JSON.parse(localStorage.user)
+          return ''
         
        }
       },

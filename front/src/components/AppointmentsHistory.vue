@@ -76,17 +76,27 @@
                 
             }
         },
-
+        computed: {
+            localStorageUser() {
+            if (!localStorage.user == null || !localStorage.user) {
+            return ''
+            }
+            return JSON.parse(localStorage.user)
+            
+            }
+        },
         methods: {
 
             getAppointments () {
-                axios.get('http://localhost:3000/appointments').then((response) => {
+                debugger; // eslint-disable-line no-debugger
+                let userId = this.localStorageUser.id
+                axios.get(`http://localhost:3000/appointments/${userId}`).then((response) => {
                     this.appointments = response.data.data 
                 })
             },
 
             getColor (id_status) {
-                if (id_status == 1) return 'red'
+                if (id_status == 1) return 'yellow'
                 
                 else return 'green'
             },
