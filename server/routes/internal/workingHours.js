@@ -55,6 +55,25 @@ router.get('/:id', (req, res) => {
   })
 })
 
+
+var utilityFunction = {
+
+  getTime: function(a,b) {
+    console.log('a e b')
+    console.log(a)
+    console.log(b)
+    console.log('a e b')
+    let toInt  = time => ((h,m) => h*2 + m/30)(...time.split(':').map(parseFloat))
+    let toTime = int => [Math.floor(int/2), int%2 ? '30' : '00'].join(':')
+    let range  = (from, to) => Array(to-from+1).fill().map((_,i) => from + i)
+    let eachHalfHour = (t1, t2) => range(...[t1, t2].map(toInt)).map(toTime);
+    return  eachHalfHour(a, b)
+  },
+  
+}
+
+
+
 router.post('/', (req, res) => {
   const working_hour_periods = req.body
 
@@ -68,6 +87,28 @@ router.post('/', (req, res) => {
     db.query('INSERT INTO working_hour_periods SET ?', [value], (error, results, _) => {
       if (error) {
         throw error
+      }
+      console.log('aqui')
+      console.log(value)
+      console.log(value.begin_hour)
+      console.log('aqui')
+      var brackets = utilityFunction.getTime(value.begin_hour, value.end_hour)
+      
+
+      for( var i = 0;  i < brackets.length - 1;  i++ ) {
+
+        var mySchedule = {
+          "start_at": brackets[i],
+          "end_at": brackets[i + 1],
+          "id_doctor": value.id_doctor,
+          "day": value.day
+      }
+      
+        db.query('INSERT INTO time_slots SET ?', [mySchedule], (error, results, _) => {
+          if (error) {
+            throw error
+          }          
+        })
       }
 
       const { insertId } = results

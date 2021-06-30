@@ -9,7 +9,7 @@
             color="#99D3DF">
 
             <v-list-item class="px-2"
-                v-if="!localStorageToken && !localStorageUser">
+                v-if="!isLoggedIn">
 
                 <v-list-item-avatar>
                     <v-icon>fas fa-lock</v-icon>
@@ -37,7 +37,7 @@
 
 
             <v-list
-                v-if="localStorageToken"
+                v-if="isLoggedIn"
                 dense
                 nav>
                 
@@ -108,6 +108,7 @@
 </template>
 
 <script>
+     import { mapActions, mapGetters } from 'vuex'
     import axios from 'axios'
     export default {
         data() {
@@ -125,29 +126,47 @@
 
         computed: {
 
-            localStorageToken() {
-                if (localStorage && localStorage.token) {
-                    return localStorage.token
-                }
-                return null
-            },
+            ...mapGetters([
+            'user',
+            'token'
+            ]),
 
-            localStorageUser() {
-                if (localStorage && localStorage.user) {
-                    return JSON.parse(localStorage.user)
+            isLoggedIn() {
+                if (this.user && this.token) {
+                    return true
                 }
-                return null
+                return false
             }
+
+            // localStorageToken() {
+            //     if (localStorage && localStorage.token) {
+            //         return localStorage.token
+            //     }
+            //     return null
+            // },
+
+            // localStorageUser() {
+            //     if (localStorage && localStorage.user) {
+            //         return JSON.parse(localStorage.user)
+            //     }
+            //     return null
+            // }
         },
 
         methods: {
+            
+            ...mapActions([
+            'setUser',
+            'setToken'
+            ]),
+
             getPatientDetails() {
-                if (!this.localStorageUser) {
+                if (!this.isLoggedIn) {
                 this.$router.push('/login')
                 return
             }
 
-                let userId = this.localStorageUser.id
+                let userId = this.user.id
 
                 axios.get(`http://localhost:3000/patients/${userId}`).then((response) => {
                     this.patient = response.data.data 
@@ -155,9 +174,9 @@
             },
 
             Logout() {
-                this.localStorage.token = null 
-                this.localStorage.user = null
-                this.patient = {}
+
+                this.setUser(null)
+                this.setToken(null)
                 this.$router.push('/login')
             }
         },

@@ -240,10 +240,10 @@
         this.getTime(this.timeIn, this.timeOut)
 
         let workingHour = {
-          "id_doctor": this.doctor,
-          "begin_hour": this.timeIn,
+          "id_doctor": this.doctor, 
+          "begin_hour": this.timeIn, 
           "day": this.day,
-          "end_hour": this.timeOut,
+          "end_hour": this.timeOut, 
           "id_clinical_office": this.clinicalOffice,          
         }
 
@@ -254,35 +254,35 @@
                 console.error("There was an error!", error);    
             })
 
-        debugger; // eslint-disable-line no-debugger
-        console.log(this.brackets)
+        
+        // console.log(this.brackets)
         
                     
-        for( var i = 0;  i < this.brackets.length - 1;  i++ ) {
+      //   for( var i = 0;  i < this.brackets.length - 1;  i++ ) {
             
-          axios.post(`http://localhost:3000/timeSlots`,  
-              this.mySchedule = {
-                  "start_at": this.brackets[i],
-                  "end_at": this.brackets[i + 1],
-                  "id_doctor": this.doctor,
-                  "day": this.day
-              }
+      //     axios.post(`http://localhost:3000/timeSlots`,  
+      //         this.mySchedule = {
+      //             "start_at": this.brackets[i],
+      //             "end_at": this.brackets[i + 1],
+      //             "id_doctor": this.doctor,
+      //             "day": this.day
+      //         }
               
-          )
-          .then((response) => {
-              // Takes 4 seconds, 4 more seconds, 4 more seconds, etc
-              // Ideally: Takes 4 seconds, returns in the same ~4 seconds, returns in the same ~4 seconds, etc
-              console.log(response);
-              console.log('Que Fking animal Beast')
-          })
-          .catch((error) => {
-              console.log(error);
-              console.log('deuBosta')
-          });
+      //     )
+      //     .then((response) => {
+      //         // Takes 4 seconds, 4 more seconds, 4 more seconds, etc
+      //         // Ideally: Takes 4 seconds, returns in the same ~4 seconds, returns in the same ~4 seconds, etc
+      //         console.log(response);
+      //         console.log('Que Fking animal Beast')
+      //     })
+      //     .catch((error) => {
+      //         console.log(error);
+      //         console.log('deuBosta')
+      //     });
 
-          // Takes < 1 second, < 1 more second, < 1 more second, etc
-          console.log( 'Request sent!' );
-      }
+      //     // Takes < 1 second, < 1 more second, < 1 more second, etc
+      //     console.log( 'Request sent!' );
+      // }
     }
         
 

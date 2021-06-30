@@ -16,13 +16,13 @@ const login = require('./public/login')
 module.exports = {
   register(app) {
     app.use('/patients', auth, patientsRouter)
-    app.use('/doctors', doctorsRouter)
-    app.use('/specializations', specializationsRouter)
-    app.use('/insurance', insuranceRouter)
+    app.use('/doctors', auth, doctorsRouter)
+    app.use('/specializations', auth, specializationsRouter)
+    app.use('/insurance', auth, insuranceRouter)
     app.use('/workingHours', workingHours)
     app.use('/timeSlots', timeSlots)
     app.use('/appointments', auth, appointments)
-    app.use('/pivot_doctor_specialization', pivotDoctorSpecialization)
+    app.use('/pivot_doctor_specialization', auth, pivotDoctorSpecialization)
     app.use('/clinical_offices', clinicalOffices)
     // app.use('/todos', auth, todosRouter)
     

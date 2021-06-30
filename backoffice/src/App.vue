@@ -80,7 +80,7 @@
                 items: [
                 { title: 'Create Doctor', to: '/create_doctor' },
                 { title: 'Working period', to: 'working-hours' },
-                { title: 'Specialties', to: 'specialties' },
+                { title: 'Specialties', to: '/specializations' },
                 { title: 'Prices', to: 'prices' },
                 { title: 'Income Doctors', to: 'incomedoctor' },
                 { title: 'Income Patients', to: 'incomepatients' },
