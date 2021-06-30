@@ -60,8 +60,7 @@ router.post('/', (req, res) => {
 
   validate(appointments, {
     id_patient: "required",
-    id_doctor: "required",
-    
+    id_doctor: "required",  
     day: "required",
     hour: "required",
     id_insurance: "required",

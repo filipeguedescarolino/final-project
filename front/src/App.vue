@@ -11,7 +11,7 @@
     >
 
       <v-list-item class="px-2"
-        v-if="!localStorageToken">
+        v-if="!localStorageToken && !localStorageUser">
         <v-list-item-avatar>
          <v-icon>fas fa-lock</v-icon>
         </v-list-item-avatar>
@@ -133,19 +133,20 @@
 
       computed: {
        localStorageToken() {
-         debugger; // eslint-disable-line no-debugger
+         
          if (localStorage && localStorage.token) {
            return localStorage.token
          }
-          return ''
+         return null
+         
        },
 
        localStorageUser() {
-         debugger; // eslint-disable-line no-debugger
+        
          if (localStorage && localStorage.user) {
            return JSON.parse(localStorage.user)
          }
-          return ''
+          return null
         
        }
       },
@@ -153,18 +154,22 @@
       methods: {
         getPatientDetails() {
           if (!this.localStorageUser) {
+            this.$router.push('/login')
             return
+          
           }
 
-          axios.get(`http://localhost:3000/patients/${this.localStorageUser.id}`).then((response) => {
+          let userId = this.localStorageUser.id
+
+          axios.get(`http://localhost:3000/patients/${userId}`).then((response) => {
                 this.patient = response.data.data 
             })
         },
 
         Logout() {
-          localStorage.token = null 
-          localStorage.user = null
-          this.patient = null
+          this.localStorage.token = null 
+          this.localStorage.user = null
+          this.patient = {}
           this.$router.push('/login')
         }
 

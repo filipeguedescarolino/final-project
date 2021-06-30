@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card v-if="appointments">
         <v-card-title>
             <v-text-field
                 v-model="search"
@@ -9,7 +9,7 @@
                 hide-details
             ></v-text-field>
         </v-card-title>
-        <v-data-table
+        <v-data-table            
             :headers="headers"
             :items="appointments"
             :search="search"
@@ -41,10 +41,7 @@
                         </v-chip>
                     </td>
                 </tr>
-            </template>
-
-            
-    
+            </template>    
         </v-data-table>
     </v-card>
 </template>
@@ -65,30 +62,33 @@
                         sortable: false,
                         value: 'name',
                     },
-                { text: 'Doctor', value: 'Doctor_id' },
-                { text: 'Specialization', value: 'id_specialization'},
-                { text: 'day', value: 'day' },
-                { text: 'hour', value: 'hour' },
-                { text: 'status', value: 'status' },
-                
-
+                    { text: 'Doctor', value: 'Doctor_id' },
+                    { text: 'Specialization', value: 'id_specialization'},
+                    { text: 'day', value: 'day' },
+                    { text: 'hour', value: 'hour' },
+                    { text: 'status', value: 'status' },
                 ],
                 
             }
         },
+
         computed: {
             localStorageUser() {
-            if (!localStorage.user == null || !localStorage.user) {
-            return ''
+            if (!localStorage || !localStorage.user) {
+                return ''
             }
             return JSON.parse(localStorage.user)
             
             }
         },
+
         methods: {
 
             getAppointments () {
-                debugger; // eslint-disable-line no-debugger
+                if (!localStorage || !this.localStorageUser) {
+                    return
+                }
+                
                 let userId = this.localStorageUser.id
                 axios.get(`http://localhost:3000/appointments/${userId}`).then((response) => {
                     this.appointments = response.data.data 
@@ -96,7 +96,9 @@
             },
 
             getColor (id_status) {
-                if (id_status == 1) return 'yellow'
+                if (id_status == 1) {
+                    return 'yellow'
+                } 
                 
                 else return 'green'
             },
