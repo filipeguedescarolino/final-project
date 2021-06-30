@@ -29,7 +29,7 @@ module.exports = (req, res) => {
         } else {
           bcrypt.compare(value.password, results[0].password).then((match) => {
           
-          debugger; // eslint-disable-line no-debugger
+          
             
                
               if (results.length != 0) {
