@@ -27,7 +27,7 @@
         
         <v-col
           cols="12"
-          sm="4">
+          sm="6">
 
 
           <v-text-field
@@ -43,10 +43,27 @@
 
         </v-col>
 
+         <v-col
+          cols="12"
+          sm="6">
+
+
+          <v-text-field
+            v-model="day2"
+            color="blue accent-3"
+            :min= day
+            type="date"
+            label="day2"
+            prepend-icon="event"
+            required>
+
+          </v-text-field>
+
+        </v-col>
 
         <v-col
           cols="12"
-          sm="3"
+          sm="6"
         >
           <v-dialog
             ref="dialog1"
@@ -95,7 +112,7 @@
         <v-spacer></v-spacer>
         <v-col
           cols="12"
-          sm="3"
+          sm="6"
         >
           <v-dialog
             ref="dialog"
@@ -187,13 +204,14 @@
 
 <script>
   import axios from 'axios'
-
+  
   export default {
     data: () => ({
       valid: false,
       doctors: [],
       doctor: {},
       day: '',
+      day2: '', 
       brackets: '',
       mySchedule:'',
       timeIn: null,
@@ -239,10 +257,13 @@
         }
         this.getTime(this.timeIn, this.timeOut)
 
+        
+
         let workingHour = {
           "id_doctor": this.doctor, 
           "begin_hour": this.timeIn, 
           "day": this.day,
+          "day2": this.day2,
           "end_hour": this.timeOut, 
           "id_clinical_office": this.clinicalOffice,          
         }
@@ -288,6 +309,21 @@
 
     
     },
+
+
+    // computed: {
+    //   validateDays() {
+    //     let date1 = moment(this.day).format("yyyy-mm-dd")
+    //     let date2 = moment(this.day2).format("yyyy-mm-dd")
+    //     if(date1 >  date2){
+    //         return false
+    //     } 
+
+    //     return true
+
+    //     }
+      
+    // },
 
 
 

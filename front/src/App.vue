@@ -107,6 +107,8 @@
     </v-app>
 </template>
 
+
+// // validar se tenho token e user na localstorage. se sim -> chamar getters e actions vuex. 
 <script>
      import { mapActions, mapGetters } from 'vuex'
     import axios from 'axios'
@@ -154,7 +156,7 @@
         },
 
         methods: {
-            
+
             ...mapActions([
             'setUser',
             'setToken'
@@ -174,15 +176,24 @@
             },
 
             Logout() {
-
+                
                 this.setUser(null)
                 this.setToken(null)
                 this.$router.push('/login')
+            },
+
+            refresh() {
+                
+                if (localStorage && localStorage.token) {
+                    this.setUser(JSON.parse(localStorage.user))
+                    this.setToken(localStorage.token)
+                }
             }
         },
 
         async created() {
             await this.getPatientDetails()
+            this.refresh()
         }
 
     }

@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { validate } = require('indicative/validator')
-
 const db = require('../../db')
+const moment = require('moment');
 
 router.get('/', (req, res) => {
   const { limit, page } = req.query
@@ -59,10 +59,7 @@ router.get('/:id', (req, res) => {
 var utilityFunction = {
 
   getTime: function(a,b) {
-    console.log('a e b')
-    console.log(a)
-    console.log(b)
-    console.log('a e b')
+    
     let toInt  = time => ((h,m) => h*2 + m/30)(...time.split(':').map(parseFloat))
     let toTime = int => [Math.floor(int/2), int%2 ? '30' : '00'].join(':')
     let range  = (from, to) => Array(to-from+1).fill().map((_,i) => from + i)
@@ -71,37 +68,206 @@ var utilityFunction = {
   },
   
 }
+var checkDaysDifference = {
+  days: function(a,b) {
+    let firstDate = new Date(a),
+    secondDate = new Date(b),
+    timeDifference = Math.abs(secondDate.getTime() - firstDate.getTime());
+    let differentDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+    return differentDays
+  }
+
+}
+
+var getDateArray = function(start, end) {
+    var arr = new Array();
+    var dt = new Date(start);
+    while (dt <= end) {
+        arr.push(new Date(dt));
+        dt.setDate(dt.getDate() + 1);
+    }
+    return arr;
+}
+
+
+// --- AQUI TENHO A MINHA TENTATIVA FALHADA.
+
+// router.post('/', (req, res) => {
+//   const working_hour_periods = req.body
+  
+//   var dayDifference = checkDaysDifference.days(working_hour_periods.day, working_hour_periods.day2)
+//   console.log(dayDifference)
+//   var startDate = new Date(working_hour_periods.day); //YYYY-MM-DD
+//   var endDate = new Date(working_hour_periods.day2); //YYYY-MM-DD
+//   var dateArr = getDateArray(startDate, endDate );
+  
+  
+  
+//   validate(working_hour_periods, {
+//     id_doctor: "required",
+//     begin_hour: "required",    
+//     day: "required",
+//     end_hour: "required",
+//     day2: "required",
+//     id_clinical_office: "required",
+
+//   }).then((value) => {
+//     console.log(value)
+    
+//     let all_working_hour_periods = {
+//       "id_doctor": working.id_doctor,
+//       "begin_hour": working.begin_hour,
+//       "day": dateArr[d],
+//       "end_hour": working.end_hour,
+//       "day2": working.day2,
+//       "id_clinical_office": working.id_clinical_office
+//     }
+//     var brackets = utilityFunction.getTime(value.begin_hour, value.end_hour)
+//     console.log(brackets)
+//     for( var d = 0;  d < dateArr.length - 1;  d++ ) {
+//       for( var i = 0;  i < brackets.length - 1;  i++ ) {
+//         console.log('aqui')
+//         console.log(i)
+//         console.log(d)
+
+        
+//         console.log(i)
+//         console.log(d)
+//         console.log(all_working_hour_periods)
+        
+//         db.query('INSERT INTO working_hour_periods SET ?', [all_working_hour_periods], (error, results, _) => {
+//           console.log(error)
+//           if (error) {
+//             throw error
+//           } 
+
+          
+//           console.log(results)
+
+
+          
+
+//           db.query('INSERT INTO time_slots SET ?', [mySchedule], (error, results, _) => {
+//             if (error) {
+//               throw error
+//             }
+            
+            
+
+//           const { insertId } = results
+
+//       db.query('SELECT * FROM working_hour_periods WHERE id = ? LIMIT 1', [insertId], (error, results, _) => {
+//         if (error) {
+//           throw error
+//         }
+
+//         res.send({
+//           code: 200,
+//           meta: null,
+//           data: results[0]
+//         })
+//       })
+
+
+
+
+//         })
+        
+//         })
+
+        
+
+//       }
+//     }}).catch((error) => {
+//       res.status(400).send(error)
+//     })
+//   })
+
+    
+    // for( var d = 0;  d < dateArr.length - 1;  d++ ) {}
+    // day: dateArr[d]
+      // var all_working_hour_periods = {
+      //   "id_doctor": value.id_doctor,
+      //   "begin_hour": value.begin_hour,
+      //   "day": value.day,
+      //   "end_hour": value.end_hour,
+      //   "day2": value.day2,
+      //   "id_clinical_office": value.id_clinical_office
+      // }
+    
+
+    // db.query('INSERT INTO working_hour_periods SET ?', [value], (error, results, _) => {
+    //   if (error) {
+    //     throw error
+    //   }
+      
+      
+      
+
+      // for( var i = 0;  i < brackets.length - 1;  i++ ) {
+
+        
+      
+        
+      // }
+
+      
+    // })
+  
+
+// --- AQUI TERMINA A MINHA TENTATIVA FALHADA.
 
 
 
 router.post('/', (req, res) => {
   const working_hour_periods = req.body
-
+  
+  var dayDifference = checkDaysDifference.days(working_hour_periods.day, working_hour_periods.day2)
+  console.log(dayDifference)
+  var startDate = new Date(working_hour_periods.day); //YYYY-MM-DD
+  var endDate = new Date(working_hour_periods.day2); //YYYY-MM-DD
+  var dateArr = getDateArray(startDate, endDate );
+  console.log(dateArr)
+  
   validate(working_hour_periods, {
     id_doctor: "required",
     begin_hour: "required",    
     day: "required",
     end_hour: "required",
+    day2: "required",
     id_clinical_office: "required",
+
+    
+
   }).then((value) => {
-    db.query('INSERT INTO working_hour_periods SET ?', [value], (error, results, _) => {
+    
+    for( var d = 0;  d < dateArr.length ;  d++ ) {
+    
+      var all_working_hour_periods = {
+        "id_doctor": value.id_doctor,
+        "begin_hour": value.begin_hour,
+        "day":  dateArr[d],
+        "end_hour": value.end_hour,
+        "day2": value.day2,
+        "id_clinical_office": value.id_clinical_office
+      }
+    
+
+    db.query('INSERT INTO working_hour_periods SET ?', [all_working_hour_periods], (error, results, _) => {
       if (error) {
         throw error
       }
-      console.log('aqui')
-      console.log(value)
-      console.log(value.begin_hour)
-      console.log('aqui')
+      
       var brackets = utilityFunction.getTime(value.begin_hour, value.end_hour)
       
 
       for( var i = 0;  i < brackets.length - 1;  i++ ) {
-
+        console.log(dateArr)
         var mySchedule = {
           "start_at": brackets[i],
           "end_at": brackets[i + 1],
           "id_doctor": value.id_doctor,
-          "day": value.day
+          "day": dateArr[d]
       }
       
         db.query('INSERT INTO time_slots SET ?', [mySchedule], (error, results, _) => {
@@ -125,6 +291,7 @@ router.post('/', (req, res) => {
         })
       })
     })
+  }
   }).catch((error) => {
     res.status(400).send(error)
   })
