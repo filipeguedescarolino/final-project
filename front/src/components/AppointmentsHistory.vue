@@ -26,9 +26,9 @@
 
             <template v-slot:item="props">
                 <tr>
-                    <td>{{ props.item.id_patient }}</td>
-                    <td>{{ props.item.id_doctor }}</td>
-                    <td>{{ props.item.id_specialization }}</td>
+                    
+                    <td>{{ props.item.doctorName }}</td>
+                    <td>{{ props.item.specializationDescription }}</td>
                     <td>{{ props.item.day }}</td>
                     <td>{{ props.item.hour }}</td>
                     
@@ -37,7 +37,7 @@
                             :color="getColor(props.item.id_status)"
                             dark>
 
-                            {{ props.item.id_status }}
+                            <span style="color: black;">{{ props.item.statusDescription }}</span>
                         </v-chip>
                     </td>
                 </tr>
@@ -57,12 +57,12 @@
                 search: '',
                 headers: [
                     {
-                        text: 'Patient',
+                        text: 'Doctor',
                         align: 'start',
                         sortable: false,
-                        value: 'name',
+                        value: 'Doctor_id',
                     },
-                    { text: 'Doctor', value: 'Doctor_id' },
+                    
                     { text: 'Specialization', value: 'id_specialization'},
                     { text: 'day', value: 'day' },
                     { text: 'hour', value: 'hour' },
@@ -90,7 +90,7 @@
                 }
                 
                 let userId = this.localStorageUser.id
-                axios.get(`http://localhost:3000/appointments/${userId}`).then((response) => {
+                axios.get(`http://localhost:3000/appointments/history/${userId}`).then((response) => {
                     this.appointments = response.data.data 
                 })
             },
