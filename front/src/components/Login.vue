@@ -59,7 +59,7 @@
                                         <v-col cols="12" md="4"  class="blue lighten-1">
                                             <v-card-text class="white--text mt-12">
                                                 <h1 class="text-center display-1">
-                                                    Hello, Friend!
+                                                    Welcome 
                                                 </h1>
 
                                                 <h5 class="text-center">                          
@@ -404,6 +404,10 @@
                 }
 
                 axios.post('http://localhost:3000/patients', patient).then(response =>  console.log(response.data.id))
+                // if (response.status != 200) {
+                //     alert('something went wrong')
+                //     return
+                // }
                     alert('Appointment is booked.')
                     this.step = 1     
                 },

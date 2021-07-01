@@ -65,8 +65,9 @@ router.get('/doctor/:id', (req, res) => {
     on (d.id = p.id_doctor)
     join specializations s on (s.id = p.id_specialization)
     WHERE d.id = ${id}`, (error, results) => {
-    if (error) {
-      throw error
+
+      if (error) {
+        throw error
     }
 
     res.send({
@@ -85,8 +86,6 @@ router.post('/', (req, res) => {
   validate(pivotDoctorSpecialization, {
     id_specialization: "required",
     id_doctor: "required",
-    
-    
     
   }).then((value) => {
     db.query('INSERT INTO pivot_doctor_specialization SET ?', [value], (error, results, _) => {

@@ -2,6 +2,7 @@ const router = require('express').Router()
 const { validate } = require('indicative/validator')
 const db = require('../../db')
 const moment = require('moment');
+const { parseTwoDigitYear } = require('moment');
 
 router.get('/', (req, res) => {
   const { limit, page } = req.query
@@ -223,30 +224,32 @@ router.post('/', (req, res) => {
   const working_hour_periods = req.body
   
   var dayDifference = checkDaysDifference.days(working_hour_periods.day, working_hour_periods.day2)
-  console.log(dayDifference)
-  var startDate = new Date(working_hour_periods.day); //YYYY-MM-DD
-  var endDate = new Date(working_hour_periods.day2); //YYYY-MM-DD
+  
+  var startDate = new Date(working_hour_periods.day); //YYYY-MM-DD 2021-08-01
+  var endDate = new Date(working_hour_periods.day2); //YYYY-MM-DD 2021-08-08
   var dateArr = getDateArray(startDate, endDate );
-  console.log(dateArr)
+  var totalDays = null
+
   
   validate(working_hour_periods, {
-    id_doctor: "required",
-    begin_hour: "required",    
-    day: "required",
-    end_hour: "required",
-    day2: "required",
-    id_clinical_office: "required",
+    id_doctor: "required",  //1
+    begin_hour: "required",  // 10:00   
+    day: "required",  //YYYY-MM-DD 2021-08-01
+    end_hour: "required",  //12:00
+    day2: "required", //YYYY-MM-DD 2021-08-08
+    id_clinical_office: "required", //consultorio3
 
     
 
   }).then((value) => {
     
     for( var d = 0;  d < dateArr.length ;  d++ ) {
-    
+      var totalDays = d
+
       var all_working_hour_periods = {
         "id_doctor": value.id_doctor,
         "begin_hour": value.begin_hour,
-        "day":  dateArr[d],
+        "day":  new Date(dateArr[d]),  // dateArr[0] = 2021-08-01
         "end_hour": value.end_hour,
         "day2": value.day2,
         "id_clinical_office": value.id_clinical_office
@@ -258,16 +261,17 @@ router.post('/', (req, res) => {
         throw error
       }
       
-      var brackets = utilityFunction.getTime(value.begin_hour, value.end_hour)
+      var brackets = utilityFunction.getTime(value.begin_hour, value.end_hour) // [10:00, 10:30, 11:00, 11:30, 12:00]
       
 
       for( var i = 0;  i < brackets.length - 1;  i++ ) {
-        console.log(dateArr)
+        console.log(dateArr[0])
+        console.log(totalDays)
         var mySchedule = {
           "start_at": brackets[i],
           "end_at": brackets[i + 1],
           "id_doctor": value.id_doctor,
-          "day": dateArr[d]
+          "day": new Date(dateArr[totalDays])
       }
       
         db.query('INSERT INTO time_slots SET ?', [mySchedule], (error, results, _) => {
