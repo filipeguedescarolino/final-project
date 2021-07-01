@@ -9,7 +9,7 @@
         
             <v-col
             v-for= "(profile,index) in profiles" :key="index"
-            
+            cols=12 sm="3"
             >
                 <v-card max-width="300" class="mx-auto my-12">
                     

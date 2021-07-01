@@ -10,7 +10,7 @@
       <v-system-bar></v-system-bar>
       <v-list>
         <v-list-item>
-          <v-list-item-avatar>
+          <v-list-item-avatar height="100" width="100">
             <v-img :src= patient.image></v-img>
           </v-list-item-avatar>
         </v-list-item>
