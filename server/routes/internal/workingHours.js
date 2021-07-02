@@ -57,6 +57,24 @@ router.get('/:id', (req, res) => {
 })
 
 
+router.get('/:id/doctor/scales', (req, res) => {
+  console.log('here')
+  const { id } = req.params
+
+  db.query(`SELECT day, day2 from working_hour_periods where id_doctor = ${id}`, (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    res.send({
+      code: 200,
+      meta: null,
+      data: results
+    })
+  })
+})
+
+
 var utilityFunction = {
 
   getTime: function(a,b) {
@@ -139,7 +157,7 @@ router.post('/', (req, res) => {
       var all_working_hour_periods = {
         "id_doctor": value.id_doctor,
         "begin_hour": value.begin_hour,
-        "day":  new Date(value.day),  // dateArr[0] = 2021-08-01
+        "day":  value.day,  // dateArr[0] = 2021-08-01
         "end_hour": value.end_hour,
         "day2": value.day2,
         "id_clinical_office": value.id_clinical_office

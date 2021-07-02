@@ -56,6 +56,27 @@ router.get('/:id', (req, res) => {
 })
 
 
+router.get('/:id/doctor', (req, res) => {
+  console.log('here')
+  const { id } = req.params
+
+  db.query(`SELECT DISTINCT day  FROM time_slots Where id_doctor =  ${id} AND id NOT IN (SELECT id_time_slot FROM appointments)`, (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    res.send({
+      code: 200,
+      meta: null,
+      data: results
+    })
+  })
+})
+
+
+
+
+
 router.get('/history/:id', (req, res) => {
   const { id } = req.params
 

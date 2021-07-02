@@ -91,7 +91,8 @@
                 Continue
             </v-btn>
 
-            <v-btn text>
+            <v-btn text
+            @click="e6 = 1">
                 Cancel
             </v-btn>
         </v-stepper-content>
@@ -119,10 +120,13 @@
                             sm="4">
                         
                             <v-row>
+                                
                                 <v-date-picker
                                     
                                     class="mb-5"
                                     v-model="picker"
+                                   
+                                    :min="nowDate"
                                     year-icon="mdi-calendar-blank"
                                     prev-icon="mdi-skip-previous"
                                     next-icon="mdi-skip-next"
@@ -158,7 +162,8 @@
                 
                 Continue
             </v-btn>
-            <v-btn text>
+            <v-btn text
+            @click="e6 = 2">
                 Cancel
             </v-btn>
         </v-stepper-content>
@@ -221,7 +226,8 @@
                 picker: new Date().toISOString().substr(0, 10),
                 timeSlots: '',
                 timeSlot: '',
-                
+                nowDate: new Date().toISOString().slice(0,10),
+                appointmentDates: [],                                
             }
         },
 
@@ -231,10 +237,18 @@
                     return JSON.parse(localStorage.user)
                 }
                 return null
-            }
+            },
+
         },
 
         methods: {
+
+            // http://localhost:3000/workingHours/${this.doctor.id_doctor}/doctor/scales if i try with range we can go for this.
+            getAllAvaliableDaysToMakeAppointment() {
+                axios.get(`http://localhost:3000/appointments/10/doctor`).then((response) => {
+                    this.appointmentDates = response.data.data 
+                })
+            },
 
             getSpecializations () {
                 axios.get('http://localhost:3000/specializations').then((response) => {
@@ -248,14 +262,6 @@
                 })
                 this.e6 = 2;
             },
-
-            // getDoctors () {
-            //     axios.get('http://localhost:3000/doctors').then((response) => {
-            //         console.log(response)
-            //         this.doctors = response.data.data
-            //     })
-            // },
-
             getPatients () {
                 if (!this.localStorageUser || !this.localStorageUser.id) {
                     return
@@ -304,6 +310,11 @@
         watch: {
             picker(val) {
                 this.getTimeSlots()
+                console.log(val)
+            },
+
+            doctor(val) {
+                this.getAllAvaliableDaysToMakeAppointment()
                 console.log(val)
             }
         },
