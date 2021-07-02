@@ -9,6 +9,7 @@ const timeSlots = require('./internal/timeSlots')
 const appointments = require('./internal/appointments')
 const pivotDoctorSpecialization = require('./internal/pivot_doctor_specialization')
 const clinicalOffices = require('./internal/clinical_offices')
+const authorization = require('./internal/restore_auth')
 // const todosRouter = require('./internal/todos')
 
 const login = require('./public/login')
@@ -24,6 +25,7 @@ module.exports = {
     app.use('/appointments',  appointments)
     app.use('/pivot_doctor_specialization',  pivotDoctorSpecialization)
     app.use('/clinical_offices', clinicalOffices)
+    app.use('/restore-auth', authorization )
     // app.use('/todos', auth, todosRouter)
     
     app.post('/patients-login', login)

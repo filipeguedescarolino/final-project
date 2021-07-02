@@ -62,7 +62,7 @@
             
                 <v-card-title class="mb-12 justify-center" >
                 
-                    <v-text class="justify-center text--white">
+                    <v-text-content class="justify-center text--white">
 
                         <v-select
                             
@@ -79,7 +79,7 @@
                                 {{ item.name }}
                             </template>
                         </v-select>
-                    </v-text>
+                    </v-text-content>
                 </v-card-title>
 
             </v-card>

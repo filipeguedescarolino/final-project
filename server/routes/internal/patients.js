@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const { validate } = require('indicative/validator')
 
+
 const db = require('../../db')
 
 router.get('/', (req, res) => {
@@ -54,6 +55,12 @@ router.get('/:id', (req, res) => {
     })
   })
 })
+
+
+
+
+
+
 
 router.post('/', (req, res) => {
   const patient = req.body

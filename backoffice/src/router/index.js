@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import WorkingHours from '../components/WorkingHours.vue'
 import CreateDoctor from '../components/CreateDoctor.vue'
 import Specializations from '../components/Specializations.vue'
+// import DoctorsList from '../components/DoctorsList.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -12,6 +13,13 @@ const routes = [
     name: 'WorkingHours',
     component: WorkingHours
   },
+
+  // {
+  //   // componente carregado
+  //   path: '/doctors-list',
+  //   name: 'DoctorsList',
+  //   component: CreateDoctor
+  // },
 
   {
     // componente carregado

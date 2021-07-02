@@ -18,7 +18,8 @@ let bearerInterceptor = {
 
 let responseAuthenticationInterceptor = {
     
-    process (response)  {    
+    process (response)  {
+            
         return response
     },
 
