@@ -37,13 +37,13 @@
 
                         </v-row>
 
-                        <div class="my-4 subtitle-1 black--text">
+                        <!-- <div class="my-4 subtitle-1 black--text">
                             {{profile.specialty}}
-                        </div>
+                        </div> -->
 
-                        <div class="my-4 subtitle-1 black--text">
+                        <!-- <div class="my-4 subtitle-1 black--text">
                             Address: {{profile.address}}
-                        </div>
+                        </div> -->
 
                     </v-card-text>
                     <v-divider> </v-divider>

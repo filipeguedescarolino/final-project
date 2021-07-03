@@ -29,7 +29,7 @@
                     
                     <td>{{ props.item.doctorName }}</td>
                     <td>{{ props.item.specializationDescription }}</td>
-                    <td>{{ props.item.day }}</td>
+                    <td>{{ formatDate(props.item.day )}}</td>
                     <td>{{ props.item.hour }}</td>
                     
                     <td>
@@ -49,7 +49,7 @@
 
 <script>
     import axios from 'axios'
-
+    import moment from 'moment'
     export default {
         data () {
             return {
@@ -79,7 +79,15 @@
             }
             return JSON.parse(localStorage.user)
             
+            },
+
+            momentDates () { 
+                let a =this.appointments.map(({day}) => {
+                    return  moment(day).format('YYYY-MM-DD') 
+                })
+                return a   
             }
+                
         },
 
         methods: {
@@ -102,6 +110,10 @@
                 
                 else return 'green'
             },
+
+            formatDate(value) {
+                return moment(value).format("MMMM DD YYYY")
+            }
 
 
         },

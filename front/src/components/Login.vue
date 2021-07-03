@@ -420,7 +420,7 @@
 
                     axios.post('http://localhost:3000/patients-login', logUser).then((response) => {
                         console.log(response);
-                        this.$router.push('/personalDetails')
+                        this.$router.push('/appointmentsHistory')
                         this.setUser(response.data.patient)
                         this.setToken(response.data.token)
 
