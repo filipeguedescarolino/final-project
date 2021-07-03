@@ -2,12 +2,15 @@
   <!-- App.vue -->
 
     <v-app>
+
+       
+        
         <v-navigation-drawer app permanent>
 
             <v-list-item>
                 <v-list-item-content>
                     <v-list-item-title class="text-h6">
-                        Doctor
+                        Back-office Clinic
                     </v-list-item-title>
                     <v-list-item-subtitle>
                         application
@@ -77,14 +80,16 @@
 </template>
 
 <script>
+    
     export default {
+        
         data () {
             
             return {
                 drawer: true,
                 items: [
                 { title: ' Doctor', to: '/doctors-list', icon: 'fas fa-user-nurse' },
-                { title: ' Patients', to: '/patients', icon: 'fas fa-user-injured' },
+                { title: ' Patients', to: '/patients-list', icon: 'fas fa-user-injured' },
                 { title: 'Working period', to: '/working-hours', icon:"fas fa-calendar-week" },
                 { title: 'Specialties', to: '/specializations', icon:"fas fa-diagnoses" },
                 { title: 'Appointments', to: '/appointments', icon:"far fa-calendar-check" },
@@ -94,6 +99,8 @@
                 ],
             }
         },
+
+        
     }   
 </script>
 
