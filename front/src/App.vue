@@ -80,7 +80,7 @@
                 this.setToken(localStorage.token)
                 this.restoreAuth()
             } else {
-                this.$router.push('/login')
+                this.$router.push('/login').catch(()=>{});
             }
             
             

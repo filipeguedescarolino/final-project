@@ -27,42 +27,105 @@
         </v-list-item>
       </v-list>
       <v-divider></v-divider>
-    
+      <v-form>
+        <v-container>
+          <v-row>
 
+            <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="patient.gender"
+                readonly
+                label="Gender"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
 
-      <v-list
-        nav
-        dense
-      >
-        <v-list-item-group
-          v-model="selectedItem"
-          
-        >
-          <v-list-item
-           
-          >
+             <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="parsedDate "
+                readonly
+                label="Birthdate"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
+
+             <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="patient.address"
+                readonly
+                label="Address"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
+
+             <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="patient.zip_code"
+                readonly
+                label="Zip-Code"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="patient.mobile_phone"
+                readonly
+                label="Mobile Phone"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
+
+             <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="patient.nif"
+                readonly
+                label="Nif"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
+
+             <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="patient.sns"
+                readonly
+                label="Sns"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
+
+             <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="patient.status"
+                readonly
+                label="Status"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
+
             
 
-            <v-list-item-content class="pa-5 ">
-                <v-list-item-title class="mb-1 pa-2"> Gender: {{patient.gender}}</v-list-item-title>
-                <v-list-item-title class="mb-1 pa-2"> birthDate: {{patient.birthdate}}</v-list-item-title>  
-                <v-list-item-title class="mb-1 pa-2"> Adress: {{patient.address}}</v-list-item-title>
-                <v-list-item-title class="mb-1 pa-2"> Zip-Code: {{patient.zip_code}}</v-list-item-title>
-                <v-list-item-title class="mb-1 pa-2"> Mobile: {{patient.mobile_phone}}</v-list-item-title>
-                <v-list-item-title class="mb-1 pa-2"> SNS: {{patient.sns}}</v-list-item-title>
-                <v-list-item-title class="mb-1 pa-2"> Nif: {{patient.nif}}</v-list-item-title>                
-                <v-list-item-title class="pa-2"> Status: {{patient.status}}</v-list-item-title>
+          </v-row>
+        </v-container>
+      </v-form>
 
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
+
+     
     </v-navigation-drawer>
   </v-card>
 </template>
 
 
 <script>
+    import moment from 'moment'
     import axios from 'axios'
     export default {
         data: () => ({
@@ -87,6 +150,13 @@
                 this.patient = response.data.data 
             })
         },
+    },
+
+    computed: {
+      parsedDate () {
+        return  moment(this.patient.birthdate).format("YYYY-MM-DD");
+      }
+
     },
 
     async created() {

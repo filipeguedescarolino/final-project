@@ -17,7 +17,7 @@
                 height="100px">
 
                 <v-card-title class="mb-12 justify-center">         
-                    <v-text-content class="justify-center">
+                    <!-- <v-text-field class="justify-center"> -->
                         <v-select              
                             label='Choose a specialization'
                             v-model='specialization'
@@ -30,7 +30,7 @@
                                 {{ item.description }}
                             </template>
                         </v-select>                    
-                    </v-text-content>
+                    <!-- </v-text-field> -->
                 </v-card-title>           
             </v-card>
 
@@ -62,7 +62,7 @@
             
                 <v-card-title class="mb-12 justify-center" >
                 
-                    <v-text-content class="justify-center text--white">
+                    <!-- <v-text-field class="justify-center text--white"> -->
 
                         <v-select
                             
@@ -79,7 +79,7 @@
                                 {{ item.name }}
                             </template>
                         </v-select>
-                    </v-text-content>
+                    <!-- </v-text-field> -->
                 </v-card-title>
 
             </v-card>
@@ -175,24 +175,67 @@
         <v-stepper-content step="4">
             <v-card
                 color="grey lighten-3"
-                class="mb-12"
-                height="200px">
+                class="mb-12 mt-4 p-3"
+                height="250px">
             
-            
-                <div class="form">
-                    <p v-if="specialization" style="font-weight: bold;"> 
-                        specialization:  {{specialization.description}}  
-                    </p>
 
-                    <p v-if="doctor" style="font-weight: bold;"> 
-                        Doctor: {{doctor.name}} 
-                    </p> 
+            <v-form>
+        
+            <v-row>
+            <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="specialization.description"
+                readonly
+                label="Specialization"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
 
-                    <p v-if="picker && timeSlot" style="font-weight: bold;"> 
-                        Date: {{picker}} at {{timeSlot.start_at}} 
-                    </p> 
-                    
-                </div>
+             <v-col cols="12" sm="6">
+              <v-text-field
+                v-model="doctor.name "
+                readonly
+                label="Doctor's Name"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
+
+             <v-col cols="12" sm="4">
+              <v-text-field
+                v-model="picker"
+                readonly
+                label="Day"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
+
+             <v-col cols="12" sm="4">
+              <v-text-field
+                v-model="timeSlot.start_at"
+                readonly
+                label="Start at"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="4">
+              <v-text-field
+                v-model="timeSlot.end_at"
+                readonly
+                label="Ends at"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
+            </v-row>
+         
+            </v-form>
+
+
+                
             </v-card>
 
             <v-btn
@@ -222,9 +265,9 @@
                 specialization: {},
                 doctor: {},          
                 specializations: [],
-                doctors: '',
+                doctors: [],
                 picker: new Date().toISOString().substr(0, 10),
-                timeSlots: '',
+                timeSlots: [],
                 timeSlot: '',
                 nowDate: new Date().toISOString().slice(0,10),
                 appointmentDates: [],                                
@@ -297,7 +340,8 @@
                 }
 
                 axios.post('http://localhost:3000/appointments', appointmentData).then(response =>  console.log(response.data.id))
-                    alert('Appointment is booked.')      
+                    alert('Appointment is booked.')
+                    this.$router.push('appointmentsHistory')      
                     .catch(error => {
                         this.errorMessage = error.message
                         console.error("There was an error!", error);    

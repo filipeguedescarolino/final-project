@@ -118,7 +118,7 @@ export default {
             
             this.setUser(null)
             this.setToken(null)
-            this.$router.push('/login')
+            this.$router.push('/login').catch(()=>{});
         },
 
             
