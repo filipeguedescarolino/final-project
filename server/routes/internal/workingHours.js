@@ -57,15 +57,19 @@ router.get('/:id', (req, res) => {
 })
 
 
+
+
 router.get('/:id/doctor/scales', (req, res) => {
   console.log('here')
   const { id } = req.params
 
-  db.query(`SELECT day, day2 from working_hour_periods where id_doctor = ${id}`, (error, results) => {
+
+  db.query(`SELECT DATE_FORMAT(day,\'%Y-%m-%d\' ) as day, day2 from working_hour_periods where id_doctor = ${id}`, (error, results) => {
     if (error) {
       throw error
+    
     }
-
+    console.log(results)
     res.send({
       code: 200,
       meta: null,

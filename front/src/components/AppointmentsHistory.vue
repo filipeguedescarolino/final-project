@@ -42,7 +42,7 @@
                         </v-chip>
                     </td>
                     <td v-if="props.item.id_status = 1">                        
-                        <i class="far fa-trash-alt pointer" @click="delete(props.item.id, props.item.id_status)"> </i>                                                    
+                        <i class="far fa-trash-alt pointer" @click="thisDelete(props.item.id, props.item.id_status)"> </i>                                                    
                     </td>
                     <td v-else>
                         Already occured
@@ -124,7 +124,7 @@
                 return moment(value).format("MMMM DD YYYY")
             },
 
-            delete(id, status) {
+            thisDelete(id, status) {
                 if ( status != 1 ) {
                     return
                 }

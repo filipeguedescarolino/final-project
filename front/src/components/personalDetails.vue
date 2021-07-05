@@ -176,6 +176,7 @@
 
 
 <script>
+    import {  mapActions, mapGetters } from 'vuex'
     import moment from 'moment'
     import axios from 'axios'
     export default {
@@ -195,6 +196,12 @@
         }),
 
     methods: {
+
+        ...mapActions([
+        'setUser',
+        'setToken'
+        ]),
+
         getPatient () {
             
             axios.get('http://localhost:3000/patients/1').then((response) => {
@@ -204,7 +211,7 @@
         },
 
         updatePatient () {
-          debugger; // eslint-disable-line no-debugger
+          
           
           let updatedPatient = {
             "name": this.patient.name,
@@ -223,6 +230,7 @@
 
           axios.put(`http://localhost:3000/patients/${this.patient.id}`, updatedPatient).then((response) => {
               console.log(response);
+              this.setUser(response.data.data)
               console.log('Que Fking animal Beast')
           })
           .catch((error) => {
@@ -232,6 +240,7 @@
           this.editMode = false 
           this.getPatient()
 
+
     
 
         }
@@ -240,7 +249,12 @@
     computed: {
       parsedDate () {
         return  moment(this.patient.birthdate).format("YYYY-MM-DD");
-      }
+      },
+
+      ...mapGetters([
+        'user',
+        'token'
+        ]),
 
     },
 

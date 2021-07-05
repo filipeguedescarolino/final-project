@@ -40,7 +40,6 @@
                         <v-row align="center" class="mx-0" v-for="specialization in specializations" :key="specialization.id">
                             
                                 <div class="grey--text mt-2 text-uppercase" v-if="specialization.id_doctor == profile.id">
-
                                     <span> Specialization: </span>   {{specialization.description}}
                                 </div>
                             
