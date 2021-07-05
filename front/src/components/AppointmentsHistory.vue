@@ -32,6 +32,7 @@
                     <td>{{ formatDate(props.item.day )}}</td>
                     <td>{{ props.item.hour }}</td>
                     
+                    
                     <td>
                         <v-chip
                             :color="getColor(props.item.id_status)"
@@ -39,6 +40,12 @@
 
                             <span style="color: black;">{{ props.item.statusDescription }}</span>
                         </v-chip>
+                    </td>
+                    <td v-if="props.item.id_status = 1">                        
+                        <i class="far fa-trash-alt pointer" @click="delete(props.item.id, props.item.id_status)"> </i>                                                    
+                    </td>
+                    <td v-else>
+                        Already occured
                     </td>
                 </tr>
             </template>    
@@ -67,6 +74,8 @@
                     { text: 'day', value: 'day' },
                     { text: 'hour', value: 'hour' },
                     { text: 'status', value: 'status' },
+                    { text: 'Remove', value: 'remove'}
+                    
                 ],
                 
             }
@@ -113,6 +122,18 @@
 
             formatDate(value) {
                 return moment(value).format("MMMM DD YYYY")
+            },
+
+            delete(id, status) {
+                if ( status != 1 ) {
+                    return
+                }
+
+                axios.delete(`http://localhost:3000/appointments/${id}`).then((response) => {
+                console.log(response) 
+                })
+                this.getAppointments()
+
             }
 
 

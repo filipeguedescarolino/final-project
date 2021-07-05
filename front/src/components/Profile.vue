@@ -34,7 +34,16 @@
                             <div class="grey--text ml-4 text-uppercase">
                                 {{profile.rating}}
                             </div>
+                            
+                        </v-row>
 
+                        <v-row align="center" class="mx-0" v-for="specialization in specializations" :key="specialization.id">
+                            
+                                <div class="grey--text mt-2 text-uppercase" v-if="specialization.id_doctor == profile.id">
+
+                                    <span> Specialization: </span>   {{specialization.description}}
+                                </div>
+                            
                         </v-row>
 
                         <!-- <div class="my-4 subtitle-1 black--text">
@@ -63,9 +72,10 @@ export default {
     data () {
         return {
 
-            profiles: [
+            profiles: [],
+            specializations: []
                 
-            ]
+            
         }
     },
 
@@ -78,15 +88,18 @@ export default {
         },
 
         getDoctorsPivotSpecializations () {
-            axios.get('http://localhost:3000/doctors').then((response) => {
-                this.profiles = response.data.data 
+            axios.get('http://localhost:3000/pivot_doctor_specialization/specialization-name').then((response) => {
+                this.specializations = response.data.data 
             })
         },
+
+
     
     },
 
     async created() {
         await this.getDoctors()
+        this.getDoctorsPivotSpecializations()
     }
     
 }

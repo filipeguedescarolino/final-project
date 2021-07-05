@@ -285,7 +285,7 @@
         },
 
         methods: {
-
+            
             // http://localhost:3000/workingHours/${this.doctor.id_doctor}/doctor/scales if i try with range we can go for this.
             getAllAvaliableDaysToMakeAppointment() {
                 axios.get(`http://localhost:3000/appointments/10/doctor`).then((response) => {

@@ -14,7 +14,7 @@
                 <v-img  :src="user.image"> </v-img>
             </v-list-item-avatar>
 
-            <h1> {{user.name}} </h1>
+            <h3> {{user.name}} </h3>
 
         </v-list-item>
         

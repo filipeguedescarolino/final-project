@@ -30,9 +30,14 @@
                 <v-list-item-icon>
                   
                   <v-icon color="blue"
+                    v-if="!editMode"
                     @click="editMode = !editMode">
                       fas fa-edit
-                    </v-icon>
+                  </v-icon>
+                  <v-icon v-else
+                    color="blue">
+                      fas fa-save
+                  </v-icon>
                 </v-list-item-icon>                  
               </v-list-item-content>
             </v-col>
@@ -45,6 +50,26 @@
       <v-form>
         <v-container v-if="patient">
           <v-row>
+            <v-col cols="12" sm="6" v-if="editMode">
+              <v-text-field
+                v-model="patient.name"
+                
+                :readonly= "!editMode"
+                label="Name"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12" sm="6" v-if="editMode">
+              <v-text-field
+                v-model="patient.email"
+                :readonly= "!editMode"
+                label="Email"
+                outlined
+                shaped
+              ></v-text-field>
+            </v-col>
 
             <v-col cols="12" sm="6">
               <v-text-field

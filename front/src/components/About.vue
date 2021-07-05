@@ -1,5 +1,6 @@
 <template>
     <div>
+        
         <h3 class="text-center mt-3"> 
             Who are we?
         </h3>

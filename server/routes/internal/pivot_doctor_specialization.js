@@ -58,6 +58,26 @@ router.get('/specialization/:id', (req, res) => {
   })
 })
 
+
+router.get('/specialization-name', (req, res) => {
+  
+  db.query(`SELECT p.id_specialization, p.id_doctor, d.name, s.description 
+    FROM pivot_doctor_specialization p join doctors d
+    on (d.id = p.id_doctor)
+    join specializations s on (s.id = p.id_specialization)
+    `, (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    res.send({
+      code: 200,
+      meta: null,
+      data: results
+    })
+  })
+})
+
 router.get('/doctor/:id', (req, res) => {
   const { id } = req.params
   db.query(`SELECT p.id_specialization, p.id_doctor, d.name, s.description 
