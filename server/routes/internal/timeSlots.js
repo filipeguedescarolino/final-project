@@ -59,7 +59,7 @@ router.get('/:day/:idDoctor', (req, res) => {
   const { day, idDoctor  } = req.params
   
   
-  db.query(`SELECT * FROM time_slots WHERE day = "${day}" AND id_doctor = ${idDoctor}`, (error, results) => {
+  db.query(`SELECT * FROM time_slots WHERE day = "${day}" AND id_doctor = ${idDoctor} AND id NOT IN (SELECT id_time_slot from appointments)`, (error, results) => {
     if (error) {
       throw error
     }

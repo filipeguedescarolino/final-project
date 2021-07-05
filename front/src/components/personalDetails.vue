@@ -15,26 +15,41 @@
           </v-list-item-avatar>
         </v-list-item>
 
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title class="text-h6">
-              {{patient.name}}
-            </v-list-item-title>
-            <v-list-item-subtitle>{{patient.email}}</v-list-item-subtitle>
-          </v-list-item-content>
+        <v-list-item v-if="patient">
+          <v-row>
+            <v-col cols="12" sm="10">
+              <v-list-item-content>
+                <v-list-item-title class="text-h6">
+                  {{patient.name}}
+                </v-list-item-title>
+                <v-list-item-subtitle>{{patient.email}}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-col>
+            <v-col cols="12" sm="2">
+              <v-list-item-content>
+                <v-list-item-icon>
+                  
+                  <v-icon color="blue"
+                    @click="editMode = !editMode">
+                      fas fa-edit
+                    </v-icon>
+                </v-list-item-icon>                  
+              </v-list-item-content>
+            </v-col>
+          </v-row>
 
           
         </v-list-item>
       </v-list>
       <v-divider></v-divider>
       <v-form>
-        <v-container>
+        <v-container v-if="patient">
           <v-row>
 
             <v-col cols="12" sm="6">
               <v-text-field
                 v-model="patient.gender"
-                readonly
+                :readonly= "!editMode"
                 label="Gender"
                 outlined
                 shaped
@@ -44,7 +59,7 @@
              <v-col cols="12" sm="6">
               <v-text-field
                 v-model="parsedDate "
-                readonly
+                :readonly= "!editMode"
                 label="Birthdate"
                 outlined
                 shaped
@@ -54,7 +69,7 @@
              <v-col cols="12" sm="6">
               <v-text-field
                 v-model="patient.address"
-                readonly
+                :readonly= "!editMode"
                 label="Address"
                 outlined
                 shaped
@@ -64,7 +79,7 @@
              <v-col cols="12" sm="6">
               <v-text-field
                 v-model="patient.zip_code"
-                readonly
+                :readonly= "!editMode"
                 label="Zip-Code"
                 outlined
                 shaped
@@ -74,7 +89,7 @@
             <v-col cols="12" sm="6">
               <v-text-field
                 v-model="patient.mobile_phone"
-                readonly
+                :readonly= "!editMode"
                 label="Mobile Phone"
                 outlined
                 shaped
@@ -84,7 +99,7 @@
              <v-col cols="12" sm="6">
               <v-text-field
                 v-model="patient.nif"
-                readonly
+                :readonly= "!editMode"
                 label="Nif"
                 outlined
                 shaped
@@ -94,7 +109,7 @@
              <v-col cols="12" sm="6">
               <v-text-field
                 v-model="patient.sns"
-                readonly
+                :readonly= "!editMode"
                 label="Sns"
                 outlined
                 shaped
@@ -104,13 +119,24 @@
              <v-col cols="12" sm="6">
               <v-text-field
                 v-model="patient.status"
-                readonly
+                :readonly= "!editMode"
                 label="Status"
                 outlined
                 shaped
               ></v-text-field>
             </v-col>
 
+            <v-col cols="12" sm="5">
+            </v-col>
+            <v-col cols="12" sm="3"
+              v-if="editMode">
+              <v-btn
+                depressed
+                color="primary"
+                @click="updatePatient()">
+                Update
+              </v-btn>
+            </v-col>
             
 
           </v-row>
@@ -129,6 +155,7 @@
     import axios from 'axios'
     export default {
         data: () => ({
+        editMode: false,
         selectedItem: 0,
         items: [
             { text: 'My Files', icon: 'mdi-folder' },
@@ -150,6 +177,39 @@
                 this.patient = response.data.data 
             })
         },
+
+        updatePatient () {
+          debugger; // eslint-disable-line no-debugger
+          
+          let updatedPatient = {
+            "name": this.patient.name,
+            "birthdate": this.parsedDate,
+            "address": this.patient.address,
+            "zip_code": this.patient.zip_code,
+            "email": this.patient.email,
+            "mobile_phone": this.patient.mobile_phone,
+            "sns": this.patient.sns,
+            "nif": this.patient.nif,
+            "password": this.patient.password,
+            "status": this.patient.status,
+            "gender": this.patient.gender,
+            "id_insurance": this.patient.id_insurance
+          }
+
+          axios.put(`http://localhost:3000/patients/${this.patient.id}`, updatedPatient).then((response) => {
+              console.log(response);
+              console.log('Que Fking animal Beast')
+          })
+          .catch((error) => {
+              console.log(error);
+              console.log('deuBosta')
+          });
+          this.editMode = false 
+          this.getPatient()
+
+    
+
+        }
     },
 
     computed: {

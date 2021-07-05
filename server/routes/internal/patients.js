@@ -103,10 +103,21 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const { id } = req.params
-  const status = req.body
+  const patient = req.body
 
-  validate(status, {
-    status: 'required',
+  
+
+  validate(patient, {
+    name: "required",
+    birthdate: "required|date",
+    address: "required",
+    zip_code: "required",
+    email: "required",
+    mobile_phone: "required",
+    sns: "required",
+    nif: "required",
+    password: "required",
+    gender: "required",
   }).then((value) => {
     db.query('UPDATE patients SET ? WHERE id = ?', [value, id], (error, results, _) => {
       if (error) {
