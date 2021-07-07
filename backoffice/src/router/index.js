@@ -1,18 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import WorkingHours from '../components/WorkingHours.vue'
-import CreateDoctor from '../components/CreateDoctor.vue'
-import Specializations from '../components/Specializations.vue'
-import DoctorsList from '../components/DoctorsList.vue'
-import PatientsList from '../components/PatientsList.vue'
+// import WorkingHours from '../components/WorkingHours.vue'
+import DoctorsMaintenance from '../components/doctors/Maintenance.vue'
+import DoctorsList from '../components/doctors/List.vue'
+import DoctorsShow from '../components/doctors/Show.vue'
+// import Specializations from '../components/Specializations.vue'
+
+// import PatientsList from '../components/PatientsList.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {
     // componente carregado
-    path: '/working-hours',
-    name: 'WorkingHours',
-    component: WorkingHours
+    path: '/doctors-maintenance',
+    name: 'DoctorsMaintenance',
+    component: DoctorsMaintenance
   },
 
   {
@@ -24,24 +26,31 @@ const routes = [
 
   {
     // componente carregado
-    path: '/patients-list',
-    name: 'PatientsList',
-    component: PatientsList
+    path: '/doctors-show/:id',
+    name: 'DoctorsShow',
+    component: DoctorsShow
   },
 
-  {
-    // componente carregado
-    path: '/create_doctor',
-    name: 'CreateDoctor',
-    component: CreateDoctor
-  },
+  // {
+  //   // componente carregado
+  //   path: '/patients-list',
+  //   name: 'PatientsList',
+  //   component: PatientsList
+  // },
 
-  {
-    // componente carregado
-    path: '/specializations',
-    name: 'Specializations',
-    component: Specializations
-  },
+  // {
+  //   // componente carregado
+  //   path: '/create_doctor',
+  //   name: 'CreateDoctor',
+  //   component: CreateDoctor
+  // },
+
+  // {
+  //   // componente carregado
+  //   path: '/specializations',
+  //   name: 'Specializations',
+  //   component: Specializations
+  // },
 ]
 
 const router = new VueRouter({

@@ -1,11 +1,35 @@
 <template>
  <!-- eslint-disable  -->
-  <v-app id="inspire">
+  
+
+  <div class="text-center">
+    <v-dialog
+      v-model="dialog"
+      width="1500"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="red lighten-2"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        >
+          Click Me
+        </v-btn>
+      </template>
+
+      <v-card>
+        <v-card-title class="text-h5 blue lighten-2" align= "center">
+          Privacy Policy
+        </v-card-title>
+
+        <v-card-text>
+          <v-app id="inspire">
     <v-main>
       <v-container   class="fill-height" fluid>
        
           
-            <v-card class="elevation-12" width= 100% >
+            <v-card class="elevation-12" width= 120% >
               
               <v-window v-model="step">
                 
@@ -14,7 +38,7 @@
                   <v-row class="fill-height">
                    
 
-                    <v-col cols="12" md="8" center>
+                    <v-col cols="12" md="12" center>
                       <v-card-text class="mt-6">
                         <h1 class="text-center display-1 blue--text text--lighten-1">
                           Create Doctor Account Account
@@ -179,6 +203,23 @@
       </v-container>
     </v-main>
   </v-app>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="dialog = false"
+          >
+            I accept
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
@@ -198,6 +239,7 @@
       return {
         logPassword: '',
         logEmail: '',
+        editMode: false,
         valid: true,
         name: '',
         nameRules: [
@@ -271,7 +313,8 @@
         birthDateRules: [
           v => !!v || 'birthDate is required'
         ],
-        step: 2
+        step: 2,
+        dialog: false,
 
       }
     },
@@ -286,6 +329,9 @@
       // },
 
       registerDoctor() {
+        if (this.editMode) {
+          return
+        }
         if (this.password != this.passwordConfirmation) {
           alert('password is not equal')
           return
@@ -304,36 +350,7 @@
           "password": "123456",
           "image_src": "https://www.hsmporto.pt/wp-content/uploads/2015/12/placeholder_homem.png"    
         }
-        // let doctor = {
-          // "name": this.name,
-          // "gender": this.select,
-          // "birthdate": this.birthDate,
-          // "address": this.address,
-          // "zip_code": this.zipCode,
-          // "email": this.email,
-          // "mobile_phone": this.mobilePhone,
-          
-          // "certificate_number": this.certificate,
-          // "nif": this.nif,
-          // "password": this.password,
-          // "image_src": this.image
-          
-          // // "name":'Filipe',
-          // // "gender": 'Male',
-          // // "birthdate": "1991-12-12",
-          // // "address": 'ra',
-          // // "zip_code": '123',
-          // // "email": "filsss@gmail.com",
-          // // "mobile_phone": "919191991",
-          
-          // // "certificate_number": 2203331,
-          // // "nif": "254245211",
-          // // "password": "123456",
-          // // "image_src": "https://www.hsmporto.pt/wp-content/uploads/2015/12/placeholder_homem.png"        
-        // }
-
-        
-
+              
         console.log(doctor2)
         
         axios.post('http://localhost:3000/doctors', doctor2).then((response) => {

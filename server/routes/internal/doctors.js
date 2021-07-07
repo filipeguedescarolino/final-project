@@ -100,6 +100,47 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const { id } = req.params
+  const doctor = req.body
+
+  
+
+  validate(doctor, {
+    certificate_number: "required",
+    name: "required",
+    birthdate: "required|date",
+    address: "required",
+    zip_code: "required",
+    email: "required",
+    mobile_phone: "required",
+    nif: "required",
+    password: "required",
+    gender: "required",
+    image_src: "required"
+  }).then((value) => {
+    db.query('UPDATE patients SET ? WHERE id = ?', [value, id], (error, results, _) => {
+      if (error) {
+        throw error
+      }
+
+      db.query('SELECT * FROM patients WHERE id = ? LIMIT 1', [id], (error, results, _) => {
+        if (error) {
+          throw error
+        }
+
+        res.send({
+          code: 200,
+          meta: null,
+          data: results[0]
+        })
+      })
+    })
+  }).catch((error) => {
+    res.status(400).send(error)
+  })
+})
+
+router.put('/status/:id', (req, res) => {
+  const { id } = req.params
   const status = req.body
 
   validate(status, {
