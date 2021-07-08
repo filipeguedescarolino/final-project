@@ -5,16 +5,16 @@
       width="900" class="pa-4">
      
       <v-system-bar> 
-        <span v-if="mode == 'edit'"> Update this Insurance </span>
-         <span v-else> Insurance Details </span>   
+        <span v-if="mode == 'edit'"> Update this Specialization </span>
+         <span v-else> Specialization Details </span>   
       </v-system-bar>
       <v-divider></v-divider>
       <v-form>
-        <v-container v-if="insuranceProxy">
+        <v-container v-if="specializationProxy">
           <v-row>
             <v-col cols="12" sm="12">
               <v-text-field
-                v-model="insuranceProxy.description"
+                v-model="specializationProxy.description"
                 
                 :readonly= "!editMode"
                 label="Description"
@@ -25,9 +25,9 @@
 
             <v-col cols="12" sm="12">
               <v-text-field
-                v-model.number="insuranceProxy.reimbursed_value"
+                v-model="specializationProxy.base_price"
                 :readonly= "!editMode"
-                label="Value to be reimbursed"
+                label="Base_price"
                 outlined
                 shaped
               ></v-text-field>
@@ -66,13 +66,13 @@ export default {
     props: {
       value: Boolean,
       mode: String,
-      insurance: Object
+      specialization: Object
 
   },
 
     data() {
       return {
-        insuranceProxy: null
+        specializationProxy: null
       }
     },
 
@@ -94,7 +94,7 @@ export default {
     methods: {
       save () {
         debugger
-        this.$emit('save', this.insuranceProxy, this.mode)
+        this.$emit('save', this.specializationProxy, this.mode)
       }
     },
 
@@ -103,7 +103,7 @@ export default {
 
 
     created() {
-      this.insuranceProxy = _.cloneDeep(this.insurance)
+      this.specializationProxy = _.cloneDeep(this.specialization)
     }
   }
 </script>

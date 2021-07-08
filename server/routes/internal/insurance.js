@@ -88,9 +88,10 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const { id } = req.params
-  const reimbursedValue = req.body
+  const insurance = req.body
 
-  validate(reimbursedValue, {
+  validate(insurance, {
+    description: 'required',
     reimbursed_value: 'required',
   }).then((value) => {
     db.query('UPDATE insurance SET ? WHERE id = ?', [value, id], (error, results, _) => {

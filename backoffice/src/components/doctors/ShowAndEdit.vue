@@ -198,7 +198,7 @@ export default {
 
     methods: {
       save () {
-        debugger
+        
         this.$emit('save', this.userProxy, this.mode)
       }
     },

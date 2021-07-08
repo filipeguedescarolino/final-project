@@ -90,7 +90,7 @@
                 items: [
                 { title: ' Doctor', to: '/doctors-list', icon: 'fas fa-user-nurse' },
                 { title: ' Insurance', to: '/insurance-list', icon: 'fas fa-user-injured' },
-                { title: 'Specialties', to: '/specializations', icon:"fas fa-diagnoses" },
+                { title: 'Specializations', to: '/specialization-list', icon:"fas fa-diagnoses" },
                 { title: 'Working period', to: '/working-hours', icon:"fas fa-calendar-week" },
                 { title: 'Appointments', to: '/appointments', icon:"far fa-calendar-check" },
                 { title: 'Prices', to: '/prices', icon:"fas fas fa-dollar-sign" },

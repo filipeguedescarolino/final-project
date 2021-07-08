@@ -87,10 +87,11 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const { id } = req.params
-  const description = req.body
+  const specialization = req.body
 
-  validate(description, {
+  validate(specialization, {
     description: 'required',
+    base_price: 'required',
   }).then((value) => {
     db.query('UPDATE specializations SET ? WHERE id = ?', [value, id], (error, results, _) => {
       if (error) {

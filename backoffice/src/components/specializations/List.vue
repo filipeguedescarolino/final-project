@@ -12,7 +12,7 @@
         </v-card-title>
         <v-data-table
             :headers="headers"
-            :items="insurances"
+            :items="specializations"
             :search="search"
             :items-per-page="5"
             item-key="name"
@@ -28,7 +28,7 @@
             <template v-slot:item="props">
                 <tr>
                     <td >{{ props.item.description }}</td>
-                    <td>{{ props.item.reimbursed_value }}</td>                                        
+                    <td>{{ props.item.base_price }}</td>                                        
                     <td >                        
                         <i class="fas fa-search mr-3" style="cursor: pointer" @click="openMaintenaceModal(props.item, 'check')"> </i>
                         <i class="fas fa-edit" style="cursor: pointer" @click="openMaintenaceModal(props.item, 'edit')"> </i>                                                                                 
@@ -37,13 +37,13 @@
             </template>
         </v-data-table>
           
-        <show-and-edit  v-model="show" v-if="show"   :insurance="insurance"  :mode="mode"  @save="saveInsurance(insurance, mode)" > </show-and-edit>
+        <show-and-edit  v-model="show" v-if="show"   :specialization="specialization"  :mode="mode"  @save="saveSpecialization(specialization, mode)" > </show-and-edit>
          <!-- Inicia dialog  -->
             <v-dialog v-model="dialogCreate" max-width="900px">
                 <v-card>
                     <v-navigation-drawer permanent
                     width="900" class="pa-4">
-                    <v-system-bar style="text: center">  Create Insurance</v-system-bar>
+                    <v-system-bar style="text: center">  Create Specialization</v-system-bar>
                     
                     <v-divider></v-divider>
                     <v-form>
@@ -62,7 +62,7 @@
 
                             <v-col cols="12" sm="12" >
                             <v-text-field
-                                v-model.number="create.reimbursed_value"
+                                v-model.number="create.base_price"
                                 
                                 label="Value to be Reimbursed"
                                 outlined
@@ -84,8 +84,8 @@
                     <v-btn
                         depressed
                         color="primary"
-                        @click="postInsurance()">
-                       Add Insurance
+                        @click="postSpecialization()">
+                       Add Specialization
                     </v-btn>
                             
                     
@@ -99,7 +99,7 @@
                 dark
                 x-large
                 @click="dialogCreate = !dialogCreate"
-                >Add new Insurance
+                >Add new Specialization
                     <i class="fas fa-plus ml-3" style="cursor: pointer" > </i>
                 </v-btn>
             </div>
@@ -118,7 +118,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
   components: { ShowAndEdit },
 
         props: {
-            insurance: {
+            specialization: {
                 type: Object
             }
       
@@ -127,24 +127,24 @@ import ShowAndEdit from './ShowAndEdit.vue'
   
         data () {
             return {
-                insurances: [],
+                specializations: [],
                 search: '',
                 show: false,
                 headers: [
                     {
-                        text: 'Insurance',
+                        text: 'Specializations',
                         align: 'center',
                         sortable: false,
                         value: 'description',
                     },       
-                    { text: 'Reimbursed_value', value: 'reimbursed_value', align: 'center' },                                       
+                    { text: 'Base_price', value: 'base_price', align: 'center' },                                       
                     { text: 'Edit', value: 'edit', align: 'center'}
                 ],
                
                 mode: null,
                 create: {
                     "description": null,
-                    "reimbursed_value": null,                    
+                    "base_price": null,                    
                 },
 
                 dialogCreate: false
@@ -156,22 +156,22 @@ import ShowAndEdit from './ShowAndEdit.vue'
     
         methods: {
 
-            getInsurances () {
-                axios.get('http://localhost:3000/insurance').then((response) => {
-                    this.insurances = response.data.data 
+            getSpecializations () {
+                axios.get('http://localhost:3000/specializations').then((response) => {
+                    this.specializations = response.data.data 
                 })
             },  
            
 
             openMaintenaceModal (row, mode) {
                 // user que estas a editar
-                debugger
-                this.insurance = row
+               
+                this.specialization = row
                 this.mode= mode
                 this.show = true
             },
 
-            async saveInsurance (insurance, mode) {
+            async saveSpecialization (specialization, mode) {
                 
                 this.show = false
                 if (mode == 'check') {
@@ -180,15 +180,15 @@ import ShowAndEdit from './ShowAndEdit.vue'
 
                 
                 
-                let insuranceUpdate = {
-                    "description": insurance.description,
-                    "reimbursed_value": insurance.reimbursed_value
+                let specializationUpdate = {
+                    "description": specialization.description,
+                    "reimbursed_value": specialization.reimbursed_value
                 }
                 
 
-                await axios.put(`http://localhost:3000/insurance/${insurance.id}`, insuranceUpdate).then((response) => {
+                await axios.put(`http://localhost:3000/specialization/${specialization.id}`, specializationUpdate).then((response) => {
                     console.log(response);
-                    alert('correu bem')
+                    
                     console.log('Que Fking animal Beast')
                 })
                 .catch((error) => {
@@ -196,20 +196,20 @@ import ShowAndEdit from './ShowAndEdit.vue'
                     console.log('deuBosta')
                 });
                 
-                this.getInsurances()
+                this.getSpecializations()
                         
             },
 
 
-            postInsurance() {
+            postSpecialization() {
                 
                 
-                let insuranceCreate = {
+                let specializationCreate = {
                     "description": this.create.description,
                     "reimbursed_value": this.create.reimbursed_value
                 }
 
-                axios.post(`http://localhost:3000/insurance`, insuranceCreate).then((response) => {
+                axios.post(`http://localhost:3000/specializations`, specializationCreate).then((response) => {
                     console.log(response);
                     alert('correu bem')
                     console.log('Que Fking animal Beast')
@@ -219,7 +219,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
                     console.log('deuBosta')
                 });
                 
-                this.getInsurances()
+                this.getSpecializations()
                 this.dialogCreate = false
             }
                 
@@ -228,7 +228,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
         
 
         created() {
-            this.getInsurances()
+            this.getSpecializations()
             
         }
     }

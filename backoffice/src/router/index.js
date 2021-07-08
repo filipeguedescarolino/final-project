@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import WorkingHours from '../components/WorkingHours.vue'
+import WorkingHours from '../components/WorkingHours.vue'
+import CheckAppointments from '../components/CheckAppointments.vue'
 
 import DoctorsList from '../components/doctors/List.vue'
 import InsuranceList from '../components/insurances/List.vue'
+import SpecializationList from '../components/specializations/List.vue'
+
 // import Specializations from '../components/Specializations.vue'
 // import HelloWorld from '../components/HelloWorld.vue'
 // import PatientsList from '../components/PatientsList.vue'
@@ -26,14 +29,21 @@ const routes = [
     component: InsuranceList
   },
 
+  {
+    // componente carregado
+    path: '/specialization-list',
+    name: 'SpecializationList',
+    component: SpecializationList
+  },
+
   
 
-  // {
-  //   // componente carregado
-  //   path: '/teste',
-  //   name: 'DoctorsShow',
-  //   component: HelloWorld
-  // },
+  {
+    // componente carregado
+    path: '/working-hours',
+    name: 'WorkingHours',
+    component: WorkingHours
+  },
 
 
 
@@ -44,12 +54,12 @@ const routes = [
   //   component: PatientsList
   // },
 
-  // {
-  //   // componente carregado
-  //   path: '/create_doctor',
-  //   name: 'CreateDoctor',
-  //   component: CreateDoctor
-  // },
+  {
+    // componente carregado
+    path: '/appointments',
+    name: 'CheckAppointments',
+    component: CheckAppointments
+  },
 
   // {
   //   // componente carregado

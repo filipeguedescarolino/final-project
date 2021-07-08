@@ -107,7 +107,7 @@
                 }
                 
                 let userId = this.localStorageUser.id
-                axios.get(`http://localhost:3000/appointments/history/${userId}`).then((response) => {
+                axios.get(`http://localhost:3000/appointments/history/"${userId}"`).then((response) => {
                     this.appointments = response.data.data 
                 })
             },
