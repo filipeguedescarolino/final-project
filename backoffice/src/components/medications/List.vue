@@ -12,10 +12,10 @@
         </v-card-title>
         <v-data-table
             :headers="headers"
-            :items="specializations"
+            :items="medications"
             :search="search"
             :items-per-page="5"
-            item-key="name"
+            item-key="description"
             class="elevation-1 pa-4"
             :footer-props="{
             showFirstLastPage: true,
@@ -28,7 +28,7 @@
             <template v-slot:item="props">
                 <tr>
                     <td >{{ props.item.description }}</td>
-                    <td>{{ props.item.base_price }}</td>                                        
+                    <td>{{ props.item.observations }}</td>                                        
                     <td >                        
                         <i class="fas fa-search mr-3" style="cursor: pointer" @click="openMaintenaceModal(props.item, 'check')"> </i>
                         <i class="fas fa-edit" style="cursor: pointer" @click="openMaintenaceModal(props.item, 'edit')"> </i>                                                                                 
@@ -37,13 +37,13 @@
             </template>
         </v-data-table>
           
-        <show-and-edit  v-model="show" v-if="show"   :specialization="specialization"  :mode="mode"  @save="saveSpecialization(specialization, mode)" > </show-and-edit>
+        <show-and-edit  v-model="show" v-if="show"   :medication="medication"  :mode="mode"  @save="saveMedication(medication, mode)" > </show-and-edit>
          <!-- Inicia dialog  -->
             <v-dialog v-model="dialogCreate" max-width="900px">
                 <v-card>
                     <v-navigation-drawer permanent
                     width="900" class="pa-4">
-                    <v-system-bar style="text: center">  Create Specialization</v-system-bar>
+                    <v-system-bar style="text: center">  Create Medication</v-system-bar>
                     
                     <v-divider></v-divider>
                     <v-form>
@@ -62,9 +62,9 @@
 
                             <v-col cols="12" sm="12" >
                             <v-text-field
-                                v-model.number="create.base_price"
+                                v-model.number="create.observations"
                                 
-                                label="Base price for the appointment"
+                                label="Observations"
                                 outlined
                                 shaped
                             ></v-text-field>
@@ -84,8 +84,8 @@
                     <v-btn
                         depressed
                         color="primary"
-                        @click="postSpecialization()">
-                       Add Specialization
+                        @click="postMedication()">
+                       Add Medication
                     </v-btn>
                             
                     
@@ -99,7 +99,7 @@
                 dark
                 x-large
                 @click="dialogCreate = !dialogCreate"
-                >Add new Specialization
+                >Add new Medication
                     <i class="fas fa-plus ml-3" style="cursor: pointer" > </i>
                 </v-btn>
             </div>
@@ -118,7 +118,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
   components: { ShowAndEdit },
 
         props: {
-            specialization: {
+            medication: {
                 type: Object
             }
       
@@ -127,24 +127,24 @@ import ShowAndEdit from './ShowAndEdit.vue'
   
         data () {
             return {
-                specializations: [],
+                medications: [],
                 search: '',
                 show: false,
                 headers: [
                     {
-                        text: 'Specializations',
+                        text: 'Medication',
                         align: 'center',
                         sortable: false,
                         value: 'description',
                     },       
-                    { text: 'Base_price', value: 'base_price', align: 'center' },                                       
+                    { text: 'Observations', value: 'observations', align: 'center' },                                       
                     { text: 'Edit', value: 'edit', align: 'center'}
                 ],
                
                 mode: null,
                 create: {
                     "description": null,
-                    "base_price": null,                    
+                    "observations": null,                    
                 },
 
                 dialogCreate: false
@@ -156,22 +156,22 @@ import ShowAndEdit from './ShowAndEdit.vue'
     
         methods: {
 
-            getSpecializations () {
-                axios.get('http://localhost:3000/specializations').then((response) => {
-                    this.specializations = response.data.data 
+            getMedications () {
+                axios.get('http://localhost:3000/medications').then((response) => {
+                    this.medications = response.data.data 
                 })
             },  
            
 
             openMaintenaceModal (row, mode) {
                 // user que estas a editar
-               
-                this.specialization = row
+                debugger
+                this.medication = row
                 this.mode= mode
                 this.show = true
             },
 
-            async saveSpecialization (specialization, mode) {
+            async saveMedication (medication, mode) {
                 
                 this.show = false
                 if (mode == 'check') {
@@ -180,36 +180,13 @@ import ShowAndEdit from './ShowAndEdit.vue'
 
                 
                 
-                let specializationUpdate = {
-                    "description": specialization.description,
-                    "base_price": specialization.base_price
+                let medicationUpdate = {
+                    "description": medication.description,
+                    "observations": medication.observations
                 }
                 
 
-                await axios.put(`http://localhost:3000/specialization/${specialization.id}`, specializationUpdate).then((response) => {
-                    console.log(response);
-                    
-                    console.log('Que Fking animal Beast')
-                })
-                .catch((error) => {
-                    console.log(error);
-                    console.log('deuBosta')
-                });
-                
-                this.getSpecializations()
-                        
-            },
-
-
-            postSpecialization() {
-                
-                
-                let specializationCreate = {
-                    "description": this.create.description,
-                    "base_price": this.create.base_price
-                }
-
-                axios.post(`http://localhost:3000/specializations`, specializationCreate).then((response) => {
+                await axios.put(`http://localhost:3000/medications/${medication.id}`, medicationUpdate).then((response) => {
                     console.log(response);
                     alert('correu bem')
                     console.log('Que Fking animal Beast')
@@ -219,7 +196,30 @@ import ShowAndEdit from './ShowAndEdit.vue'
                     console.log('deuBosta')
                 });
                 
-                this.getSpecializations()
+                this.getMedications()
+                        
+            },
+
+
+            postMedication() {
+                
+                
+                let medicationCreate = {
+                    "description": this.create.description,
+                    "observations": this.create.observations
+                }
+
+                axios.post(`http://localhost:3000/medications`, medicationCreate).then((response) => {
+                    console.log(response);
+                    alert('correu bem')
+                    console.log('Que Fking animal Beast')
+                })
+                .catch((error) => {
+                    console.log(error);
+                    console.log('deuBosta')
+                });
+                
+                this.getMedications()
                 this.dialogCreate = false
             }
                 
@@ -228,7 +228,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
         
 
         created() {
-            this.getSpecializations()
+            this.getMedications()
             
         }
     }

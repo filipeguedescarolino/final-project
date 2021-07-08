@@ -65,7 +65,7 @@ router.get('/day/:day', (req, res) => {
             join specializations s on (s.id = p.id_specialization)
             join patients c on (c.id = p.id_patient)
             join status t on (t.id = p.id_status)
-            WHERE p.day =  ${day}`, (error, results) => {
+            WHERE p.day =  "${day}"`, (error, results) => {
     if (error) {
       throw error
     }
@@ -82,12 +82,12 @@ router.get('/day/:day/doctor/:doctorId', (req, res) => {
   const { day, doctorId } = req.params
 
   db.query(` SELECT p.id, p.day, p.hour, p.id_doctor, p.id_patient,  c.name as patientName, d.name as doctorName,  s.description as specializationDescription,  t.description as statusDescription
-            FROM appointments p 
+            FROM appointments p   
             join doctors d on (d.id = p.id_doctor)
             join specializations s on (s.id = p.id_specialization)
             join patients c on (c.id = p.id_patient)
             join status t on (t.id = p.id_status)
-            WHERE p.day =  ${day} AND p.id_doctor = ${doctorId}`, (error, results) => {
+            WHERE p.day =  "${day}" AND p.id_doctor = ${doctorId}`, (error, results) => {
     if (error) {
       throw error
     }

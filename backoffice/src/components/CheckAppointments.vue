@@ -95,12 +95,10 @@
                                 <span style="color: black;">{{ props.item.statusDescription }}</span>
                             </v-chip>
                         </td>
-                        <td v-if="props.statusDescription == 'scheduled'">                        
+                        <td>                        
                             <i class="far fa-trash-alt pointer" @click="thisChangeStatus(props.item.id)"> </i>                                                    
                         </td>
-                        <td v-else>
-                            Completed
-                        </td>
+                        
                     </tr>
                 </template>    
             </v-data-table>
@@ -125,12 +123,12 @@ import moment from 'moment'
                         value: 'id_doctor',
                     },
                     
-                    { text: 'Day', value: 'day'},
-                    { text: 'Hour', value: 'hour' },
-                    { text: 'Patient', value: 'patientName' },
-                    { text: 'Specialization', value: 'specializationDescription'},
-                    { text: 'Status', value: 'statusDescription' },
-                    { text: 'Completed?', value: 'status_id' },
+                    { text: 'Day', value: 'day', align: 'center'},
+                    { text: 'Hour', value: 'hour', align: 'center' },
+                    { text: 'Patient', value: 'patientName', align: 'center' },
+                    { text: 'Specialization', value: 'specializationDescription', align: 'center'},
+                    { text: 'Status', value: 'statusDescription', align: 'center' },
+                    { text: 'Completed?', value: 'status_id', align: 'center' },
                     
                     
                 ],
@@ -164,8 +162,10 @@ import moment from 'moment'
             },
             
             getAllAppointments () {
+                
                if (this.doctor) {
                    this.getAllAppointmentsWithDoctor()
+                   return
                 }
                 axios.get(`http://localhost:3000/appointments/day/${this.picker}`).then((response) => {
                     this.appointments = response.data.data 
@@ -176,7 +176,7 @@ import moment from 'moment'
                if (!this.doctor) {
                    return
                 }
-                axios.get(`http://localhost:3000/appointments/day/${this.formatDate(this.picker)}/doctor/${this.doctor.id}`).then((response) => {
+                axios.get(`http://localhost:3000/appointments/day/${this.picker}/doctor/${this.doctor.id}`).then((response) => {
                     this.appointments = response.data.data 
                 })
             },

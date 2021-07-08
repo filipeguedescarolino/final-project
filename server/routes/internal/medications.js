@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
   const _limit = +limit || 20
   const _page = +page || 1
 
-  db.query('SELECT COUNT(id) FROM clinical_office', (error, countResults, _) => {
+  db.query('SELECT COUNT(id) FROM medication', (error, countResults, _) => {
     if (error) {
       throw error
     }
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
     const total = countResults[0]['COUNT(id)']
     const pageCount = Math.ceil(total / _limit)
 
-    db.query('SELECT * FROM clinical_office LIMIT ?, ?', [offset, _limit], (error, results, _) => {
+    db.query('SELECT * FROM medication LIMIT ?, ?', [offset, _limit], (error, results, _) => {
       if (error) {
         throw error
       }
@@ -42,7 +42,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query(`SELECT * FROM clinical_office WHERE id = ${id}`, (error, results) => {
+  db.query(`SELECT * FROM medication WHERE id = ${id}`, (error, results) => {
     if (error) {
       throw error
     }
@@ -56,20 +56,20 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  const clinicalOffice = req.body
+  const medication = req.body
 
-  validate(clinicalOffice, {
+  validate(medication, {
     description: "required",
-    max_capacity: "required"
+    observations: "required",
   }).then((value) => {
-    db.query('INSERT INTO clinical_office SET ?', [value], (error, results, _) => {
+    db.query('INSERT INTO medication SET ?', [value], (error, results, _) => {
       if (error) {
         throw error
       }
 
       const { insertId } = results
 
-      db.query('SELECT * FROM clinical_office WHERE id = ? LIMIT 1', [insertId], (error, results, _) => {
+      db.query('SELECT * FROM medication WHERE id = ? LIMIT 1', [insertId], (error, results, _) => {
         if (error) {
           throw error
         }
@@ -88,18 +88,18 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const { id } = req.params
-  const description = req.body
+  const medication = req.body
 
-  validate(description, {
+  validate(medication, {
     description: 'required',
-    max_capacity: 'required',
+    reimbursed_value: 'required',
   }).then((value) => {
-    db.query('UPDATE clinical_office SET ? WHERE id = ?', [value, id], (error, results, _) => {
+    db.query('UPDATE medication SET ? WHERE id = ?', [value, id], (error, results, _) => {
       if (error) {
         throw error
       }
 
-      db.query('SELECT * FROM clinical_office WHERE id = ? LIMIT 1', [id], (error, results, _) => {
+      db.query('SELECT * FROM medication WHERE id = ? LIMIT 1', [id], (error, results, _) => {
         if (error) {
           throw error
         }
@@ -139,14 +139,14 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query('SELECT * FROM clinical_office WHERE id = ?', [id], (error, results, _) => {
+  db.query('SELECT * FROM medication WHERE id = ?', [id], (error, results, _) => {
     if (error) {
       throw error
     }
     console.log(results)
-    const [doctors] = results
+    const [medication] = results
 
-    db.query('DELETE FROM clinical_office WHERE id = ?', [id], (error, _, __) => {
+    db.query('DELETE FROM medication WHERE id = ?', [id], (error, _, __) => {
       if (error) {
         throw error
       }
@@ -154,7 +154,7 @@ router.delete('/:id', (req, res) => {
       res.send({
         code: 200,
         meta: null,
-        data: doctors
+        data: medication
       })
     })
   })

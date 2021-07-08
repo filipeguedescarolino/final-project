@@ -1,5 +1,6 @@
 const auth = require('../middlewares/auth')
 const bcrypt = require('bcrypt')
+const medicationsRouter = require('./internal/medications')
 const patientsRouter = require('./internal/patients')
 const doctorsRouter = require('./internal/doctors')
 const specializationsRouter = require('./internal/specializations')
@@ -10,6 +11,7 @@ const appointments = require('./internal/appointments')
 const pivotDoctorSpecialization = require('./internal/pivot_doctor_specialization')
 const clinicalOffices = require('./internal/clinical_offices')
 const authorization = require('./internal/restore_auth')
+
 // const todosRouter = require('./internal/todos')
 
 const login = require('./public/login')
@@ -17,6 +19,7 @@ const login = require('./public/login')
 module.exports = {
   register(app) {
     app.use('/patients',  patientsRouter)
+    app.use('/medications',  medicationsRouter)
     app.use('/doctors',  doctorsRouter)
     app.use('/specializations',  specializationsRouter)
     app.use('/insurance',  insuranceRouter)

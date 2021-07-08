@@ -90,11 +90,11 @@
                 items: [
                 { title: ' Doctor', to: '/doctors-list', icon: 'fas fa-user-nurse' },
                 { title: ' Insurance', to: '/insurance-list', icon: 'fas fa-user-injured' },
-                { title: 'Specializations', to: '/specialization-list', icon:"fas fa-diagnoses" },
+                { title: 'Specializations', to: '/specialization-list', icon:"fas fa-diagnoses" },               
+                { title: 'Medications', to: '/medications-list', icon:"fas  fa-pills" },
+                { title: 'Offices', to: '/office-list', icon:"fas  fa-building" },
                 { title: 'Working period', to: '/working-hours', icon:"fas fa-calendar-week" },
-                { title: 'Appointments', to: '/appointments', icon:"far fa-calendar-check" },
-                { title: 'Prices', to: '/prices', icon:"fas fas fa-dollar-sign" },
-                { title: 'Income Doctors', to: 'incomedoctor', icon:"fas fas fa-dollar-sign" },
+                { title: 'Appointments', to: '/appointments', icon:"far fa-calendar-check" },                
                 { title: 'Income Patients', to: 'incomepatients', icon:"fas fas fa-dollar-sign" },
                 ],
             }
