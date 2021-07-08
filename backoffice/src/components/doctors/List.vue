@@ -44,14 +44,15 @@
                 </tr>
             </template>
         </v-data-table>
-        <i class="fas fa-plus" style="cursor: pointer" @click="dialogCreate = true"> </i>  
+       
+          
         <show-and-edit  v-model="show" v-if="show"   :user="user"  :mode="mode"  @save="saveUser(user, mode)" > </show-and-edit>
          <!-- Inicia dialog  -->
             <v-dialog v-model="dialogCreate" max-width="900px">
                 <v-card>
                     <v-navigation-drawer permanent
                     width="900" class="pa-4">
-                    <v-system-bar></v-system-bar>
+                    <v-system-bar style="text: center">  Create Doctor</v-system-bar>
                     
                     <v-divider></v-divider>
                     <v-form>
@@ -187,18 +188,6 @@
                                 shaped
                             ></v-text-field>
                             </v-col>
-
-                            <v-col cols="12" sm="5">
-                            </v-col>
-                            <v-col cols="12" sm="3">
-                            
-                            <v-btn
-                                depressed
-                                color="primary"
-                                @click="postDoctor()">
-                                Create Doctor
-                            </v-btn>
-                            </v-col>
                             
 
                         </v-row>
@@ -209,11 +198,31 @@
                     
                     </v-navigation-drawer>
                     <v-card-actions>
-                    <v-btn color="primary"  @click=" dialogCreate = false">Return</v-btn>
+                    <v-btn color="primary"  @click=" dialogCreate = false">
+                        Return
+                    </v-btn>
+                    <v-btn
+                        depressed
+                        color="primary"
+                        @click="postDoctor()">
+                        Create Doctor
+                    </v-btn>
+                            
+                    
                     </v-card-actions>
                 </v-card>
             </v-dialog>
-
+            <div class="text-center">
+                <v-btn
+                rounded
+                color="primary"
+                dark
+                x-large
+                @click="dialogCreate = !dialogCreate"
+                >Adicionar novo Médico
+                    <i class="fas fa-plus ml-3" style="cursor: pointer" > </i>
+                </v-btn>
+            </div>
 
 
         <!-- termina dialog  -->

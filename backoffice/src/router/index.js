@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 // import WorkingHours from '../components/WorkingHours.vue'
 
 import DoctorsList from '../components/doctors/List.vue'
-
+import InsuranceList from '../components/insurances/List.vue'
 // import Specializations from '../components/Specializations.vue'
 // import HelloWorld from '../components/HelloWorld.vue'
 // import PatientsList from '../components/PatientsList.vue'
@@ -17,6 +17,13 @@ const routes = [
     path: '/doctors-list',
     name: 'DoctorsList',
     component: DoctorsList
+  },
+
+  {
+    // componente carregado
+    path: '/insurance-list',
+    name: 'InsuranceList',
+    component: InsuranceList
   },
 
   

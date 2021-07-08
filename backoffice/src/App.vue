@@ -38,9 +38,9 @@
                         <v-list-item-title>{{ item.title }}</v-list-item-title>
                     </v-list-item-content>
 
-                    <v-list-item-icon>
+                    <!-- <v-list-item-icon>
                         <v-icon color="blue">fas fa-plus</v-icon>
-                    </v-list-item-icon>
+                    </v-list-item-icon> -->
                 </v-list-item>
             </v-list>
 
@@ -89,9 +89,9 @@
                 drawer: true,
                 items: [
                 { title: ' Doctor', to: '/doctors-list', icon: 'fas fa-user-nurse' },
-                { title: ' Patients', to: '/patients-list', icon: 'fas fa-user-injured' },
-                { title: 'Working period', to: '/working-hours', icon:"fas fa-calendar-week" },
+                { title: ' Insurance', to: '/insurance-list', icon: 'fas fa-user-injured' },
                 { title: 'Specialties', to: '/specializations', icon:"fas fa-diagnoses" },
+                { title: 'Working period', to: '/working-hours', icon:"fas fa-calendar-week" },
                 { title: 'Appointments', to: '/appointments', icon:"far fa-calendar-check" },
                 { title: 'Prices', to: '/prices', icon:"fas fas fa-dollar-sign" },
                 { title: 'Income Doctors', to: 'incomedoctor', icon:"fas fas fa-dollar-sign" },

@@ -21,22 +21,7 @@
                 <v-list-item-subtitle>{{userProxy.email}}</v-list-item-subtitle>
               </v-list-item-content>
             </v-col>
-            <v-col cols="12" sm="2">
-              <v-list-item-content>
-                <v-list-item-icon>
-                  
-                  <v-icon color="blue"
-                    v-if="!editMode"
-                    @click="editMode = !editMode">
-                      fas fa-edit
-                  </v-icon>
-                  <v-icon v-else
-                    color="blue">
-                      fas fa-save
-                  </v-icon>
-                </v-list-item-icon>                  
-              </v-list-item-content>
-            </v-col>
+            
           </v-row>          
         </v-list-item>
       </v-list>
