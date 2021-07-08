@@ -1,21 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import WorkingHours from '../components/WorkingHours.vue'
-import DoctorsMaintenance from '../components/doctors/Maintenance.vue'
-import DoctorsList from '../components/doctors/List.vue'
-import DoctorsShow from '../components/doctors/Show.vue'
-// import Specializations from '../components/Specializations.vue'
 
+import DoctorsList from '../components/doctors/List.vue'
+
+// import Specializations from '../components/Specializations.vue'
+// import HelloWorld from '../components/HelloWorld.vue'
 // import PatientsList from '../components/PatientsList.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    // componente carregado
-    path: '/doctors-maintenance',
-    name: 'DoctorsMaintenance',
-    component: DoctorsMaintenance
-  },
+  
 
   {
     // componente carregado
@@ -24,12 +19,16 @@ const routes = [
     component: DoctorsList
   },
 
-  {
-    // componente carregado
-    path: '/doctors-show/:id',
-    name: 'DoctorsShow',
-    component: DoctorsShow
-  },
+  
+
+  // {
+  //   // componente carregado
+  //   path: '/teste',
+  //   name: 'DoctorsShow',
+  //   component: HelloWorld
+  // },
+
+
 
   // {
   //   // componente carregado

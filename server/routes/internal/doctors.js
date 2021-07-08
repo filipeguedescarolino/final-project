@@ -59,17 +59,16 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   const doctors = req.body
-
+ 
   validate(doctors, {
     certificate_number: "required",
     name: "required",  
-    birthdate: "required",
+    birthdate: "required|date",
     address: "required",
     zip_code: "required",
     email: "required",
     mobile_phone: "required",
-    password: "required",
-    
+    password: "required",  
     gender:"required",
     image_src: "required",
     nif: "required"
@@ -106,23 +105,23 @@ router.put('/:id', (req, res) => {
 
   validate(doctor, {
     certificate_number: "required",
-    name: "required",
+    name: "required",  
     birthdate: "required|date",
     address: "required",
     zip_code: "required",
     email: "required",
     mobile_phone: "required",
-    nif: "required",
-    password: "required",
-    gender: "required",
-    image_src: "required"
+    password: "required",  
+    gender:"required",
+    image_src: "required",
+    nif: "required"
   }).then((value) => {
-    db.query('UPDATE patients SET ? WHERE id = ?', [value, id], (error, results, _) => {
+    db.query('UPDATE doctors SET ? WHERE id = ?', [value, id], (error, results, _) => {
       if (error) {
         throw error
       }
 
-      db.query('SELECT * FROM patients WHERE id = ? LIMIT 1', [id], (error, results, _) => {
+      db.query('SELECT * FROM doctors WHERE id = ? LIMIT 1', [id], (error, results, _) => {
         if (error) {
           throw error
         }
