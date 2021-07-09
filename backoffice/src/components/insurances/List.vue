@@ -37,7 +37,7 @@
             </template>
         </v-data-table>
           
-        <show-and-edit  v-model="show" v-if="show"   :insurance="insurance"  :mode="mode"  @save="saveInsurance(insurance, mode)" > </show-and-edit>
+        <show-and-edit  v-model="show" v-if="show"   :insurance="insurance"  :mode="mode"  @save="saveInsurance()" > </show-and-edit>
          <!-- Inicia dialog  -->
             <v-dialog v-model="dialogCreate" max-width="900px">
                 <v-card>
@@ -117,17 +117,12 @@ import ShowAndEdit from './ShowAndEdit.vue'
     export default {
   components: { ShowAndEdit },
 
-        props: {
-            insurance: {
-                type: Object
-            }
-      
-
-        },
+        
   
         data () {
             return {
                 insurances: [],
+                insurance: null,
                 search: '',
                 show: false,
                 headers: [

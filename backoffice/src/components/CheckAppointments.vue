@@ -102,6 +102,10 @@
                         <td>                        
                             {{props.item.base_price * (props.item.reimbursed_value / 100) }} €                                                  
                         </td>
+
+                        <td>                        
+                            {{props.item.base_price -(props.item.base_price * (props.item.reimbursed_value / 100) )}} €                                                  
+                        </td>
                         
                     </tr>
                 </template>    
@@ -134,6 +138,7 @@ import moment from 'moment'
                     { text: 'Status', value: 'statusDescription', align: 'center' },
                     { text: 'Payment', value: 'base_price', align: 'center' },
                     { text: 'Covered', value: 'reimbursed_value', align: 'center' },
+                    { text: 'Total', value: 'total', align: 'center' },
                     
                     
                 ],

@@ -37,7 +37,7 @@
             </template>
         </v-data-table>
           
-        <show-and-edit  v-model="show" v-if="show"   :office="office"  :mode="mode"  @save="saveOffice(office, mode)" > </show-and-edit>
+        <show-and-edit  v-model="show" v-if="show"   :office="office"  :mode="mode"  @save="saveOffice()" > </show-and-edit>
          <!-- Inicia dialog  -->
             <v-dialog v-model="dialogCreate" max-width="900px">
                 <v-card>
@@ -117,17 +117,12 @@ import ShowAndEdit from './ShowAndEdit.vue'
     export default {
   components: { ShowAndEdit },
 
-        props: {
-            office: {
-                type: Object
-            }
-      
-
-        },
+        
   
         data () {
             return {
                 offices: [],
+                office: null,
                 search: '',
                 show: false,
                 headers: [

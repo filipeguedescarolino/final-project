@@ -46,7 +46,7 @@
         </v-data-table>
        
           
-        <show-and-edit  v-model="show" v-if="show"   :user="user"  :mode="mode"  @save="saveUser(user, mode)" > </show-and-edit>
+        <show-and-edit  v-model="show" v-if="show"   :user="user"  :mode="mode"  @save="saveUser" > </show-and-edit>
          <!-- Inicia dialog  -->
             <v-dialog v-model="dialogCreate" max-width="900px">
                 <v-card>
@@ -234,13 +234,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
     export default {
   components: { ShowAndEdit },
 
-        props: {
-            user: {
-                type: Object
-            }
-      
-
-        },
+        
   
         data () {
             return {
@@ -260,7 +254,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
                     
                     { text: 'Edit', value: 'edit', align: 'center'}
                 ],
-               
+                user: null,
                 mode: null,
                 create: {
                     "birthdate": null,
@@ -337,6 +331,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
                 this.mode= mode
                 this.show = true
             },
+
 
             async saveUser (user, mode) {
                 debugger

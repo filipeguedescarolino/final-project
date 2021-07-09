@@ -37,7 +37,7 @@
             </template>
         </v-data-table>
           
-        <show-and-edit  v-model="show" v-if="show"   :medication="medication"  :mode="mode"  @save="saveMedication(medication, mode)" > </show-and-edit>
+        <show-and-edit  v-model="show" v-if="show"   :medication="medication"  :mode="mode"  @save="saveMedication()" > </show-and-edit>
          <!-- Inicia dialog  -->
             <v-dialog v-model="dialogCreate" max-width="900px">
                 <v-card>
@@ -117,17 +117,12 @@ import ShowAndEdit from './ShowAndEdit.vue'
     export default {
   components: { ShowAndEdit },
 
-        props: {
-            medication: {
-                type: Object
-            }
-      
-
-        },
+        
   
         data () {
             return {
                 medications: [],
+                medication: null,
                 search: '',
                 show: false,
                 headers: [

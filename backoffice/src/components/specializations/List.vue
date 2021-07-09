@@ -37,7 +37,7 @@
             </template>
         </v-data-table>
           
-        <show-and-edit  v-model="show" v-if="show"   :specialization="specialization"  :mode="mode"  @save="saveSpecialization(specialization, mode)" > </show-and-edit>
+        <show-and-edit  v-model="show" v-if="show"   :specialization="specialization"  :mode="mode"  @save="saveSpecialization()" > </show-and-edit>
          <!-- Inicia dialog  -->
             <v-dialog v-model="dialogCreate" max-width="900px">
                 <v-card>
@@ -117,17 +117,12 @@ import ShowAndEdit from './ShowAndEdit.vue'
     export default {
   components: { ShowAndEdit },
 
-        props: {
-            specialization: {
-                type: Object
-            }
-      
-
-        },
+       
   
         data () {
             return {
                 specializations: [],
+                specialization: null,
                 search: '',
                 show: false,
                 headers: [
