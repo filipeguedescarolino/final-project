@@ -92,7 +92,7 @@ router.put('/:id', (req, res) => {
 
   validate(medication, {
     description: 'required',
-    reimbursed_value: 'required',
+    observations: 'required',
   }).then((value) => {
     db.query('UPDATE medication SET ? WHERE id = ?', [value, id], (error, results, _) => {
       if (error) {

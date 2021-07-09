@@ -94,6 +94,7 @@ export default {
     methods: {
       save () {
         debugger
+        
         this.$emit('save', this.specializationProxy, this.mode)
       }
     },

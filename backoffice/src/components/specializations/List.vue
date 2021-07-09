@@ -37,7 +37,7 @@
             </template>
         </v-data-table>
           
-        <show-and-edit  v-model="show" v-if="show"   :specialization="specialization"  :mode="mode"  @save="saveSpecialization()" > </show-and-edit>
+        <show-and-edit  v-model="show" v-if="show"   :specialization="specialization"  :mode="mode"  @save="saveSpecialization" > </show-and-edit>
          <!-- Inicia dialog  -->
             <v-dialog v-model="dialogCreate" max-width="900px">
                 <v-card>
@@ -167,7 +167,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
             },
 
             async saveSpecialization (specialization, mode) {
-                
+                debugger
                 this.show = false
                 if (mode == 'check') {
                     return
@@ -181,7 +181,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
                 }
                 
 
-                await axios.put(`http://localhost:3000/specialization/${specialization.id}`, specializationUpdate).then((response) => {
+                await axios.put(`http://localhost:3000/specializations/${specialization.id}`, specializationUpdate).then((response) => {
                     console.log(response);
                     
                     console.log('Que Fking animal Beast')

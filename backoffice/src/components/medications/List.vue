@@ -37,7 +37,7 @@
             </template>
         </v-data-table>
           
-        <show-and-edit  v-model="show" v-if="show"   :medication="medication"  :mode="mode"  @save="saveMedication()" > </show-and-edit>
+        <show-and-edit  v-model="show" v-if="show"   :medication="medication"  :mode="mode"  @save="saveMedication" > </show-and-edit>
          <!-- Inicia dialog  -->
             <v-dialog v-model="dialogCreate" max-width="900px">
                 <v-card>

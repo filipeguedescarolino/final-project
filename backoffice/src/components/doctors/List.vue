@@ -188,6 +188,20 @@
                                 shaped
                             ></v-text-field>
                             </v-col>
+                            <v-col cols="12" sm="12">
+                                <v-select              
+                            label='Choose a specialization'
+                            v-model='specialization'
+                            :items='specializations'
+                            item-value='id'
+                            item-text='description'
+                            return-object>
+
+                            <template slot='item' slot-scope='{ item }'>
+                                {{ item.description }}
+                            </template>
+                        </v-select>     
+                            </v-col>
                             
 
                         </v-row>
@@ -238,6 +252,9 @@ import ShowAndEdit from './ShowAndEdit.vue'
   
         data () {
             return {
+                idDoctor: null,
+                specializations: null,
+                specialization: null, 
                 doctors: [],
                 search: '',
                 show: false,
@@ -291,14 +308,24 @@ import ShowAndEdit from './ShowAndEdit.vue'
 
             
 
-            // thisDelete(id) {
-               
-            //     axios.delete(`http://localhost:3000/doctors/${id}`).then((response) => {
-            //     console.log(response) 
-            //     })
-            //     this.getDoctors()
+           getSpecializations () {
+                axios.get('http://localhost:3000/specializations').then((response) => {
+                    this.specializations = response.data.data 
+                })
+            },
 
-            // },
+            postSpecialization () {
+                debugger
+                let pivotDoctorSpecialization = {
+                    "id_doctor": this.idDoctor,
+                    "id_specialization": this.specialization.id
+                }
+                axios.post('http://localhost:3000/pivot_doctor_specialization', pivotDoctorSpecialization).then((response) => {
+                    console.log(response)
+                     
+                })
+
+            },
 
             thisChangeStatus(doctor) {
                 if (doctor.status == "active") {
@@ -318,7 +345,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
                 }
 
                 axios.put(`http://localhost:3000/doctors/status/${doctor.id}`, status2).then((response) => {
-                        console.log(response)
+                    console.log(response) 
                     })
                     this.getDoctors()
                     return
@@ -360,6 +387,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
 
                 await axios.put(`http://localhost:3000/doctors/${user.id}`, doctorUpdate).then((response) => {
                     console.log(response);
+                    
                     alert('correu bem')
                     console.log('Que Fking animal Beast')
                 })
@@ -367,13 +395,15 @@ import ShowAndEdit from './ShowAndEdit.vue'
                     console.log(error);
                     console.log('deuBosta')
                 });
+
+                
                 
                 this.getDoctors()
                         
             },
 
 
-            postDoctor() {
+            async postDoctor() {
                 if (this.create.password != this.create.password2) {
                     return
                 }
@@ -393,8 +423,9 @@ import ShowAndEdit from './ShowAndEdit.vue'
                     "image_src": this.create.image_src
                 }
 
-                axios.post(`http://localhost:3000/doctors`, doctorCreate).then((response) => {
-                    console.log(response);
+                await axios.post(`http://localhost:3000/doctors`, doctorCreate).then((response) => {
+                    console.log(response)
+                    this.idDoctor = response.data.data.id
                     alert('correu bem')
                     console.log('Que Fking animal Beast')
                 })
@@ -402,7 +433,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
                     console.log(error);
                     console.log('deuBosta')
                 });
-                
+                this.postSpecialization() 
                 this.getDoctors()
                 this.dialogCreate = false
             }
@@ -413,6 +444,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
 
         created() {
             this.getDoctors()
+            this.getSpecializations()
             
         }
     }
