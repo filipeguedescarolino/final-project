@@ -30,10 +30,10 @@
                     <td >{{ props.item.name }}</td>
                     <td>{{ props.item.email }}</td>
                     <td>{{ props.item.certificate_number }}</td>
-                     <td>
+                     <td @click="thisChangeStatus( props.item)">
                         {{ props.item.status }}                      
-                        <i v-if="props.item.status = 'active'" class="fas fa-ban" style="cursor: pointer" @click="toggleInactive( props.item.id)"> </i>
-                        <i v-else  class="fas fa-first-aid " style="cursor: pointer" @click="toggleActive( props.item.id)"> </i>                                                    
+                        <i  class="fas fa-ban" style="cursor: pointer" > </i>
+                                                                            
                     </td>
                     
                     <td >                        
@@ -198,34 +198,31 @@
                     
                     </v-navigation-drawer>
                     <v-card-actions>
-                    <v-btn color="primary"  @click=" dialogCreate = false">
-                        Return
-                    </v-btn>
-                    <v-btn
-                        depressed
-                        color="primary"
-                        @click="postDoctor()">
-                        Create Doctor
-                    </v-btn>
-                            
-                    
+                        <v-btn color="primary"  @click=" dialogCreate = false">
+                            Return
+                        </v-btn>
+                        <v-btn
+                            depressed
+                            color="primary"
+                            @click="postDoctor()">
+                            Create Doctor
+                        </v-btn>                                                
                     </v-card-actions>
                 </v-card>
             </v-dialog>
+
             <div class="text-center">
                 <v-btn
-                rounded
+                
                 color="primary"
                 dark
-                x-large
+                
                 @click="dialogCreate = !dialogCreate"
                 >Adicionar novo Médico
                     <i class="fas fa-plus ml-3" style="cursor: pointer" > </i>
                 </v-btn>
             </div>
-
-
-        <!-- termina dialog  -->
+       
     </v-card>
 </template>
 
@@ -309,46 +306,28 @@ import ShowAndEdit from './ShowAndEdit.vue'
 
             // },
 
-            toggleActive(id) {
-                
-                let currentStatus = {
-                    "status" : "active"
+            thisChangeStatus(doctor) {
+                if (doctor.status == "active") {
+                    let status  = {
+                        "status": "inactive" 
+                    }
+
+                    axios.put(`http://localhost:3000/doctors/status/${doctor.id}`, status).then((response) => {
+                        console.log(response)
+                    })
+                    this.getDoctors()
+                    return 
                 }
-                axios.put(`http://localhost:3000/doctors/status/${id}`, currentStatus).then((response) => {
-                        // Takes 4 seconds, 4 more seconds, 4 more seconds, etc
-                        // Ideally: Takes 4 seconds, returns in the same ~4 seconds, returns in the same ~4 seconds, etc
-                        console.log(response);
-                        console.log('Que Fking animal Beast')
-                })
-                    .catch((error) => {
-                        console.log(error);
-                        console.log('deuBosta')
-                });
 
-                this.getDoctors()
-
-                
-            },
-
-            toggleInactive(id) {
-                
-                let currentStatus = {
-                    "status" : "inactive"
+                let status2 = {
+                    "status": "active"
                 }
-                axios.put(`http://localhost:3000/doctors/status/${id}`, currentStatus).then((response) => {
-                        // Takes 4 seconds, 4 more seconds, 4 more seconds, etc
-                        // Ideally: Takes 4 seconds, returns in the same ~4 seconds, returns in the same ~4 seconds, etc
-                        console.log(response);
-                        console.log('Que Fking animal Beast')
-                })
-                    .catch((error) => {
-                        console.log(error);
-                        console.log('deuBosta')
-                });
 
-                this.getDoctors()
-
-                
+                axios.put(`http://localhost:3000/doctors/status/${doctor.id}`, status2).then((response) => {
+                        console.log(response)
+                    })
+                    this.getDoctors()
+                    return
             },
 
             openMaintenaceModal (row, mode) {

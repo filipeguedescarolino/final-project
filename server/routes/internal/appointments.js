@@ -59,13 +59,14 @@ router.get('/:id', (req, res) => {
 router.get('/day/:day', (req, res) => {
   const { day } = req.params
 
-  db.query(` SELECT p.id, p.day, p.hour, p.id_doctor, p.id_patient,  c.name as patientName, d.name as doctorName,  s.description as specializationDescription,  t.description as statusDescription
-            FROM appointments p 
-            join doctors d on (d.id = p.id_doctor)
-            join specializations s on (s.id = p.id_specialization)
-            join patients c on (c.id = p.id_patient)
-            join status t on (t.id = p.id_status)
-            WHERE p.day =  "${day}"`, (error, results) => {
+  db.query(` SELECT p.id, p.day, s.base_price, p.id_status, i.reimbursed_value,  p.hour, p.id_doctor, p.id_patient,  c.name as patientName, d.name as doctorName,  s.description as specializationDescription,  t.description as statusDescription
+    FROM appointments p   
+    join doctors d on (d.id = p.id_doctor)
+    join specializations s on (s.id = p.id_specialization)
+    join patients c on (c.id = p.id_patient)
+    join status t on (t.id = p.id_status)
+    join insurance i on (i.id = c.id_insurance)
+    WHERE p.day =  "${day}"`, (error, results) => {
     if (error) {
       throw error
     }
@@ -81,12 +82,13 @@ router.get('/day/:day', (req, res) => {
 router.get('/day/:day/doctor/:doctorId', (req, res) => {
   const { day, doctorId } = req.params
 
-  db.query(` SELECT p.id, p.day, p.hour, p.id_doctor, p.id_patient,  c.name as patientName, d.name as doctorName,  s.description as specializationDescription,  t.description as statusDescription
+  db.query(` SELECT p.id, p.day, s.base_price, p.id_status, i.reimbursed_value,  p.hour, p.id_doctor, p.id_patient,  c.name as patientName, d.name as doctorName,  s.description as specializationDescription,  t.description as statusDescription
             FROM appointments p   
             join doctors d on (d.id = p.id_doctor)
             join specializations s on (s.id = p.id_specialization)
             join patients c on (c.id = p.id_patient)
             join status t on (t.id = p.id_status)
+            join insurance i on (i.id = c.id_insurance)
             WHERE p.day =  "${day}" AND p.id_doctor = ${doctorId}`, (error, results) => {
     if (error) {
       throw error
@@ -184,7 +186,7 @@ router.put('/:id', (req, res) => {
   const status = req.body
 
   validate(status, {
-    status: 'required',
+    id_status: 'required',
   }).then((value) => {
     db.query('UPDATE appointments SET ? WHERE id = ?', [value, id], (error, results, _) => {
       if (error) {

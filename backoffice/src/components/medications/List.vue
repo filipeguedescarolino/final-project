@@ -94,10 +94,10 @@
             </v-dialog>
             <div class="text-center">
                 <v-btn
-                rounded
+                
                 color="primary"
                 dark
-                x-large
+                
                 @click="dialogCreate = !dialogCreate"
                 >Add new Medication
                     <i class="fas fa-plus ml-3" style="cursor: pointer" > </i>

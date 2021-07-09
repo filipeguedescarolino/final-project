@@ -4,7 +4,7 @@
         color="#F2F2F2"
         class="mb-12 justify pa-5 "
         height="500px"
-        width="350px" >
+        width="350px">
         
     
         <v-container fluid>
@@ -40,16 +40,14 @@
                                 {{ item.name }} 
                             </template>
                         </v-select>
+                        
+                        
                     </v-row>
                 </v-col>
-
-    
-
-    
-    
+                  
             </v-row>
+            
         </v-container>
-    
     </v-card>
 
     <v-card v-if="appointments">
@@ -87,16 +85,22 @@
                         <td>{{ props.item.specializationDescription }}</td>
                         
                         
-                        <td>
+                        <td @click="thisChangeStatus(props.item)">
                             <v-chip
-                                :color="getColor(props.statusDescription)"
+                                :color="getColor(props.item)"
                                 dark>
 
                                 <span style="color: black;">{{ props.item.statusDescription }}</span>
                             </v-chip>
+                            <i class="fas fa-random pointer ml-3" > </i> 
+
                         </td>
                         <td>                        
-                            <i class="far fa-trash-alt pointer" @click="thisChangeStatus(props.item.id)"> </i>                                                    
+                            {{ props.item.base_price }} €                                                   
+                        </td>
+
+                        <td>                        
+                            {{props.item.base_price * (props.item.reimbursed_value / 100) }} €                                                  
                         </td>
                         
                     </tr>
@@ -118,7 +122,7 @@ import moment from 'moment'
                 headers: [
                     {
                         text: 'Doctor',
-                        align: 'start',
+                        align: 'center',
                         sortable: false,
                         value: 'id_doctor',
                     },
@@ -128,7 +132,8 @@ import moment from 'moment'
                     { text: 'Patient', value: 'patientName', align: 'center' },
                     { text: 'Specialization', value: 'specializationDescription', align: 'center'},
                     { text: 'Status', value: 'statusDescription', align: 'center' },
-                    { text: 'Completed?', value: 'status_id', align: 'center' },
+                    { text: 'Payment', value: 'base_price', align: 'center' },
+                    { text: 'Covered', value: 'reimbursed_value', align: 'center' },
                     
                     
                 ],
@@ -153,8 +158,8 @@ import moment from 'moment'
                 return moment(value).format("MMMM DD YYYY")
             },
 
-            getColor (id_status) {
-                if (id_status == 1) {
+            getColor (item) {
+                if (item.id_status == 1) {
                     return 'yellow'
                 } 
                 
@@ -187,10 +192,32 @@ import moment from 'moment'
                 })
             },
 
-            
-            
+            thisChangeStatus(appointment) {
+                if (appointment.id_status == 1) {
+                    let status  = {
+                        "id_status": 2 
+                    }
+
+                    axios.put(`http://localhost:3000/appointments/${appointment.id}`, status).then((response) => {
+                        console.log(response)
+                    })
+                    this.getAllAppointments()
+                    return 
+                }
+
+                let status2 = {
+                    "id_status": 1
+                }
+
+                axios.put(`http://localhost:3000/appointments/${appointment.id}`, status2).then((response) => {
+                        console.log(response)
+                    })
+                    this.getAllAppointments()
+                    return
+            }
 
             
+
 
             
         },
