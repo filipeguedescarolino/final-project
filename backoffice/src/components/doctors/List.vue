@@ -246,7 +246,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
 
 
     export default {
-  components: { ShowAndEdit },
+        components: { ShowAndEdit },
 
         
   
@@ -321,10 +321,23 @@ import ShowAndEdit from './ShowAndEdit.vue'
                     "id_specialization": this.specialization.id
                 }
                 axios.post('http://localhost:3000/pivot_doctor_specialization', pivotDoctorSpecialization).then((response) => {
-                    console.log(response)
-                     
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })                                         
                 })
-
+                .catch((error) => {
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'ERROR!',
+                        text: error,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });
             },
 
             thisChangeStatus(doctor) {
@@ -334,8 +347,23 @@ import ShowAndEdit from './ShowAndEdit.vue'
                     }
 
                     axios.put(`http://localhost:3000/doctors/status/${doctor.id}`, status).then((response) => {
-                        console.log(response)
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })                     
+                })
+                .catch((error) => {
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'ERROR!',
+                        text: error,
+                        showConfirmButton: false,
+                        timer: 1500
                     })
+                });
                     this.getDoctors()
                     return 
                 }
@@ -345,8 +373,23 @@ import ShowAndEdit from './ShowAndEdit.vue'
                 }
 
                 axios.put(`http://localhost:3000/doctors/status/${doctor.id}`, status2).then((response) => {
-                    console.log(response) 
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })                    
+                })
+                .catch((error) => {
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'ERROR!',
+                        text: error,
+                        showConfirmButton: false,
+                        timer: 1500
                     })
+                });
                     this.getDoctors()
                     return
             },
@@ -386,20 +429,24 @@ import ShowAndEdit from './ShowAndEdit.vue'
                 
 
                 await axios.put(`http://localhost:3000/doctors/${user.id}`, doctorUpdate).then((response) => {
-                    console.log(response);
-                    
-                    alert('correu bem')
-                    console.log('Que Fking animal Beast')
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })                  
                 })
                 .catch((error) => {
-                    console.log(error);
-                    console.log('deuBosta')
-                });
-
-                
-                
-                this.getDoctors()
-                        
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'ERROR!',
+                        text: error,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });   
+                this.getDoctors()                        
             },
 
 
@@ -424,15 +471,27 @@ import ShowAndEdit from './ShowAndEdit.vue'
                 }
 
                 await axios.post(`http://localhost:3000/doctors`, doctorCreate).then((response) => {
-                    console.log(response)
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }) 
                     this.idDoctor = response.data.data.id
-                    alert('correu bem')
-                    console.log('Que Fking animal Beast')
+                    
                 })
                 .catch((error) => {
-                    console.log(error);
-                    console.log('deuBosta')
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'ERROR!',
+                        text: error,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    
                 });
+
                 this.postSpecialization() 
                 this.getDoctors()
                 this.dialogCreate = false

@@ -182,13 +182,26 @@ import ShowAndEdit from './ShowAndEdit.vue'
                 
 
                 await axios.put(`http://localhost:3000/medications/${medication.id}`, medicationUpdate).then((response) => {
-                    console.log(response);
-                    alert('correu bem')
-                    console.log('Que Fking animal Beast')
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }) 
+                    
+                    
+                    
+                    
                 })
                 .catch((error) => {
-                    console.log(error);
-                    console.log('deuBosta')
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'ERROR!',
+                        text: error,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 });
                 
                 this.getMedications()
@@ -205,13 +218,26 @@ import ShowAndEdit from './ShowAndEdit.vue'
                 }
 
                 axios.post(`http://localhost:3000/medications`, medicationCreate).then((response) => {
-                    console.log(response);
-                    alert('correu bem')
-                    console.log('Que Fking animal Beast')
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }) 
+                    
+                    
+                    
+                    
                 })
                 .catch((error) => {
-                    console.log(error);
-                    console.log('deuBosta')
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'ERROR!',
+                        text: error,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 });
                 
                 this.getMedications()

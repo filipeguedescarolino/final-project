@@ -178,8 +178,18 @@ import moment from 'moment'
                    return
                 }
                 axios.get(`http://localhost:3000/appointments/day/${this.picker}`).then((response) => {
+                    
+                    console.log(response)
+                    
                     this.appointments = response.data.data 
+                    
+                    
                 })
+                .catch((error) => {
+                    console.log(error)
+                });
+                    
+                
             },
 
             getAllAppointmentsWithDoctor () {
@@ -187,8 +197,17 @@ import moment from 'moment'
                    return
                 }
                 axios.get(`http://localhost:3000/appointments/day/${this.picker}/doctor/${this.doctor.id}`).then((response) => {
+                    console.log(response)
+                    
                     this.appointments = response.data.data 
+                    
+                    
                 })
+                .catch((error) => {
+                    console.log(error)
+                });
+                    
+                
             },
 
             getDoctors () {
@@ -204,8 +223,27 @@ import moment from 'moment'
                     }
 
                     axios.put(`http://localhost:3000/appointments/${appointment.id}`, status).then((response) => {
-                        console.log(response)
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }) 
+                    
+                    
+                    
+                    
+                })
+                .catch((error) => {
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'ERROR!',
+                        text: error,
+                        showConfirmButton: false,
+                        timer: 1500
                     })
+                });
                     this.getAllAppointments()
                     return 
                 }
@@ -215,8 +253,27 @@ import moment from 'moment'
                 }
 
                 axios.put(`http://localhost:3000/appointments/${appointment.id}`, status2).then((response) => {
-                        console.log(response)
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }) 
+                    
+                    
+                    
+                    
+                })
+                .catch((error) => {
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'ERROR!',
+                        text: error,
+                        showConfirmButton: false,
+                        timer: 1500
                     })
+                });
                     this.getAllAppointments()
                     return
             }

@@ -231,16 +231,44 @@
       
       getDoctors () {
         axios.get('http://localhost:3000/doctors').then((response) => {
-          console.log(response)
-          this.doctors = response.data.data
+          
+                    
+        this.doctors = response.data.data  
+          
+          
         })
+        .catch((error) => {
+            this.$swal.fire({
+                icon: 'error',
+                title: 'ERROR!',
+                text: error,
+                showConfirmButton: false,
+                timer: 1500
+            })
+        });
+          
+        
       },
 
       getClinicalOffices () {
         axios.get('http://localhost:3000/clinical_offices').then((response) => {
-          console.log(response)
-          this.clinicalOffices = response.data.data
+          
+                    
+        this.clinicalOffices = response.data.data
+          
+          
         })
+        .catch((error) => {
+            this.$swal.fire({
+                icon: 'error',
+                title: 'ERROR!',
+                text: error,
+                showConfirmButton: false,
+                timer: 1500
+            })
+        });
+          
+        
       },
 
       getTime(a,b) {
@@ -269,11 +297,28 @@
         }
 
         console.log(workingHour)
-        await axios.post('http://localhost:3000/workingHours', workingHour).then(response =>  console.log(response.data.id))      
-            .catch(error => {
-                this.errorMessage = error.message
-                console.error("There was an error!", error);    
+        await axios.post('http://localhost:3000/workingHours', workingHour).then((response) => {
+          this.$swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              text: response.status,
+              showConfirmButton: false,
+              timer: 1500
+          }) 
+                    
+        this.clinicalOffices = response.data.data
+          
+          
+        })
+        .catch((error) => {
+            this.$swal.fire({
+                icon: 'error',
+                title: 'ERROR!',
+                text: error,
+                showConfirmButton: false,
+                timer: 1500
             })
+        });
 
         
         // console.log(this.brackets)
