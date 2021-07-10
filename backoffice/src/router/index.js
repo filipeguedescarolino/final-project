@@ -7,6 +7,7 @@ import DoctorsList from '../components/doctors/List.vue'
 import InsuranceList from '../components/insurances/List.vue'
 import SpecializationList from '../components/specializations/List.vue'
 import OfficeList from '../components/offices/List.vue'
+import Graphs from '../components/graphs.vue'
 
 // import Specializations from '../components/Specializations.vue'
 // import HelloWorld from '../components/HelloWorld.vue'
@@ -21,6 +22,13 @@ const routes = [
     path: '/office-list',
     name: 'OfficeList',
     component: OfficeList
+  },
+
+  {
+    // componente carregado
+    path: '/graphs',
+    name: 'Graphs',
+    component: Graphs
   },
 
 

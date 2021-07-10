@@ -95,7 +95,7 @@
                 { title: 'Offices', to: '/office-list', icon:"fas  fa-building" },
                 { title: 'Working period', to: '/working-hours', icon:"fas fa-calendar-week" },
                 { title: 'Appointments', to: '/appointments', icon:"far fa-calendar-check" },                
-                { title: 'Income Patients', to: 'incomepatients', icon:"fas fas fa-dollar-sign" },
+                { title: 'Income Patients', to: 'graphs', icon:"fas fas fa-dollar-sign" },
                 ],
             }
         },
