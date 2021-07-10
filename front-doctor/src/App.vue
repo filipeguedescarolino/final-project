@@ -4,7 +4,7 @@
 
         
         <side-bar v-if="isLoggedIn"> </side-bar>
-        <top-bar v-if="isLoggedIn"> </top-bar>
+        <!-- <top-bar v-if="isLoggedIn"> </top-bar> -->
         
 
         <v-main>
@@ -17,7 +17,7 @@
 // // validar se tenho token e user na localstorage. se sim -> chamar getters e actions vuex. 
 <script>
     import SideBar from '../src/components/SideBar.vue'
-    import TopBar from '../src/components/TopBar.vue'
+    // import TopBar from '../src/components/TopBar.vue'
     import {  mapActions, mapGetters } from 'vuex'
     
     // import { mapActions, mapGetters } from 'vuex'
@@ -26,7 +26,7 @@
 
         components: {
             SideBar,
-            TopBar           
+            // TopBar           
         },
 
         props: {

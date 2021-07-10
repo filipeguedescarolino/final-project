@@ -1,14 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import Homepage from '../components/Homepage.vue'
-import Home from '../views/Home.vue'
+
 import Login from '../components/Login.vue'
-import medics from '../components/medics.vue'
-import Prices from  '../components/Prices.vue'
-import Profile from '../components/Profile.vue'
-import About from '../components/About.vue'
+
+
 import MakeAppointment from '../components/MakeAppointment.vue'
-import Partnerships from '../components/Partnerships.vue'
+
 import AppointmentsHistory from '../components/AppointmentsHistory.vue'
 import personalDetails from '../components/personalDetails.vue'
 
@@ -45,51 +43,24 @@ const routes = [
     component: MakeAppointment
   },
 
-  {
-    // componente carregado
-    path: '/Profile',
-    name: 'profile',
-    component: Profile
-  },
 
-  {
-    // componente carregado
-    path: '/partnerships',
-    name: 'Partnerships',
-    component: Partnerships
-  },
 
-  {
-    // componente carregado
-    path: '/prices',
-    name: 'prices',
-    component: Prices
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: About
-  },
+ 
+
+ 
+
   
-  {
-    path: '/home',
-    name: 'home',
-    component: Home
-  },
-  {
-    path: '/specialists',
-    name: 'specialists',
-    component: medics
-  },
-  {
+  
+
+  // {
     // componente carregado quando é navegado para esta rota
-    path: '/patients/:patientId',
-    name: 'PatientDetails',
+    // path: '/patients/:patientId',
+    // name: 'PatientDetails',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/PatientsDetails.vue')
-  },
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/PatientsDetails.vue')
+  // },
 
 ]
 

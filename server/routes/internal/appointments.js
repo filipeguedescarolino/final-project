@@ -144,6 +144,29 @@ router.get('/history/:id', (req, res) => {
   })
 })
 
+router.get('/doctor/:id', (req, res) => {
+  const { id } = req.params
+
+  db.query(` SELECT p.id, p.day, p.hour, p.id_doctor, p.id_status, p.id_specialization, c.name as patientName,  d.name as doctorName,  s.description as specializationDescription,  t.description as statusDescription, u.end_at
+      FROM appointments p 
+      join doctors d on (d.id = p.id_doctor)
+      join patients c on (c.id = p.id_patient)
+      join specializations s on (s.id = p.id_specialization)
+      join status t on (t.id = p.id_status)
+      join time_slots u on (u.id = p.id_time_slot)
+      WHERE p.id_doctor = ${id}`, (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    res.send({
+      code: 200,
+      meta: null,
+      data: results
+    })
+  })
+})
+
 router.post('/', (req, res) => {
   const appointments = req.body
 

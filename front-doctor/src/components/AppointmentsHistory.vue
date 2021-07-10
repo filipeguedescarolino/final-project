@@ -1,148 +1,149 @@
 <template>
-    <v-card v-if="appointments">
-        <v-card-title>
-            <v-text-field
-                v-model="search"
-                append-icon="mdi-magnify"
-                label="Search"
-                single-line
-                hide-details
-            ></v-text-field>
-        </v-card-title>
-        <v-data-table            
-            :headers="headers"
-            :items="appointments"
-            :search="search"
-            :items-per-page="5"
-            item-key="name"
-            class="elevation-1 pa-4"
-            :footer-props="{
-            showFirstLastPage: true,
-            firstIcon: 'mdi-arrow-collapse-left',
-            lastIcon: 'mdi-arrow-collapse-right',
-            prevIcon: 'mdi-minus',
-            nextIcon: 'mdi-plus'
-            }">
 
-            <template v-slot:item="props">
-                <tr>
-                    
-                    <td>{{ props.item.doctorName }}</td>
-                    <td>{{ props.item.specializationDescription }}</td>
-                    <td>{{ formatDate(props.item.day )}}</td>
-                    <td>{{ props.item.hour }}</td>
-                    
-                    
-                    <td>
-                        <v-chip
-                            :color="getColor(props.item.id_status)"
-                            dark>
-
-                            <span style="color: black;">{{ props.item.statusDescription }}</span>
-                        </v-chip>
-                    </td>
-                    <td v-if="props.item.id_status = 1">                        
-                        <i class="far fa-trash-alt pointer" @click="thisDelete(props.item.id, props.item.id_status)"> </i>                                                    
-                    </td>
-                    <td v-else>
-                        Already occured
-                    </td>
-                </tr>
-            </template>    
-        </v-data-table>
-    </v-card>
+  <v-row>
+    <v-col>
+      <v-sheet height="1000">
+        <v-calendar
+          ref="calendar"
+          v-model="value"
+          type="week"
+          :events="events"
+        >
+        
+          <template v-slot:day-body="{ date, week }">
+            <div
+              class="v-current-time"
+              :class="{ first: date === week[0].date }"
+              :style="{ top: nowY }"
+            ></div>
+          </template>
+        </v-calendar>
+      </v-sheet>
+    </v-col>
+  </v-row>
 </template>
 
 
 <script>
     import axios from 'axios'
     import moment from 'moment'
-    export default {
-        data () {
-            return {
-                appointments: [],
-                search: '',
-                headers: [
-                    {
-                        text: 'Doctor',
-                        align: 'start',
-                        sortable: false,
-                        value: 'Doctor_id',
-                    },
+  export default {
+    data: () => ({
+      value: '',
+      ready: false,
+      events: []
+        // {
+        //   name: 'Weekly Meeting',
+        //   start: '2021-07-09 09:00',
+        //   end: '2021-07-09 09:30',
+        // },
+        // {
+        //   name: `Thomas' Birthday`,
+        //   start: '2019-01-10',
+        // },
+        // {
+        //   name: 'Mash Potatoes',
+        //   start: '2019-01-09 12:30',
+        //   end: '2019-01-09 15:30',
+        // },
+     
+    }),
+    computed: {
+       
+
+        cal () {
+        return this.ready ? this.$refs.calendar : null
+        },
+        nowY () {
+        return this.cal ? this.cal.timeToY(this.cal.times.now) + 'px' : '-10px'
+        },
+    },
+    mounted () {
+        this.ready = true
+        this.scrollToTime()
+        this.updateTime()
+    },
+    methods: {
+
+    
+        getAppointmentsForDoctor() {
+            debugger
+            axios.get(`http://localhost:3000/appointments/doctor/4`).then((response) => {
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }) 
+                debugger 
+                for (let i = 0; i < response.data.data.length; i++) {
+                    let a = {
+                        "name": response.data.data[i].patientName,
+                        "start": `${moment(response.data.data[i].day).format("YYYY-MM-DD")} ${response.data.data[i].hour}`,
+                        "end" : `${moment(response.data.data[i].day).format("YYYY-MM-DD")} ${response.data.data[i].end_at}`,
+                    }
+                    this.events.push(a);
+
+                    a = null
+                    }
+                
+                
+                
                     
-                    { text: 'Specialization', value: 'id_specialization'},
-                    { text: 'day', value: 'day' },
-                    { text: 'hour', value: 'hour' },
-                    { text: 'status', value: 'status' },
-                    { text: 'Remove', value: 'remove'}
                     
-                ],
-                
-            }
+                })
+                .catch((error) => {
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'ERROR!',
+                        text: error,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });
         },
 
-        computed: {
-            localStorageUser() {
-            if (!localStorage || !localStorage.user) {
-                return ''
-            }
-            return JSON.parse(localStorage.user)
-            
-            },
-
-            momentDates () { 
-                let a =this.appointments.map(({day}) => {
-                    return  moment(day).format('YYYY-MM-DD') 
-                })
-                return a   
-            }
-                
+        getCurrentTime () {
+            return this.cal ? this.cal.times.now.hour * 60 + this.cal.times.now.minute : 0
         },
+        scrollToTime () {
+            const time = this.getCurrentTime()
+            const first = Math.max(0, time - (time % 30) - 30)
 
-        methods: {
-
-            getAppointments () {
-                if (!localStorage || !this.localStorageUser) {
-                    return
-                }
-                
-                let userId = this.localStorageUser.id
-                axios.get(`http://localhost:3000/appointments/history/"${userId}"`).then((response) => {
-                    this.appointments = response.data.data 
-                })
-            },
-
-            getColor (id_status) {
-                if (id_status == 1) {
-                    return 'yellow'
-                } 
-                
-                else return 'green'
-            },
-
-            formatDate(value) {
-                return moment(value).format("MMMM DD YYYY")
-            },
-
-            thisDelete(id, status) {
-                if ( status != 1 ) {
-                    return
-                }
-
-                axios.delete(`http://localhost:3000/appointments/${id}`).then((response) => {
-                console.log(response) 
-                })
-                this.getAppointments()
-
-            }
-
-
+            this.cal.scrollToTime(first)
         },
+        updateTime () {
+            setInterval(() => this.cal.updateTimes(), 60 * 1000)
+        },
+    },
 
-        async created() {
-            await this.getAppointments()
-        }
+
+    async created() {
+        await this.getAppointmentsForDoctor()
     }
+  }
 </script>
 
-<style>
+
+<style lang="scss">
+.v-current-time {
+  height: 2px;
+  background-color: #ea4335;
+  position: absolute;
+  left: -1px;
+  right: 0;
+  pointer-events: none;
+
+  &.first::before {
+    content: '';
+    position: absolute;
+    background-color: #ea4335;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: -5px;
+    margin-left: -6.5px;
+  }
+}
+</style>

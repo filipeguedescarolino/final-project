@@ -10,9 +10,12 @@ module.exports = (req, res) => {
       username: 'required|email',
       password: 'required'
     }).then((value) => {
+      console.log(req.route.path)
+      
       let query = ''
 
       if (req.route.path === '/doctors-login') {
+        console.log('here')
         query = 'SELECT * FROM doctors WHERE email = ? AND status = "active"'
       } else if (req.route.path === '/patients-login') {
         query = 'SELECT * FROM patients WHERE email = ? AND status = "active"'

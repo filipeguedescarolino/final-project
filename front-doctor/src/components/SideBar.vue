@@ -5,13 +5,13 @@
             app
             fixed
             dark
-            color="#99D3DF">
+            color="#60BACD">
 
         
             
         <v-list-item>
             <v-list-item-avatar height="100" width="100">
-                <v-img  :src="user.image"> </v-img>
+                <v-img  src="https://cdn.vuetifyjs.com/images/john.png"> </v-img>
             </v-list-item-avatar>
 
             <h3> {{user.name}} </h3>
