@@ -25,6 +25,7 @@
 
 
 <script>
+    import {mapGetters} from 'vuex'
     import axios from 'axios'
     import moment from 'moment'
   export default {
@@ -50,6 +51,10 @@
     }),
     computed: {
        
+        ...mapGetters([
+        'user',
+        'token'
+        ]),
 
         cal () {
         return this.ready ? this.$refs.calendar : null
@@ -68,7 +73,7 @@
     
         getAppointmentsForDoctor() {
             debugger
-            axios.get(`http://localhost:3000/appointments/doctor/4`).then((response) => {
+            axios.get(`http://localhost:3000/appointments/doctor/${this.user.id}`).then((response) => {
                     this.$swal.fire({
                         icon: 'success',
                         title: 'Success!',
@@ -86,12 +91,7 @@
                     this.events.push(a);
 
                     a = null
-                    }
-                
-                
-                
-                    
-                    
+                    }                   
                 })
                 .catch((error) => {
                     this.$swal.fire({

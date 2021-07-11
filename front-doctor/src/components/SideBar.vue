@@ -2,6 +2,7 @@
     
     <v-navigation-drawer
             v-model="drawer"
+
             app
             fixed
             dark
@@ -67,11 +68,11 @@ export default {
 
     data() {
             return {
-                drawer: null ,
+                drawer: true ,
                 items: [
-                    { title: 'Personal Details', icon: 'fas fa-search', to: '/personalDetails' },
-                    { title: 'History', icon: 'fas fa-list', to: '/appointmentsHistory' },
-                    { title: 'Appointment', icon: 'fas fa-edit', to: 'appointment' }
+                    
+                    { title: 'Schedule', icon: 'fas fa-list', to: '/appointmentsHistory' },
+                    
                 ],
                 
                 

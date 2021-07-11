@@ -5,10 +5,9 @@ import VueRouter from 'vue-router'
 import Login from '../components/Login.vue'
 
 
-import MakeAppointment from '../components/MakeAppointment.vue'
+
 
 import AppointmentsHistory from '../components/AppointmentsHistory.vue'
-import personalDetails from '../components/personalDetails.vue'
 
 
 
@@ -22,12 +21,7 @@ const routes = [
     component: Login
   },
 
-  {
-    // componente carregado
-    path: '/personalDetails',
-    name: 'personalDetails',
-    component: personalDetails
-  },
+  
 
   {
     // componente carregado
@@ -36,12 +30,7 @@ const routes = [
     component: AppointmentsHistory
   },
 
-  {
-    // componente carregado
-    path: '/appointment',
-    name: 'appointment',
-    component: MakeAppointment
-  },
+  
 
 
 
