@@ -88,7 +88,8 @@
     },
 
     created() {
-        this.refresh()
+        this.setToken(localStorage.token)
+        this.setUser(JSON.parse(localStorage.user))
         
     }
 

@@ -130,10 +130,10 @@
                         showConfirmButton: false,
                         timer: 1500
                     }) 
-                    
-                    this.$router.push('/appointmentsHistory')
                     this.setUser(response.data.patient)
                     this.setToken(response.data.token)
+                    this.$router.push('/appointmentsHistory')
+                   
                     
                     
                 })

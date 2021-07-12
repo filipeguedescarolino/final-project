@@ -8,6 +8,7 @@
           v-model="value"
           type="week"
           :events="events"
+          @click:event="showEvent"
         >
         
           <template v-slot:day-body="{ date, week }">
@@ -70,7 +71,12 @@
     },
     methods: {
 
-    
+
+        showEvent(a ) {
+          console.log(a)
+          
+        },
+
         getAppointmentsForDoctor() {
             debugger
             axios.get(`http://localhost:3000/appointments/doctor/${this.user.id}`).then((response) => {
@@ -87,6 +93,7 @@
                         "name": response.data.data[i].patientName,
                         "start": `${moment(response.data.data[i].day).format("YYYY-MM-DD")} ${response.data.data[i].hour}`,
                         "end" : `${moment(response.data.data[i].day).format("YYYY-MM-DD")} ${response.data.data[i].end_at}`,
+                        "id": response.data.data[i].id
                     }
                     this.events.push(a);
 

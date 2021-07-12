@@ -37,6 +37,17 @@ const routes = [
     component: PatientList
   },
 
+
+  // {
+  //   // componente carregado
+  //   path: '/patient-list',
+  //   name: 'patientList',
+  //   component: 
+  // },
+
+
+
+
   
 
 

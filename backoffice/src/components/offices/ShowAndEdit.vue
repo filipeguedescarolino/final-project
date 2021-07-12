@@ -5,16 +5,16 @@
       width="900" class="pa-4">
      
       <v-system-bar> 
-        <span v-if="mode == 'edit'"> Update this Office </span>
-         <span v-else> Office Details </span>   
+        <span v-if="mode == 'edit'"> Update this Insurance </span>
+         <span v-else> Insurance Details </span>   
       </v-system-bar>
       <v-divider></v-divider>
       <v-form>
-        <v-container v-if="officeProxy">
+        <v-container v-if="insuranceProxy">
           <v-row>
             <v-col cols="12" sm="12">
               <v-text-field
-                v-model="officeProxy.description"
+                v-model="insuranceProxy.description"
                 
                 :readonly= "!editMode"
                 label="Description"
@@ -25,9 +25,9 @@
 
             <v-col cols="12" sm="12">
               <v-text-field
-                v-model.number="officeProxy.max_capacity"
+                v-model.number="insuranceProxy.reimbursed_value"
                 :readonly= "!editMode"
-                label="Max_capacity"
+                label="Value to be reimbursed"
                 outlined
                 shaped
               ></v-text-field>
@@ -66,13 +66,13 @@ export default {
     props: {
       value: Boolean,
       mode: String,
-      office: Object
+      insurance: Object
 
   },
 
     data() {
       return {
-        officeProxy: null
+        insuranceProxy: null
       }
     },
 
@@ -94,7 +94,7 @@ export default {
     methods: {
       save () {
         debugger
-        this.$emit('save', this.officeProxy, this.mode)
+        this.$emit('save', this.insuranceProxy, this.mode)
       }
     },
 
@@ -103,7 +103,7 @@ export default {
 
 
     created() {
-      this.officeProxy = _.cloneDeep(this.office)
+      this.insuranceProxy = _.cloneDeep(this.insurance)
     }
   }
 </script>
