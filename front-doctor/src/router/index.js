@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 // import Homepage from '../components/Homepage.vue'
 
 import Login from '../components/Login.vue'
-
+import PatientList  from '../components/PatientList.vue'
 
 
 
@@ -28,6 +28,13 @@ const routes = [
     path: '/appointmentsHistory',
     name: 'appointmentsHistory',
     component: AppointmentsHistory
+  },
+
+  {
+    // componente carregado
+    path: '/patient-list',
+    name: 'patientList',
+    component: PatientList
   },
 
   

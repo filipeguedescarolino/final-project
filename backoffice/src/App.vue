@@ -5,7 +5,9 @@
 
        
         
-        <v-navigation-drawer app permanent>
+        <v-navigation-drawer app permanent
+        dark
+        color="#99D3DF">
 
             <v-list-item>
                 <v-list-item-content>
@@ -57,25 +59,7 @@
             </v-container>
         </v-main>
 
-        <v-footer app
-            color="primary lighten-1"
-            padless
-            center>
         
-            <v-row
-                justify="center"
-                no-gutters>
-        
-
-                <v-col
-                    class="primary lighten-2 py-4 text-center white--text"
-                    cols="12">
-                
-                    {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-                </v-col>
-            </v-row>
-
-        </v-footer>
     </v-app>
 </template>
 
