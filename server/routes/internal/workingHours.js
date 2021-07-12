@@ -125,13 +125,19 @@ var createTimeSlotsForWorkingHourPeriod = function(day, begin_hour, end_hour, do
       "end_at": brackets[i + 1],
       "id_doctor": doctorId,
       "day": day
-    } 
+    }
+    
+    db.query(`Select * FROM time_slots WHERE  id_doctor = ${mySchedule.doctorId} AND day = "${mySchedule.day}" AND start_at = "${mySchedule.brackets[i]}"`, (error, results, _) => {
+    
+      if ( results && results.length > 1) {
+        throw `${error} There are duplicate keys in the table with this day with id_doctor and start_at.`
+      }
 
     db.query('INSERT INTO time_slots SET ?', [mySchedule], (error, results, _) => {
       if (error) {
         throw error
       }          
-    })
+    })})
   }
 
   
@@ -166,6 +172,12 @@ router.post('/', (req, res) => {
         "day2": value.day2,
         "id_clinical_office": value.id_clinical_office
       }
+      
+      db.query(`Select * FROM working_hour_periods WHERE  id_doctor = ${value.id_doctor} AND day = "${value.day}" AND begin_hour = "${value.begin_hour}" AND end_hour = "${value.end_hour}" AND id_clinical_office = ${value.id_clinical_office}`, (error, results, _) => {
+    
+        if ( results && results.length > 1) {
+          throw `${error} There are duplicate keys in the table with this id_clinical_office with id_doctor with day and end and begin_hour.`
+      }
     
 
     db.query('INSERT INTO working_hour_periods SET ?', [all_working_hour_periods], (error, results, _) => {
@@ -198,7 +210,7 @@ router.post('/', (req, res) => {
           data: results[0]
         })
       })
-    })
+    })})
   // }
   }).catch((error) => {
     res.status(400).send(error)

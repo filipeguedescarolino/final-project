@@ -180,6 +180,15 @@ router.post('/', (req, res) => {
     id_time_slot: "required",
     
   }).then((value) => {
+    
+    db.query(`Select * FROM appointments WHERE id_patient = ${value.id_patient} AND id_doctor = ${value.id_doctor} AND day = "${value.day}" AND hour = "${value.hour}"`, (error, results, _) => {
+    
+      if ( results && results.length > 1) {
+        throw `${error} There are duplicate keys in the table with this id_patient with id_doctor with day and hour.`
+      }
+    
+
+    console.log(value)
     db.query('INSERT INTO appointments SET ?', [value], (error, results, _) => {
       if (error) {
         throw error
@@ -198,7 +207,7 @@ router.post('/', (req, res) => {
           data: results[0]
         })
       })
-    })
+    })})
   }).catch((error) => {
     res.status(400).send(error)
   })

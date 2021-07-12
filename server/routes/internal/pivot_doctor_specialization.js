@@ -108,6 +108,14 @@ router.post('/', (req, res) => {
     id_doctor: "required",
     
   }).then((value) => {
+
+    db.query(`Select * FROM pivot_doctor_specialization WHERE id_doctor = ${value.id_doctor} AND id_specialization = ${value.id_specialization} `, (error, results, _) => {
+    
+      if ( results && results.length > 1) {
+        throw `${error} There are duplicate keys in the table with this  with id_doctor and id_specialization.`
+      }
+
+
     db.query('INSERT INTO pivot_doctor_specialization SET ?', [value], (error, results, _) => {
       if (error) {
         throw error
@@ -126,7 +134,7 @@ router.post('/', (req, res) => {
           data: results[0]
         })
       })
-    })
+    })})
   }).catch((error) => {
     res.status(400).send(error)
   })
