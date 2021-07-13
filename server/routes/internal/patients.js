@@ -1,10 +1,14 @@
 const router = require('express').Router()
 const { validate } = require('indicative/validator')
-
+const bcrypt = require('bcrypt')
 
 const db = require('../../db')
 
-router.get('/', (req, res) => {
+function removePasswordProperty(object) {
+  delete object.password
+}
+
+router.get('/',  (req, res) => {
   const { limit, page } = req.query
 
   const _limit = +limit || 20
@@ -42,6 +46,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const { id } = req.params
+  
 
   db.query(`SELECT * FROM patients WHERE id = ${id}`, (error, results) => {
     if (error) {
@@ -77,6 +82,11 @@ router.post('/', (req, res) => {
     password: "required",
     gender: "required",
   }).then((value) => {
+
+    bcrypt.hash(value.password, 10).then((hash) => {
+    value.password = hash
+      console.log(value)
+    
     db.query('INSERT INTO patients SET ?', [value], (error, results, _) => {
       if (error) {
         throw error
@@ -89,6 +99,8 @@ router.post('/', (req, res) => {
           throw error
         }
 
+        removePasswordProperty(results[0])
+
         res.send({
           code: 200,
           meta: null,
@@ -98,7 +110,7 @@ router.post('/', (req, res) => {
     })
   }).catch((error) => {
     res.status(400).send(error)
-  })
+  })})
 })
 
 router.put('/:id', (req, res) => {

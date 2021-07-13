@@ -1,7 +1,10 @@
 const router = require('express').Router()
 const { validate } = require('indicative/validator')
-
+const bcrypt = require('bcrypt')
 const db = require('../../db')
+function removePasswordProperty(object) {
+  delete object.password
+}
 
 router.get('/', (req, res) => {
   const { limit, page } = req.query
@@ -73,6 +76,10 @@ router.post('/', (req, res) => {
     image_src: "required",
     nif: "required"
   }).then((value) => {
+
+    bcrypt.hash(value.password, 10).then((hash) => {
+      value.password = hash
+
     db.query('INSERT INTO doctors SET ?', [value], (error, results, _) => {
       if (error) {
         throw error
@@ -85,6 +92,8 @@ router.post('/', (req, res) => {
           throw error
         }
 
+        removePasswordProperty(results[0])
+
         res.send({
           code: 200,
           meta: null,
@@ -94,7 +103,7 @@ router.post('/', (req, res) => {
     })
   }).catch((error) => {
     res.status(400).send(error)
-  })
+  })})
 })
 
 router.put('/:id', (req, res) => {

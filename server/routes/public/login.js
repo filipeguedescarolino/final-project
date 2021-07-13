@@ -10,7 +10,7 @@ module.exports = (req, res) => {
       username: 'required|email',
       password: 'required'
     }).then((value) => {
-      console.log(req.route.path)
+      
       
       let query = ''
 
@@ -35,7 +35,7 @@ module.exports = (req, res) => {
           
             
                
-              if (results.length != 0) {
+              if (match) {
                 const secret = 'B18fbWIyeU1utFA31mzGaVyzjyL9ZnfP'
                 const data = { id: results[0].id }
                 delete results[0].password // para não ter de ser preciso a row na BD

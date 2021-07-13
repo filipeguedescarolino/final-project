@@ -18,9 +18,10 @@ const login = require('./public/login')
 
 module.exports = {
   register(app) {
-    app.use('/patients',  patientsRouter)
+
+    app.use('/patients', auth('patients'),  patientsRouter)
     app.use('/medications',  medicationsRouter)
-    app.use('/doctors',  doctorsRouter)
+    app.use('/doctors',  auth('doctors'), doctorsRouter)
     app.use('/specializations',  specializationsRouter)
     app.use('/insurance',  insuranceRouter)
     app.use('/workingHours', workingHours)

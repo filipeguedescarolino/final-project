@@ -2,8 +2,15 @@ const db = require('../db')
 const jwt = require('jsonwebtoken')
 const { JsonWebTokenError } = jwt
 
-module.exports = (req, res, next) => {
-  const authorization = req.header('Authorization')
+
+
+module.exports = (path) => {
+  
+  return (req, res, next) => {
+    
+    
+    const authorization = req.header('Authorization')
+  
 
   if (!authorization) {
     res.status(400).send('JWT not provided')
@@ -15,8 +22,11 @@ module.exports = (req, res, next) => {
 
   try {
     const { id } = jwt.verify(authorization, secret)
+   
+   
 
-    db.query('SELECT * FROM patients WHERE id = ?', [id], (error, results) => {
+    db.query(`SELECT * FROM ${path} WHERE id = ?`, [id], (error, results) => {
+     
       if (error) {
         throw error
       }
@@ -34,4 +44,8 @@ module.exports = (req, res, next) => {
       res.status(401).send('Unknown error trying to verify the provided JWT')
     }
   }
+  }
 }
+
+
+

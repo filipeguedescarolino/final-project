@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import router  from '@/router'
+debugger; // eslint-disable-line no-debugger
 
 let bearerInterceptor = {
 
@@ -19,7 +20,7 @@ let bearerInterceptor = {
 let responseAuthenticationInterceptor = {
     
     process (response)  {
-            
+        debugger; // eslint-disable-line no-debugger   
         return response
     },
 
