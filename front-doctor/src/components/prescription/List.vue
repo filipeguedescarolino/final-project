@@ -27,7 +27,7 @@
             }">
 
             <template v-slot:item="props">
-                <tr>
+                <tr v-if="props.item">
                     <td >{{ props.item.namePatient }}</td>
                     <td>{{ props.item.email }}</td>
                     <td>{{ props.item.nameMedication }}</td>
@@ -35,8 +35,8 @@
                     <td>{{ formatDate(props.item.day) }} - {{ props.item.hour }} </td>
                     <td >{{ props.item.observation }}</td>          
                     <td >                        
-                        <i class="fas fa-search mr-3" style="cursor: pointer" @click="openMaintenaceModal(props.item, 'check')"> </i>
-                        <i class="fas fa-edit" style="cursor: pointer" @click="openMaintenaceModal(props.item, 'edit')"> </i>                                                                                
+                        <i class="fas fa-trash-alt" style="cursor: pointer" @click="removePrescription(props.item.id)"> </i>
+                                                                                                       
                     </td>                    
                 </tr>
             </template>
@@ -47,7 +47,7 @@
 
        
           
-        <show-and-edit  v-model="show" v-if="show"   :prescription="prescription"  :mode="mode"  @save="savePrescription" > </show-and-edit>
+        
          <!-- Inicia dialog  -->
             <v-dialog v-model="dialogCreate" max-width="900px">
                 <v-card>
@@ -121,38 +121,88 @@
             
             <v-system-bar class="mt-3" color="#60BACD"></v-system-bar>
 
-            <v-card class="mt-3 pa-2">
+            <v-card class="mt-3 pa-2" v-if="clinicalProcess && clinicalProcess.observations != null"> 
                 <v-card-title class="justify-center">
-                   {{prescriptions[0].namePatient}} - Clinical Process
+                    Clinical Process
                     <v-card-subtitle>
-                        last update:
+                        last update: {{formatDate(clinicalProcess.created_at)}}
                     </v-card-subtitle>
                 </v-card-title>
-                <v-container fluid>
-    <v-textarea
-      name="input-7-1"
-      filled
-      label="Last Clinical observations"
-      auto-grow
-      v-model="clinicalObservations"
-    ></v-textarea>
+                
+                <v-container fluid  >
+                    <v-textarea
+                    name="input-7-1"
+                    filled
+                    label="Last Clinical observations"
+                    auto-grow
+                    v-model="clinicalProcess.observations"
+                    ></v-textarea>
  
-                <v-file-input
-                    accept="image/*"
-                    label="Patient Files"
-                ></v-file-input>
-             </v-container>
-                <!-- <v-text-field
-                        v-model="clinicalObservations"
-                        append-icon="mdi-magnify"
-                        label="Last Update"
-                        single-line
-                        hide-details
-                ></v-text-field>  Colocar em cima com clinical process-->
-
-
+                    <v-file-input
+                        accept="image/*"
+                        label="Patient Files"
+                    ></v-file-input>
+                </v-container>
             
+                <v-btn               
+                    color="primary"
+                    dark
+                    class="text-center"
+                    @click="updateClinicalProcess()"
+                    >Update clinical Process
+                    
+                </v-btn>           
             </v-card>
+
+            <v-card v-else class="mt-3 pa-2">
+                <v-btn               
+                    color="primary"
+                    dark
+                    class="text-center"
+                    @click="dialogClinicalProcess = !dialogClinicalProcess"
+                    >Create Clinical Process
+                    
+                </v-btn>    
+
+            </v-card>
+
+            <v-dialog v-model="dialogClinicalProcess" max-width="900px">
+                <v-card>
+                    <v-navigation-drawer permanent
+                    width="900" class="pa-4">
+                    <v-system-bar style="text: center">  Create Clinical Process</v-system-bar>
+                    
+                    <v-divider></v-divider>
+                    <v-form>
+                       <v-container fluid  >
+                            <v-textarea
+                            name="input-7-1"
+                            filled
+                            label="Last Clinical observations"
+                            auto-grow
+                            v-model="createObservations"
+                            ></v-textarea>
+        
+                            <v-file-input
+                                accept="image/*"
+                                label="Patient Files"
+                            ></v-file-input>
+                        </v-container>
+                    </v-form>                    
+                    </v-navigation-drawer>
+                    <v-card-actions>
+                        <v-btn color="primary"  @click=" dialogClinicalProcess = false">
+                            Return
+                        </v-btn>
+                        <v-btn
+                            depressed
+                            color="primary"
+                            @click="postClinicalProcess()">
+                            Create Prescription
+                        </v-btn>                                                
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
        
     </v-card>
 </template>
@@ -161,11 +211,11 @@
 import axios from 'axios'
 import {  mapGetters } from 'vuex'
 import moment from 'moment'
-import ShowAndEdit from './ShowAndEdit.vue'
+
 
 
     export default {
-        components: { ShowAndEdit },
+        
 
         
   
@@ -175,7 +225,9 @@ import ShowAndEdit from './ShowAndEdit.vue'
                 prescription: [],
                 search: '',
                 show: false,
-                clinicalObservations: null,
+                dialogClinicalProcess: false,
+                createObservations: null,
+                
                 headers: [
                     {
                         text: 'Patient',
@@ -189,14 +241,16 @@ import ShowAndEdit from './ShowAndEdit.vue'
                     { text: 'Appointment ', value: 'appointment', align: 'center' }, 
                     { text: 'Clinic OBS', value: 'observations', align: 'center' },
 
-                    { text: 'Edit', value: 'edit', align: 'center'}
+                    { text: 'Remove', value: 'edit', align: 'center'}
                 ],
                
                 mode: null,
                 observation: null,
                 medication: null,
                 medications: [],
-
+                clinicalProcess: {
+                    observations: null
+                },
 
 
                 dialogCreate: false          
@@ -215,7 +269,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
         methods: {
 
             async getPrescriptions () {
-                await axios.get('http://localhost:3000/prescription/patient/11/doctor/24').then((response) => {
+                await axios.get(`http://localhost:3000/prescription/patient/${this.$route.params.id}/doctor/${this.user.id}`).then((response) => {
                    
                     this.prescriptions = response.data.data 
                 })
@@ -224,7 +278,12 @@ import ShowAndEdit from './ShowAndEdit.vue'
         
 
 
-
+            getClinicalProcess () {
+                axios.get(`http://localhost:3000/clinical_process/${this.$route.params.id}`).then((response) => {
+                    
+                    this.clinicalProcess = response.data.data 
+                })
+            },
             
 
            getMedications () {
@@ -235,6 +294,95 @@ import ShowAndEdit from './ShowAndEdit.vue'
 
             formatDate(value) {
                 return moment(value).format("MMMM DD YYYY")
+            },
+
+
+            updateClinicalProcess () {
+                let clinical = {
+                    "observations": this.clinicalProcess.observations,
+                    "id_patient": this.$route.params.id
+                }
+                axios.put(`http://localhost:3000/clinical_process/${this.clinicalProcess.id}`, clinical).then((response) => {
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })                                         
+                })
+                .catch((error) => {
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'ERROR!',
+                        text: error,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });
+
+                this.getClinicalProcess()
+                
+            },
+
+            removePrescription(id) {
+
+                axios.delete(`http://localhost:3000/prescription/${id}`).then((response) => {
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })  
+                    this.getPrescriptions()                                      
+                })
+                .catch((error) => {
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'ERROR!',
+                        text: error,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });
+
+                
+            },
+
+
+
+
+
+            postClinicalProcess () {
+                debugger
+                let clinicalPost = {
+                    "observations": this.createObservations,
+                    "id_patient": this.$route.params.id
+                }
+                axios.post(`http://localhost:3000/clinical_process`, clinicalPost).then((response) => {
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    console.log(response)
+                    this.getClinicalProcess()
+                })
+                .catch((error) => {
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'ERROR!',
+                        text: error,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });
+                this.dialogClinicalProcess = false
+                this.getClinicalProcess()
+                
             },
 
 
@@ -273,60 +421,8 @@ import ShowAndEdit from './ShowAndEdit.vue'
                 this.dialogCreate = !this.dialogCreate
             },
 
-            // thisChangeStatus(doctor) {
-            //     if (doctor.status == "active") {
-            //         let status  = {
-            //             "status": "inactive" 
-            //         }
-
-            //         axios.put(`http://localhost:3000/doctors/status/${doctor.id}`, status).then((response) => {
-            //         this.$swal.fire({
-            //             icon: 'success',
-            //             title: 'Success!',
-            //             text: response.status,
-            //             showConfirmButton: false,
-            //             timer: 1500
-            //         })                     
-            //     })
-            //     .catch((error) => {
-            //         this.$swal.fire({
-            //             icon: 'error',
-            //             title: 'ERROR!',
-            //             text: error,
-            //             showConfirmButton: false,
-            //             timer: 1500
-            //         })
-            //     });
-            //         this.getDoctors()
-            //         return 
-            //     }
-
-            //     let status2 = {
-            //         "status": "active"
-            //     }
-
-            //     axios.put(`http://localhost:3000/doctors/status/${doctor.id}`, status2).then((response) => {
-            //         this.$swal.fire({
-            //             icon: 'success',
-            //             title: 'Success!',
-            //             text: response.status,
-            //             showConfirmButton: false,
-            //             timer: 1500
-            //         })                    
-            //     })
-            //     .catch((error) => {
-            //         this.$swal.fire({
-            //             icon: 'error',
-            //             title: 'ERROR!',
-            //             text: error,
-            //             showConfirmButton: false,
-            //             timer: 1500
-            //         })
-            //     });
-            //         this.getDoctors()
-            //         return
-            // },
-
+            
+           
             openMaintenaceModal (row, mode) {
                 // user que estas a editar
         
@@ -336,100 +432,18 @@ import ShowAndEdit from './ShowAndEdit.vue'
             },
 
 
-            // async savePrescription (user, mode) {
-            //     console.log(user)
-            //     console.log(mode)
-                // this.show = false
-                // if (mode == 'check') {
-                //     return
-                // }
+            
 
-                // console.log(user)
-                
-                // let doctorUpdate = {
-                //     "observation": this.observation,
-                //     "id_medication": this.medication.id,
-                //     "id_patient": this.$route.params.id,
-                //     "id_doctor": this.user.id
-                // }
-                
-
-                // await axios.put(`http://localhost:3000/prescription/${user.id}`, doctorUpdate).then((response) => {
-                //     this.$swal.fire({
-                //         icon: 'success',
-                //         title: 'Success!',
-                //         text: response.status,
-                //         showConfirmButton: false,
-                //         timer: 1500
-                //     })                  
-                // })
-                // .catch((error) => {
-                //     this.$swal.fire({
-                //         icon: 'error',
-                //         title: 'ERROR!',
-                //         text: error,
-                //         showConfirmButton: false,
-                //         timer: 1500
-                //     })
-                // });   
-                // this.getDoctors()                        
-            // },
-
-
-            // async postPrescription() {
-            //     if (this.create.password != this.create.password2) {
-            //         return
-            //     }
-            //     debugger
-            //     let doctorCreate = {
-            //         "certificate_number": this.create.certificate_number,
-            //         "name": this.create.name,
-            //         "birthdate": this.create.birthdate,
-            //         "address": this.create.address,
-            //         "zip_code": this.create.zip_code,
-            //         "email": this.create.email,
-            //         "mobile_phone": this.create.mobile_phone,
-            //         "nif": this.create.nif,
-            //         "password": this.create.password,
-            //         "status":this.create.status,
-            //         "gender": this.create.gender,
-            //         "image_src": this.create.image_src
-            //     }
-
-            //     await axios.post(`http://localhost:3000/doctors`, doctorCreate).then((response) => {
-            //         this.$swal.fire({
-            //             icon: 'success',
-            //             title: 'Success!',
-            //             text: response.status,
-            //             showConfirmButton: false,
-            //             timer: 1500
-            //         }) 
-            //         this.idDoctor = response.data.data.id
-                    
-            //     })
-            //     .catch((error) => {
-            //         this.$swal.fire({
-            //             icon: 'error',
-            //             title: 'ERROR!',
-            //             text: error,
-            //             showConfirmButton: false,
-            //             timer: 1500
-            //         })
-                    
-            //     });
-
-            //     this.postSpecialization() 
-            //     this.getDoctors()
-            //     this.dialogCreate = false
-            // }
+            
                 
         },
 
         
 
         async created() {
-             await this.getPrescriptions()
-            this.getMedications()
+            await this.getPrescriptions()
+            await this.getMedications()
+            await this.getClinicalProcess()
             
         }
     }

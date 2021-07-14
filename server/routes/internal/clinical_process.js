@@ -59,7 +59,7 @@ router.post('/', (req, res) => {
   const clinicalOffice = req.body
 
   validate(clinicalOffice, {
-    observation: "required",
+    observations: "required",
     id_patient: "required"
   }).then((value) => {
     db.query('INSERT INTO clinical_process SET ?', [value], (error, results, _) => {
@@ -87,12 +87,12 @@ router.post('/', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-
+  const { id } = req.params
   const description = req.body
 
   validate(description, {
-    observation: "required",
-    id_patient: "required"
+    observations: 'required',
+    id_patient: 'required',
   }).then((value) => {
     db.query('UPDATE clinical_process SET ? WHERE id = ?', [value, id], (error, results, _) => {
       if (error) {
