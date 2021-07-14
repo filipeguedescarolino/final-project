@@ -41,12 +41,7 @@
                             <span style="color: black;">{{ props.item.statusDescription }}</span>
                         </v-chip>
                     </td>
-                    <td v-if="props.item.id_status = 1">                        
-                        <i class="far fa-trash-alt pointer" @click="thisDelete(props.item.id, props.item.id_status)"> </i>                                                    
-                    </td>
-                    <td v-else>
-                        Already occured
-                    </td>
+                    
                 </tr>
             </template>    
         </v-data-table>
@@ -74,7 +69,7 @@
                     { text: 'day', value: 'day' },
                     { text: 'hour', value: 'hour' },
                     { text: 'status', value: 'status' },
-                    { text: 'Remove', value: 'remove'}
+                    
                     
                 ],
                 
@@ -124,17 +119,17 @@
                 return moment(value).format("MMMM DD YYYY")
             },
 
-            thisDelete(id, status) {
-                if ( status != 1 ) {
-                    return
-                }
+            // thisDelete(id, status) {
+            //     if ( status != 1 ) {
+            //         return
+            //     }
 
-                axios.delete(`http://localhost:3000/appointments/${id}`).then((response) => {
-                console.log(response) 
-                })
-                this.getAppointments()
+            //     axios.delete(`http://localhost:3000/appointments/${id}`).then((response) => {
+            //     console.log(response) 
+            //     })
+            //     this.getAppointments()
 
-            }
+            // }
 
 
         },

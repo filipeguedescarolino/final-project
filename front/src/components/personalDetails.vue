@@ -36,7 +36,7 @@
                   </v-icon>
                   <v-icon v-else
                     color="blue">
-                      fas fa-save
+                      
                   </v-icon>
                 </v-list-item-icon>                  
               </v-list-item-content>

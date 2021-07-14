@@ -2,7 +2,7 @@
     <v-app-bar app
         color="#88BBD6">
 
-        <v-app-bar-nav-icon @click="toggle = !toggle" class=" white--text text--darken-2"> </v-app-bar-nav-icon>
+        
 
         <v-toolbar-title>
             <v-list-item   :to="'/about'"> 

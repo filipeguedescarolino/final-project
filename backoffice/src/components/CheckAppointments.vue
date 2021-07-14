@@ -227,9 +227,7 @@ import moment from 'moment'
                         timer: 1500
                     }) 
                     
-                    
-                    
-                    
+                    this.getAllAppointments()                    
                 })
                 .catch((error) => {
                     this.$swal.fire({
@@ -240,7 +238,7 @@ import moment from 'moment'
                         timer: 1500
                     })
                 });
-                    this.getAllAppointments()
+                    
                     return 
                 }
 
@@ -256,6 +254,7 @@ import moment from 'moment'
                         showConfirmButton: false,
                         timer: 1500
                     }) 
+                    this.getAllAppointments()
                     
                     
                     
@@ -270,14 +269,10 @@ import moment from 'moment'
                         timer: 1500
                     })
                 });
-                    this.getAllAppointments()
+                    
                     return
             }
-
-            
-
-
-            
+           
         },
 
         watch: {
@@ -294,7 +289,7 @@ import moment from 'moment'
 
         async created() {
             
-            // this.getDoctors()
+            
             this.getDoctors()
             this.getAllAppointments()
         }
