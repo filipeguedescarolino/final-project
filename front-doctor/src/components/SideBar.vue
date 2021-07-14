@@ -70,7 +70,7 @@ export default {
             return {
                 drawer: true ,  	
                 items: [
-                    {title: 'Your Patients-List', icon: 'fas fa-hospital', to: '/patient-list' },
+                    
                     { title: 'Schedule', icon: 'fas fa-list', to: '/appointmentsHistory' },
                     
                 ],
