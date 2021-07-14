@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 
 import Login from '../components/Login.vue'
 import PatientList  from '../components/PatientList.vue'
-
+import PersonalDetails  from '../components/personalDetails.vue'
 
 
 import AppointmentsHistory from '../components/AppointmentsHistory.vue'
@@ -16,10 +16,18 @@ Vue.use(VueRouter)
 const routes = [
   {
     // componente carregado
+    path: '/patients/:id',
+    name: 'PersonalDetails',
+    component: PersonalDetails
+  },
+
+  {
+    // componente carregado
     path: '/login',
     name: 'login',
     component: Login
   },
+
 
   
 

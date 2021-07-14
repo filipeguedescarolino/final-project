@@ -147,7 +147,7 @@ router.get('/history/:id', (req, res) => {
 router.get('/doctor/:id', (req, res) => {
   const { id } = req.params
 
-  db.query(` SELECT p.id, p.day, p.hour, p.id_doctor, p.id_status, p.id_specialization, c.name as patientName,  d.name as doctorName,  s.description as specializationDescription,  t.description as statusDescription, u.end_at
+  db.query(` SELECT p.id, p.day, p.id_patient, p.hour, p.id_doctor, p.id_status, p.id_specialization, c.name as patientName,  d.name as doctorName,  s.description as specializationDescription,  t.description as statusDescription, u.end_at
       FROM appointments p 
       join doctors d on (d.id = p.id_doctor)
       join patients c on (c.id = p.id_patient)

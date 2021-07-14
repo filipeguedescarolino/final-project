@@ -74,7 +74,8 @@
 
         showEvent(a ) {
           this.$router.push(`/patients/${a.event.id}`)
-          console.log(a.event.id)
+          
+          
           
         },
 
@@ -87,14 +88,15 @@
                         text: response.status,
                         showConfirmButton: false,
                         timer: 1500
-                    }) 
+                    })
+                  console.log(response) 
                 debugger 
                 for (let i = 0; i < response.data.data.length; i++) {
                     let a = {
                         "name": response.data.data[i].patientName,
                         "start": `${moment(response.data.data[i].day).format("YYYY-MM-DD")} ${response.data.data[i].hour}`,
                         "end" : `${moment(response.data.data[i].day).format("YYYY-MM-DD")} ${response.data.data[i].end_at}`,
-                        "id": response.data.data[i].id
+                        "id": response.data.data[i].id_patient
                     }
                     this.events.push(a);
 
