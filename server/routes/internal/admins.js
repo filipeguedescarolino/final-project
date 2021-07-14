@@ -1,20 +1,19 @@
 const router = require('express').Router()
 const { validate } = require('indicative/validator')
 const bcrypt = require('bcrypt')
-
 const db = require('../../db')
 
 function removePasswordProperty(object) {
   delete object.password
 }
 
-router.get('/',  (req, res) => {
+router.get('/', (req, res) => {
   const { limit, page } = req.query
 
   const _limit = +limit || 20
   const _page = +page || 1
 
-  db.query('SELECT COUNT(id) FROM patients', (error, countResults, _) => {
+  db.query('SELECT COUNT(id) FROM admins', (error, countResults, _) => {
     if (error) {
       throw error
     }
@@ -23,7 +22,7 @@ router.get('/',  (req, res) => {
     const total = countResults[0]['COUNT(id)']
     const pageCount = Math.ceil(total / _limit)
 
-    db.query('SELECT * FROM patients LIMIT ?, ?', [offset, _limit], (error, results, _) => {
+    db.query('SELECT * FROM admins LIMIT ?, ?', [offset, _limit], (error, results, _) => {
       if (error) {
         throw error
       }
@@ -44,11 +43,12 @@ router.get('/',  (req, res) => {
   })
 })
 
+
+
 router.get('/:id', (req, res) => {
   const { id } = req.params
-  
 
-  db.query(`SELECT * FROM patients WHERE id = ${id}`, (error, results) => {
+  db.query(`SELECT * FROM admins WHERE id = ${id}`, (error, results) => {
     if (error) {
       throw error
     }
@@ -63,38 +63,28 @@ router.get('/:id', (req, res) => {
 
 
 
-
-
-
-
 router.post('/', (req, res) => {
-  const patient = req.body
+  const admins = req.body
 
-  validate(patient, {
-    name: "required",
-    birthdate: "required|date",
-    address: "required",
-    zip_code: "required",
-    email: "required",
-    mobile_phone: "required",
-    sns: "required",
-    nif: "required",
-    password: "required",
-    gender: "required",
+  validate(admins, {   
+    name: "required",  
+    email: "required",    
+    password: "required",  
   }).then((value) => {
-
+    
     bcrypt.hash(value.password, 10).then((hash) => {
-    value.password = hash
-    
-    
-    db.query('INSERT INTO patients SET ?', [value], (error, results, _) => {
+      value.password = hash
+      
+
+    db.query('INSERT INTO admins SET ?', [value], (error, results, _) => {
+        
       if (error) {
         throw error
       }
 
       const { insertId } = results
 
-      db.query('SELECT * FROM patients WHERE id = ? LIMIT 1', [insertId], (error, results, _) => {
+      db.query('SELECT * FROM admins WHERE id = ? LIMIT 1', [insertId], (error, results, _) => {
         if (error) {
           throw error
         }
@@ -115,28 +105,21 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const { id } = req.params
-  const patient = req.body
+  const doctor = req.body
 
   
 
-  validate(patient, {
-    name: "required",
-    birthdate: "required|date",
-    address: "required",
-    zip_code: "required",
-    email: "required",
-    mobile_phone: "required",
-    sns: "required",
-    nif: "required",
-    password: "required",
-    gender: "required",
+  validate(doctor, {    
+    name: "required",      
+    email: "required",    
+    password: "required",  
   }).then((value) => {
-    db.query('UPDATE patients SET ? WHERE id = ?', [value, id], (error, results, _) => {
+    db.query('UPDATE admins SET ? WHERE id = ?', [value, id], (error, results, _) => {
       if (error) {
         throw error
       }
 
-      db.query('SELECT * FROM patients WHERE id = ? LIMIT 1', [id], (error, results, _) => {
+      db.query('SELECT * FROM admins WHERE id = ? LIMIT 1', [id], (error, results, _) => {
         if (error) {
           throw error
         }
@@ -152,6 +135,7 @@ router.put('/:id', (req, res) => {
     res.status(400).send(error)
   })
 })
+
 
 // router.patch('/:id/completed', (req, res) => {
 //   const { id } = req.params
@@ -176,14 +160,14 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query('SELECT * FROM patients WHERE id = ?', [id], (error, results, _) => {
+  db.query('SELECT * FROM admins WHERE id = ?', [id], (error, results, _) => {
     if (error) {
       throw error
     }
     console.log(results)
-    const [patients] = results
+    const [admins] = results
 
-    db.query('DELETE FROM patients WHERE id = ?', [id], (error, _, __) => {
+    db.query('DELETE FROM admins WHERE id = ?', [id], (error, _, __) => {
       if (error) {
         throw error
       }
@@ -191,7 +175,7 @@ router.delete('/:id', (req, res) => {
       res.send({
         code: 200,
         meta: null,
-        data: patients
+        data: admins
       })
     })
   })

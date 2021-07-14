@@ -7,7 +7,7 @@ const db = require('../../db')
 
 
 router.get('/', (req, res) => {
-    console.log('gogo')
+    
     const authorization = req.header('Authorization')
     const secret = 'B18fbWIyeU1utFA31mzGaVyzjyL9ZnfP'
   

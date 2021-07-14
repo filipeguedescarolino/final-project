@@ -139,6 +139,15 @@
 
         },
 
+        watch: {
+            appointments(val) {
+                this.getAppointments()
+                console.log(val)
+            },
+
+            
+      },
+
         async created() {
             await this.getAppointments()
         }

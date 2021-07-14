@@ -73,7 +73,8 @@
 
 
         showEvent(a ) {
-          console.log(a)
+          this.$router.push(`/patients/${a.event.id}`)
+          console.log(a.event.id)
           
         },
 

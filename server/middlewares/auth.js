@@ -3,9 +3,8 @@ const jwt = require('jsonwebtoken')
 const { JsonWebTokenError } = jwt
 
 
-
 module.exports = (path) => {
-  
+  console.log(path)
   return (req, res, next) => {
     
     

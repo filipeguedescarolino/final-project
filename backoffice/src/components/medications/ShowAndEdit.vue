@@ -93,7 +93,7 @@ export default {
 
     methods: {
       save () {
-        debugger
+        
         this.$emit('save', this.medicationProxy, this.mode)
       }
     },

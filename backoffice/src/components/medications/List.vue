@@ -160,7 +160,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
 
             openMaintenaceModal (row, mode) {
                 // user que estas a editar
-                debugger
+                
                 this.medication = row
                 this.mode= mode
                 this.show = true

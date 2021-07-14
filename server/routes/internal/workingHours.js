@@ -127,17 +127,13 @@ var createTimeSlotsForWorkingHourPeriod = function(day, begin_hour, end_hour, do
       "day": day
     }
     
-    db.query(`Select * FROM time_slots WHERE  id_doctor = ${mySchedule.doctorId} AND day = "${mySchedule.day}" AND start_at = "${mySchedule.brackets[i]}"`, (error, results, _) => {
     
-      if ( results && results.length > 1) {
-        throw `${error} There are duplicate keys in the table with this day with id_doctor and start_at.`
-      }
 
     db.query('INSERT INTO time_slots SET ?', [mySchedule], (error, results, _) => {
       if (error) {
         throw error
       }          
-    })})
+    })
   }
 
   

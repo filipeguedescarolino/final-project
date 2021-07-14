@@ -20,7 +20,7 @@ module.exports = (req, res) => {
       } else if (req.route.path === '/patients-login') {
         query = 'SELECT * FROM patients WHERE email = ? AND status = "active"'
       } else  {
-        query = 'SELECT * FROM users_admin WHERE email = ?'
+        query = 'SELECT * FROM admins WHERE email = ?'
       }
       
       
@@ -31,7 +31,7 @@ module.exports = (req, res) => {
   
         } else {
           bcrypt.compare(value.password, results[0].password).then((match) => {
-          
+          console.log(match)
           
             
                

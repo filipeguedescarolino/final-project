@@ -204,7 +204,7 @@
 
         getPatient () {
             
-            axios.get('http://localhost:3000/patients/1').then((response) => {
+            axios.get(`http://localhost:3000/patients/${this.user.id}`).then((response) => {
                 console.log(response)
                 this.patient = response.data.data 
             })
@@ -229,14 +229,21 @@
           }
 
           axios.put(`http://localhost:3000/patients/${this.patient.id}`, updatedPatient).then((response) => {
-              console.log(response);
+              this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }) 
               this.setUser(response.data.data)
-              console.log('Que Fking animal Beast')
+              
           })
           .catch((error) => {
               console.log(error);
-              console.log('deuBosta')
+              
           });
+
           this.editMode = false 
           this.getPatient()
 
@@ -245,6 +252,8 @@
 
         }
     },
+
+    
 
     computed: {
       parsedDate () {

@@ -339,16 +339,28 @@
                     "id_status": 1
                 }
 
-                axios.post('http://localhost:3000/appointments', appointmentData).then(response =>  console.log(response.data.id))
-                    alert('Appointment is booked.')
-                    this.$router.push('appointmentsHistory')      
-                    .catch(error => {
-                        this.errorMessage = error.message
-                        console.error("There was an error!", error);    
+                axios.post('http://localhost:3000/appointments', appointmentData).then((response) => {
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.status,
+                        showConfirmButton: false,
+                        timer: 1500
                     })
-
-                console.log(appointmentData)
+                    this.$router.push('appointmentsHistory')                                           
+                })
+                .catch((error) => {
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'ERROR!',
+                        text: error,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                });
             }
+
+                
         },
 
         watch: {

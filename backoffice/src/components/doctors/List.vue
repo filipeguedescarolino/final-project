@@ -404,7 +404,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
 
 
             async saveUser (user, mode) {
-                debugger
+                
                 this.show = false
                 if (mode == 'check') {
                     return

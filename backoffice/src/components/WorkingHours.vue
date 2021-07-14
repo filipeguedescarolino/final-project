@@ -320,6 +320,8 @@
             })
         });
 
+        this.getClinicalOffices()
+
         
         // console.log(this.brackets)
         
