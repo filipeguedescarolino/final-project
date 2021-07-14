@@ -6,49 +6,9 @@
     center
   >
 
-    <v-card>
-      <v-tabs
-        dark
-        color="#60BACD"
-        show-arrows
-      >
-        <v-tabs-slider color="teal lighten-3"></v-tabs-slider>
-
-        <v-tab
-          v-for="i in 3"
-          :key="i"
-          :href="'#tab-' + i"
-        >
-          Item {{ i }}
-        </v-tab>
-      </v-tabs>
-      
-      <v-tab-item>
-
-
-      </v-tab-item>
-
-
-
-       <v-tab-item>
-
-
-      </v-tab-item>
-
-
-
-       <v-tab-item>
-
-
-      </v-tab-item>
-
-
-
-
-    </v-card>
     <v-navigation-drawer permanent
     width="900" class="pa-4">
-      <v-system-bar></v-system-bar>
+      <v-system-bar color="#60BACD"></v-system-bar>
       <v-list>
         <v-list-item>
           <v-list-item-avatar height="100" width="100">
@@ -66,21 +26,18 @@
                 <v-list-item-subtitle>{{patient.email}}</v-list-item-subtitle>
               </v-list-item-content>
             </v-col>
-            <v-col cols="12" sm="2">
-              <v-list-item-content>
-                <v-list-item-icon>
-                  
-                  <v-icon color="blue"
-                    v-if="!editMode"
-                    @click="editMode = !editMode">
-                      fas fa-edit
-                  </v-icon>
-                  <v-icon v-else
-                    color="blue">
-                      fas fa-save
-                  </v-icon>
-                </v-list-item-icon>                  
-              </v-list-item-content>
+            <v-col cols="12" sm="4">
+              
+            </v-col>
+            <v-col cols="12" sm="4" class="">
+              <v-btn
+                rounded
+                depressed
+                color="primary"
+                @click="goToPrescription()"
+              >
+                Prescription List
+              </v-btn>
             </v-col>
           </v-row>
 
@@ -88,136 +45,123 @@
         </v-list-item>
       </v-list>
       <v-divider></v-divider>
-      <v-form>
+      <v-form class="pa-2">
         <v-container v-if="patient">
           <v-row>
-            <v-col cols="12" sm="6" v-if="editMode">
+            <v-col cols="12" sm="4" v-if="editMode">
               <v-text-field
                 v-model="patient.name"
                 
-                :readonly= "!editMode"
+                readonly
                 label="Name"
                 outlined
                 shaped
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" sm="6" v-if="editMode">
+            <v-col cols="12" sm="4" v-if="editMode">
               <v-text-field
                 v-model="patient.email"
-                :readonly= "!editMode"
+                readonly
                 label="Email"
                 outlined
                 shaped
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" sm="6">
+            <v-col cols="12" sm="4">
               <v-text-field
                 v-model="patient.gender"
-                :readonly= "!editMode"
+                readonly
                 label="Gender"
                 outlined
                 shaped
               ></v-text-field>
             </v-col>
 
-             <v-col cols="12" sm="6">
+             <v-col cols="12" sm="4">
               <v-text-field
                 v-model="parsedDate "
-                :readonly= "!editMode"
+                readonly
                 label="Birthdate"
                 outlined
                 shaped
               ></v-text-field>
             </v-col>
 
-             <v-col cols="12" sm="6">
+             <v-col cols="12" sm="4">
               <v-text-field
                 v-model="patient.address"
-                :readonly= "!editMode"
+                readonly
                 label="Address"
                 outlined
                 shaped
               ></v-text-field>
             </v-col>
 
-             <v-col cols="12" sm="6">
+             <v-col cols="12" sm="4">
               <v-text-field
                 v-model="patient.zip_code"
-                :readonly= "!editMode"
+                readonly
                 label="Zip-Code"
                 outlined
                 shaped
               ></v-text-field>
             </v-col>
 
-            <v-col cols="12" sm="6">
+            <v-col cols="12" sm="4">
               <v-text-field
                 v-model="patient.mobile_phone"
-                :readonly= "!editMode"
+                readonly
                 label="Mobile Phone"
                 outlined
                 shaped
               ></v-text-field>
             </v-col>
 
-             <v-col cols="12" sm="6">
+             <v-col cols="12" sm="4">
               <v-text-field
                 v-model="patient.nif"
-                :readonly= "!editMode"
+                readonly
                 label="Nif"
                 outlined
                 shaped
               ></v-text-field>
             </v-col>
 
-             <v-col cols="12" sm="6">
+             <v-col cols="12" sm="4">
               <v-text-field
                 v-model="patient.sns"
-                :readonly= "!editMode"
+                readonly
                 label="Sns"
                 outlined
                 shaped
               ></v-text-field>
             </v-col>
 
-             <v-col cols="12" sm="6">
+             <v-col cols="12" sm="4">
               <v-text-field
                 v-model="patient.status"
-                :readonly= "!editMode"
+                readonly
                 label="Status"
                 outlined
                 shaped
               ></v-text-field>
             </v-col>
-
-            <v-col cols="12" sm="5">
-            </v-col>
-            <v-col cols="12" sm="3"
-              v-if="editMode">
-              <v-btn
-                depressed
-                color="primary"
-                @click="updatePatient()">
-                Update
-              </v-btn>
-            </v-col>
-            
-
           </v-row>
         </v-container>
-      </v-form>
-
-
-     
+      </v-form>     
     </v-navigation-drawer>
+
+    
+
+    
   </v-card>
 </template>
 
 
 <script>
-    import {  mapActions, mapGetters } from 'vuex'
+    import {   mapGetters } from 'vuex'
     import moment from 'moment'
     import axios from 'axios'
     export default {
@@ -239,10 +183,7 @@
 
     methods: {
 
-        ...mapActions([
-        'setUser',
-        'setToken'
-        ]),
+        
 
         getPatient () {
           debugger
@@ -253,47 +194,11 @@
             })
         },
 
-        updatePatient () {
-          
-          
-          let updatedPatient = {
-            "name": this.patient.name,
-            "birthdate": this.parsedDate,
-            "address": this.patient.address,
-            "zip_code": this.patient.zip_code,
-            "email": this.patient.email,
-            "mobile_phone": this.patient.mobile_phone,
-            "sns": this.patient.sns,
-            "nif": this.patient.nif,
-            "password": this.patient.password,
-            "status": this.patient.status,
-            "gender": this.patient.gender,
-            "id_insurance": this.patient.id_insurance
-          }
-
-          axios.put(`http://localhost:3000/patients/${this.patient.id}`, updatedPatient).then((response) => {
-              this.$swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: response.status,
-                        showConfirmButton: false,
-                        timer: 1500
-                    }) 
-              this.setUser(response.data.data)
-              
-          })
-          .catch((error) => {
-              console.log(error);
-              
-          });
-
-          this.editMode = false 
-          this.getPatient()
-
-
-    
-
+        goToPrescription() {
+          this.$router.push(`/prescription/${this.$route.params.id}/${this.$route.params.appointment_id}`)
         }
+
+       
     },
 
     

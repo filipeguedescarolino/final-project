@@ -12,6 +12,7 @@ const pivotDoctorSpecialization = require('./internal/pivot_doctor_specializatio
 const clinicalOffices = require('./internal/clinical_offices')
 const authorization = require('./internal/restore_auth')
 const adminsRouter = require('./internal/admins')
+const prescriptionRouter = require('./internal/prescription')
 
 // const todosRouter = require('./internal/todos')
 
@@ -22,6 +23,7 @@ const login = require('./public/login')
 module.exports = {
   register(app) {
     app.use('/admins',  adminsRouter)
+    app.use('/prescription',  prescriptionRouter)
     app.use('/patients', patientsRouter)
     app.use('/medications',  medicationsRouter)
     app.use('/doctors',  doctorsRouter)

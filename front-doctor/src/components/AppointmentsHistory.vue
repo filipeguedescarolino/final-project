@@ -73,7 +73,10 @@
 
 
         showEvent(a ) {
-          this.$router.push(`/patients/${a.event.id}`)
+          debugger
+          console.log(a)
+          this.$router.push(`/patients/${a.event.id}/${a.event.appointment_id}`)
+
           
           
           
@@ -96,7 +99,8 @@
                         "name": response.data.data[i].patientName,
                         "start": `${moment(response.data.data[i].day).format("YYYY-MM-DD")} ${response.data.data[i].hour}`,
                         "end" : `${moment(response.data.data[i].day).format("YYYY-MM-DD")} ${response.data.data[i].end_at}`,
-                        "id": response.data.data[i].id_patient
+                        "id": response.data.data[i].id_patient,
+                        "appointment_id": response.data.data[i].id
                     }
                     this.events.push(a);
 
