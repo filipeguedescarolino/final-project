@@ -196,7 +196,7 @@ router.delete('/:id', (req, res) => {
     if (error) {
       throw error
     }
-    console.log(results)
+    
     const [pivotDoctorSpecialization] = results
 
     db.query('DELETE FROM pivot_doctor_specialization WHERE id = ?', [id], (error, _, __) => {

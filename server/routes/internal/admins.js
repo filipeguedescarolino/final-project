@@ -164,7 +164,7 @@ router.delete('/:id', (req, res) => {
     if (error) {
       throw error
     }
-    console.log(results)
+    
     const [admins] = results
 
     db.query('DELETE FROM admins WHERE id = ?', [id], (error, _, __) => {

@@ -205,7 +205,7 @@
         getPatient () {
             
             axios.get(`http://localhost:3000/patients/${this.user.id}`).then((response) => {
-                console.log(response)
+                
                 this.patient = response.data.data 
             })
         },

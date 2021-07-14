@@ -311,7 +311,7 @@
                 }
                 let userId = this.localStorageUser.id
                 axios.get(`http://localhost:3000/patients/${userId}`).then((response) => {
-                    console.log(response)
+                    
                     this.loggedUser = response.data.data
                 })
             },
@@ -322,7 +322,7 @@
                 }
 
                 axios.get(`http://localhost:3000/timeSlots/${this.picker}/${this.doctor.id_doctor}`).then((response) => {
-                    console.log(response)
+                    
                     this.timeSlots = response.data.data
                 })
             },

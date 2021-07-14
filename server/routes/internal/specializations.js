@@ -142,7 +142,7 @@ router.delete('/:id', (req, res) => {
     if (error) {
       throw error
     }
-    console.log(results)
+    
     const [doctors] = results
 
     db.query('DELETE FROM specializations WHERE id = ?', [id], (error, _, __) => {

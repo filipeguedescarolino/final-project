@@ -264,6 +264,11 @@
 
                                                     Complete Registration
                                                 </v-btn>
+                                                <v-btn rounded color="blue accent-3" 
+                                                    @click="step = 1 " dark>
+
+                                                    Return
+                                                </v-btn>
                                             </div>
                                         </v-col>
                                     </v-row>
@@ -404,10 +409,7 @@
                 }
 
                 axios.post('http://localhost:3000/patients', patient).then(response =>  console.log(response.data.id))
-                // if (response.status != 200) {
-                //     alert('something went wrong')
-                //     return
-                // }
+                
                     alert('Appointment is booked.')
                     this.step = 1     
                 },
@@ -419,7 +421,7 @@
                     }
 
                     axios.post('http://localhost:3000/patients-login', logUser).then((response) => {
-                        console.log(response);
+                        
                         this.$router.push('/appointmentsHistory')
                         this.setUser(response.data.patient)
                         this.setToken(response.data.token)

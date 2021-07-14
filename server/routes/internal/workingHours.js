@@ -60,7 +60,7 @@ router.get('/:id', (req, res) => {
 
 
 router.get('/:id/doctor/scales', (req, res) => {
-  console.log('here')
+  
   const { id } = req.params
 
 
@@ -69,7 +69,7 @@ router.get('/:id/doctor/scales', (req, res) => {
       throw error
     
     }
-    console.log(results)
+    
     res.send({
       code: 200,
       meta: null,
@@ -143,7 +143,7 @@ var createTimeSlotsForWorkingHourPeriod = function(day, begin_hour, end_hour, do
 
 router.post('/', (req, res) => {
   const working_hour_periods = req.body
-  console.log('aqui')
+  
    
   validate(working_hour_periods, {
     id_doctor: "required",  //1
@@ -183,11 +183,11 @@ router.post('/', (req, res) => {
       var startDate = new Date(working_hour_periods.day); //YYYY-MM-DD 2021-08-01
       var endDate = new Date(working_hour_periods.day2); //YYYY-MM-DD 2021-08-08
       var dateArr = getDateArray(startDate, endDate );
-      console.log(dateArr)
-      console.log('aqui2')
+      
+      
       for ( var i = 0;  i < dateArr.length ;  i++ ) {
-        console.log(dateArr)
-        console.log(dateArr[i])
+        
+        
         createTimeSlotsForWorkingHourPeriod(dateArr[i], value.begin_hour, value.end_hour, value.id_doctor)
 
       }
@@ -269,7 +269,7 @@ router.delete('/:id', (req, res) => {
     if (error) {
       throw error
     }
-    console.log(results)
+    
     const [working_hour_periods] = results
 
     db.query('DELETE FROM working_hour_periods WHERE id = ?', [id], (error, _, __) => {

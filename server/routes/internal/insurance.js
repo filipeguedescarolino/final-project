@@ -143,7 +143,7 @@ router.delete('/:id', (req, res) => {
     if (error) {
       throw error
     }
-    console.log(results)
+    
     const [insurance] = results
 
     db.query('DELETE FROM insurance WHERE id = ?', [id], (error, _, __) => {

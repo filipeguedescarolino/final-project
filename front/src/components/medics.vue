@@ -38,7 +38,7 @@ export default {
     methods: {
         getDoctors () {
           axios.get('http://localhost:3000/doctors?page=1&limit=5').then((response) => {
-            console.log(response)
+            
             this.medics = response.data.data
             })
         }

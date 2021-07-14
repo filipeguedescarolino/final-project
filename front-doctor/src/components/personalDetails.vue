@@ -189,7 +189,7 @@
           
             
             axios.get(`http://localhost:3000/patients/${this.$route.params.id}`).then((response) => {
-                console.log(response)
+                
                 this.patient = response.data.data 
             })
         },

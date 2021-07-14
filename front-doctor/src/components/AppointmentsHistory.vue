@@ -72,64 +72,58 @@
     methods: {
 
 
-        showEvent(a ) {
-          
-          console.log(a)
-          this.$router.push(`/patients/${a.event.id}/${a.event.appointment_id}`)
+      showEvent(a ) {        
+        this.$router.push(`/patients/${a.event.id}/${a.event.appointment_id}`)
+      },
 
+      getAppointmentsForDoctor() {
           
-          
-          
-        },
-
-        getAppointmentsForDoctor() {
-            
-            axios.get(`http://localhost:3000/appointments/doctor/${this.user.id}`).then((response) => {
-                    this.$swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: response.status,
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                  console.log(response) 
+          axios.get(`http://localhost:3000/appointments/doctor/${this.user.id}`).then((response) => {
+                  this.$swal.fire({
+                      icon: 'success',
+                      title: 'Success!',
+                      text: response.status,
+                      showConfirmButton: false,
+                      timer: 1500
+                  })
                 
-                for (let i = 0; i < response.data.data.length; i++) {
-                    let a = {
-                        "name": response.data.data[i].patientName,
-                        "start": `${moment(response.data.data[i].day).format("YYYY-MM-DD")} ${response.data.data[i].hour}`,
-                        "end" : `${moment(response.data.data[i].day).format("YYYY-MM-DD")} ${response.data.data[i].end_at}`,
-                        "id": response.data.data[i].id_patient,
-                        "appointment_id": response.data.data[i].id
-                    }
-                    this.events.push(a);
+              
+              for (let i = 0; i < response.data.data.length; i++) {
+                  let a = {
+                      "name": response.data.data[i].patientName,
+                      "start": `${moment(response.data.data[i].day).format("YYYY-MM-DD")} ${response.data.data[i].hour}`,
+                      "end" : `${moment(response.data.data[i].day).format("YYYY-MM-DD")} ${response.data.data[i].end_at}`,
+                      "id": response.data.data[i].id_patient,
+                      "appointment_id": response.data.data[i].id
+                  }
+                  this.events.push(a);
 
-                    a = null
-                    }                   
-                })
-                .catch((error) => {
-                    this.$swal.fire({
-                        icon: 'error',
-                        title: 'ERROR!',
-                        text: error,
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                });
-        },
+                  a = null
+                  }                   
+              })
+              .catch((error) => {
+                  this.$swal.fire({
+                      icon: 'error',
+                      title: 'ERROR!',
+                      text: error,
+                      showConfirmButton: false,
+                      timer: 1500
+                  })
+              });
+      },
 
-        getCurrentTime () {
-            return this.cal ? this.cal.times.now.hour * 60 + this.cal.times.now.minute : 0
-        },
-        scrollToTime () {
-            const time = this.getCurrentTime()
-            const first = Math.max(0, time - (time % 30) - 30)
+      getCurrentTime () {
+          return this.cal ? this.cal.times.now.hour * 60 + this.cal.times.now.minute : 0
+      },
+      scrollToTime () {
+          const time = this.getCurrentTime()
+          const first = Math.max(0, time - (time % 30) - 30)
 
-            this.cal.scrollToTime(first)
-        },
-        updateTime () {
-            setInterval(() => this.cal.updateTimes(), 60 * 1000)
-        },
+          this.cal.scrollToTime(first)
+      },
+      updateTime () {
+          setInterval(() => this.cal.updateTimes(), 60 * 1000)
+      },
     },
 
 

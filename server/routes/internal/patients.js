@@ -180,7 +180,7 @@ router.delete('/:id', (req, res) => {
     if (error) {
       throw error
     }
-    console.log(results)
+    
     const [patients] = results
 
     db.query('DELETE FROM patients WHERE id = ?', [id], (error, _, __) => {

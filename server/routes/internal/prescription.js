@@ -43,7 +43,7 @@ router.get('/patient/:id/doctor/:doc', (req, res) => {
 
     
   const { id, doc } = req.params
-    console.log(req.params)
+    
   db.query(`SELECT p.id, p.id_doctor, p.id_patient, p.id_medication, p.observation, p.id_appointment, m.description as nameMedication, m.observations as observationMedication, pa.name as namePatient, pa.email as email, a.day, a.hour  
   FROM prescription p
   join patients pa on (pa.id = p.id_patient)
@@ -153,7 +153,7 @@ router.delete('/:id', (req, res) => {
     if (error) {
       throw error
     }
-    console.log(results)
+    
     const [prescription] = results
 
     db.query('DELETE FROM prescription WHERE id = ?', [id], (error, _, __) => {

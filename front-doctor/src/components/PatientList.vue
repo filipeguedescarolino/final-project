@@ -130,9 +130,7 @@ import axios from 'axios'
                 if (mode == 'check') {
                     return
                 }
-
-                console.log(user)
-                
+                                
                 let doctorUpdate = {
                     "certificate_number": user.certificate_number,
                     "name": user.name,

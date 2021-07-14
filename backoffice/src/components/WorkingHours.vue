@@ -246,8 +246,7 @@
                 timer: 1500
             })
         });
-          
-        
+                  
       },
 
       getClinicalOffices () {
@@ -266,9 +265,7 @@
                 showConfirmButton: false,
                 timer: 1500
             })
-        });
-          
-        
+        });          
       },
 
       getTime(a,b) {
@@ -296,7 +293,7 @@
           "id_clinical_office": this.clinicalOffice,          
         }
 
-        console.log(workingHour)
+        
         await axios.post('http://localhost:3000/workingHours', workingHour).then((response) => {
           this.$swal.fire({
               icon: 'success',
@@ -323,60 +320,9 @@
         this.getClinicalOffices()
 
         
-        // console.log(this.brackets)
         
-                    
-      //   for( var i = 0;  i < this.brackets.length - 1;  i++ ) {
-            
-      //     axios.post(`http://localhost:3000/timeSlots`,  
-      //         this.mySchedule = {
-      //             "start_at": this.brackets[i],
-      //             "end_at": this.brackets[i + 1],
-      //             "id_doctor": this.doctor,
-      //             "day": this.day
-      //         }
-              
-      //     )
-      //     .then((response) => {
-      //         // Takes 4 seconds, 4 more seconds, 4 more seconds, etc
-      //         // Ideally: Takes 4 seconds, returns in the same ~4 seconds, returns in the same ~4 seconds, etc
-      //         console.log(response);
-      //         console.log('Que Fking animal Beast')
-      //     })
-      //     .catch((error) => {
-      //         console.log(error);
-      //         console.log('deuBosta')
-      //     });
-
-      //     // Takes < 1 second, < 1 more second, < 1 more second, etc
-      //     console.log( 'Request sent!' );
-      // }
-    }
-        
-
-    
+      }          
     },
-
-
-    // computed: {
-    //   validateDays() {
-    //     let date1 = moment(this.day).format("yyyy-mm-dd")
-    //     let date2 = moment(this.day2).format("yyyy-mm-dd")
-    //     if(date1 >  date2){
-    //         return false
-    //     } 
-
-    //     return true
-
-    //     }
-      
-    // },
-
-
-
-
-
-
 
     async created() {
         await this.getDoctors ()

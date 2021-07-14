@@ -368,7 +368,7 @@ import moment from 'moment'
                         showConfirmButton: false,
                         timer: 1500
                     })
-                    console.log(response)
+                    
                     this.getClinicalProcess()
                 })
                 .catch((error) => {

@@ -162,7 +162,7 @@ router.delete('/:id', (req, res) => {
     if (error) {
       throw error
     }
-    console.log(results)
+    
     const [time_slots] = results
 
     db.query('DELETE FROM time_slots WHERE id = ?', [id], (error, _, __) => {

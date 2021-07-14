@@ -179,7 +179,7 @@ import moment from 'moment'
                 }
                 axios.get(`http://localhost:3000/appointments/day/${this.picker}`).then((response) => {
                     
-                    console.log(response)
+                    
                     
                     this.appointments = response.data.data 
                     
@@ -196,12 +196,8 @@ import moment from 'moment'
                if (!this.doctor) {
                    return
                 }
-                axios.get(`http://localhost:3000/appointments/day/${this.picker}/doctor/${this.doctor.id}`).then((response) => {
-                    console.log(response)
-                    
-                    this.appointments = response.data.data 
-                    
-                    
+                axios.get(`http://localhost:3000/appointments/day/${this.picker}/doctor/${this.doctor.id}`).then((response) => {                 
+                    this.appointments = response.data.data                     
                 })
                 .catch((error) => {
                     console.log(error)

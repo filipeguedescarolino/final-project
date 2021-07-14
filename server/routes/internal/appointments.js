@@ -103,7 +103,7 @@ router.get('/day/:day/doctor/:doctorId', (req, res) => {
 })
 
 router.get('/:id/doctor', (req, res) => {
-  console.log('here')
+  
   const { id } = req.params
 
   db.query(`SELECT DISTINCT day  FROM time_slots Where id_doctor =  ${id} AND id NOT IN (SELECT id_time_slot FROM appointments)`, (error, results) => {
@@ -188,7 +188,7 @@ router.post('/', (req, res) => {
       }
     
 
-    console.log(value)
+    
     db.query('INSERT INTO appointments SET ?', [value], (error, results, _) => {
       if (error) {
         throw error
@@ -269,7 +269,7 @@ router.delete('/:id', (req, res) => {
     if (error) {
       throw error
     }
-    console.log(results)
+    
     const [appointments] = results
 
     db.query('DELETE FROM appointments WHERE id = ?', [id], (error, _, __) => {
