@@ -315,7 +315,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
             },
 
             postSpecialization () {
-                debugger
+                
                 let pivotDoctorSpecialization = {
                     "id_doctor": this.idDoctor,
                     "id_specialization": this.specialization.id
@@ -454,7 +454,7 @@ import ShowAndEdit from './ShowAndEdit.vue'
                 if (this.create.password != this.create.password2) {
                     return
                 }
-                debugger
+                
                 let doctorCreate = {
                     "certificate_number": this.create.certificate_number,
                     "name": this.create.name,

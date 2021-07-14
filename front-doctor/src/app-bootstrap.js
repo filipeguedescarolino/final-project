@@ -24,7 +24,7 @@ let responseAuthenticationInterceptor = {
     },
 
     exception (error) {
-        debugger; // eslint-disable-line no-debugger
+        
         router.push('/login')
         
         return Promise.reject(error)

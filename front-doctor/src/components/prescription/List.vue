@@ -355,7 +355,7 @@ import moment from 'moment'
 
 
             postClinicalProcess () {
-                debugger
+                
                 let clinicalPost = {
                     "observations": this.createObservations,
                     "id_patient": this.$route.params.id
@@ -390,7 +390,7 @@ import moment from 'moment'
 
 
             postPrescription () {
-                debugger
+                
                 let prescription = {
                     "observation": this.observation,
                     "id_doctor": this.user.id,

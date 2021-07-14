@@ -73,7 +73,7 @@
 
 
         showEvent(a ) {
-          debugger
+          
           console.log(a)
           this.$router.push(`/patients/${a.event.id}/${a.event.appointment_id}`)
 
@@ -83,7 +83,7 @@
         },
 
         getAppointmentsForDoctor() {
-            debugger
+            
             axios.get(`http://localhost:3000/appointments/doctor/${this.user.id}`).then((response) => {
                     this.$swal.fire({
                         icon: 'success',
@@ -93,7 +93,7 @@
                         timer: 1500
                     })
                   console.log(response) 
-                debugger 
+                
                 for (let i = 0; i < response.data.data.length; i++) {
                     let a = {
                         "name": response.data.data[i].patientName,

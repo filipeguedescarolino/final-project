@@ -186,7 +186,7 @@
         
 
         getPatient () {
-          debugger
+          
             
             axios.get(`http://localhost:3000/patients/${this.$route.params.id}`).then((response) => {
                 console.log(response)

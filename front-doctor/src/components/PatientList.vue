@@ -125,7 +125,7 @@ import axios from 'axios'
 
 
             async saveUser (user, mode) {
-                debugger
+                
                 this.show = false
                 if (mode == 'check') {
                     return
@@ -175,7 +175,7 @@ import axios from 'axios'
                 if (this.create.password != this.create.password2) {
                     return
                 }
-                debugger
+                
                 let doctorCreate = {
                     "certificate_number": this.create.certificate_number,
                     "name": this.create.name,
