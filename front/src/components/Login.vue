@@ -410,7 +410,7 @@
 
                 axios.post('http://localhost:3000/patients', patient).then(response =>  console.log(response.data.id))
                 
-                    alert('Appointment is booked.')
+                    alert('Proceed to Login.')
                     this.step = 1     
                 },
 
